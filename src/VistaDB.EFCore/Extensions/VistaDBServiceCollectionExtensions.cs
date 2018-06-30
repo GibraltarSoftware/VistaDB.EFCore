@@ -14,7 +14,10 @@ using Microsoft.EntityFrameworkCore.Update.Internal;
 using Microsoft.EntityFrameworkCore.Utilities;
 using Microsoft.EntityFrameworkCore.ValueGeneration;
 using VistaDB.EFCore.Infrastructure.Internal;
+using VistaDB.EFCore.Query.ExpressionTranslators.Internal;
+using VistaDB.EFCore.Query.Sql.Internal;
 using VistaDB.EFCore.Storage.Internal;
+using VistaDB.EFCore.Update.Internal;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection
@@ -61,31 +64,25 @@ namespace Microsoft.Extensions.DependencyInjection
 
             var builder = new EntityFrameworkRelationalServicesBuilder(serviceCollection)
                 .TryAdd<IDatabaseProvider, DatabaseProvider<VistaDBOptionsExtension>>()
-                //.TryAdd<IRelationalTypeMappingSource, SqlServerTypeMappingSource>()
-                //.TryAdd<ISqlGenerationHelper, SqlServerSqlGenerationHelper>()
-                //.TryAdd<IMigrationsAnnotationProvider, SqlServerMigrationsAnnotationProvider>()
+                .TryAdd<IRelationalTypeMappingSource, VistaDBTypeMappingSource>()
+                .TryAdd<ISqlGenerationHelper, VistaDBSqlGenerationHelper>()
+                .TryAdd<IUpdateSqlGenerator, VistaDBUpdateSqlGenerator>()
+                .TryAdd<ISingletonUpdateSqlGenerator, VistaDBUpdateSqlGenerator>()
+                .TryAdd<IModificationCommandBatchFactory, VistaDBModificationCommandBatchFactory>()
+                .TryAdd<ICompositeMethodCallTranslator, VistaDBCompositeMethodCallTranslator>()
+                .TryAdd<IMemberTranslator, VistaDBCompositeMemberTranslator>()
+                .TryAdd<IQuerySqlGeneratorFactory, VistaDBQuerySqlGeneratorFactory>()
+
                 //.TryAdd<IModelValidator, SqlServerModelValidator>()
                 //.TryAdd<IConventionSetBuilder, SqlServerConventionSetBuilder>()
-                //.TryAdd<IUpdateSqlGenerator>(p => p.GetService<ISqlServerUpdateSqlGenerator>())
-                //.TryAdd<ISingletonUpdateSqlGenerator>(p => p.GetService<ISqlServerUpdateSqlGenerator>())
-                //.TryAdd<IModificationCommandBatchFactory, SqlServerModificationCommandBatchFactory>()
-                
-                .TryAdd<IRelationalConnection, VistaDBRelationalConnection>();
 
-                //.TryAdd<IMigrationsSqlGenerator, SqlServerMigrationsSqlGenerator>()
                 //.TryAdd<IRelationalDatabaseCreator, VistaDBDatabaseCreator>()
-
+                
+                //.TryAdd<IMigrationsAnnotationProvider, SqlServerMigrationsAnnotationProvider>()
+                //.TryAdd<IMigrationsSqlGenerator, SqlServerMigrationsSqlGenerator>()
                 //.TryAdd<IHistoryRepository, SqlServerHistoryRepository>()
-                //.TryAdd<IQueryCompilationContextFactory, SqlServerQueryCompilationContextFactory>()
-                //.TryAdd<IMemberTranslator, SqlServerCompositeMemberTranslator>()
-                //.TryAdd<ICompositeMethodCallTranslator, SqlServerCompositeMethodCallTranslator>()
-                //.TryAdd<IQuerySqlGeneratorFactory, SqlServerQuerySqlGeneratorFactory>()
-                //.TryAdd<ISqlTranslatingExpressionVisitorFactory, SqlServerSqlTranslatingExpressionVisitorFactory>()
-                //.TryAddProviderSpecificServices(
-                //    b => b
-                ////        .TryAddSingleton<ISqlServerUpdateSqlGenerator, SqlServerUpdateSqlGenerator>()
-                //        .TryAddScoped<IRelationalConnection, VistaDBRelationalConnection>()
-                //        );
+
+                .TryAdd<IRelationalConnection, VistaDBRelationalConnection>();
 
             builder.TryAddCoreServices();
 

@@ -1,19 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
+  
   <PropertyGroup>
     <TargetFramework>net461</TargetFramework>
+    <LangVersion>7.2</LangVersion>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="VistaDBDatabaseFacaceExtensionsTest.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational.Specification.Tests" Version="2.1.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\VistaDB.EFCore\VistaDB.EFCore.csproj" />
+    <ProjectReference Include="..\VistaDB.EFCore.FunctionalTests\VistaDB.EFCore.FunctionalTests.csproj" />
   </ItemGroup>
 
   <ItemGroup>

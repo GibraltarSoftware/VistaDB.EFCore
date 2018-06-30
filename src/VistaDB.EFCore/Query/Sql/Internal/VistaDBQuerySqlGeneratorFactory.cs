@@ -1,21 +1,22 @@
-﻿using System.Data.Common;
 using JetBrains.Annotations;
-using Microsoft.EntityFrameworkCore.Storage;
-using VistaDB.Provider;
+using Microsoft.EntityFrameworkCore.Query.Expressions;
+using Microsoft.EntityFrameworkCore.Query.Sql;
+using Microsoft.EntityFrameworkCore.Utilities;
 
-namespace VistaDB.EFCore.Storage.Internal
+namespace VistaDB.EFCore.Query.Sql.Internal
 {
     /// <summary>
     ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
     ///     directly from your code. This API may change or be removed in future releases.
     /// </summary>
-    public class VistaDBRelationalConnection : RelationalConnection
+    public class VistaDBQuerySqlGeneratorFactory : QuerySqlGeneratorFactoryBase
     {
         /// <summary>
         ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
-        public VistaDBRelationalConnection([NotNull] RelationalConnectionDependencies dependencies)
+        public VistaDBQuerySqlGeneratorFactory(
+            [NotNull] QuerySqlGeneratorDependencies dependencies)
             : base(dependencies)
         {
         }
@@ -24,12 +25,9 @@ namespace VistaDB.EFCore.Storage.Internal
         ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
-        protected override DbConnection CreateDbConnection() => new  VistaDBConnection(ConnectionString);
-
-        /// <summary>
-        ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
-        public override bool IsMultipleActiveResultSetsEnabled => true;
+        public override IQuerySqlGenerator CreateDefault(SelectExpression selectExpression)
+            => new VistaDBQuerySqlGenerator(
+                Dependencies,
+                Check.NotNull(selectExpression, nameof(selectExpression)));
     }
 }
