@@ -7,6 +7,9 @@ using VistaDB.EFCore.Infrastructure.Internal;
 // ReSharper disable once CheckNamespace
 namespace Microsoft.EntityFrameworkCore
 {
+    /// <summary>
+    /// Extension
+    /// </summary>
     public static class VistaDBDatabaseFacadeExtensions
     {
         /// <summary>

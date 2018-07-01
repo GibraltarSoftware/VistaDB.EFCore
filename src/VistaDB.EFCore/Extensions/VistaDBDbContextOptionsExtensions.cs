@@ -20,7 +20,7 @@ namespace Microsoft.EntityFrameworkCore
         /// </summary>
         /// <param name="optionsBuilder"> The builder being used to configure the context. </param>
         /// <param name="connectionString"> The connection string of the database to connect to. </param>
-        /// <param name="vsiatDBOptionsAction">An optional action to allow additional SQL Server Compact specific configuration.</param>
+        /// <param name="vistaDBOptionsAction">An optional action to allow additional SQL Server Compact specific configuration.</param>
         /// <returns> The options builder so that further configuration can be chained. </returns>
         public static DbContextOptionsBuilder UseVistaDB(
             [NotNull] this DbContextOptionsBuilder optionsBuilder,
@@ -46,7 +46,7 @@ namespace Microsoft.EntityFrameworkCore
         /// </summary>
         /// <param name="optionsBuilder"> The builder being used to configure the context. </param>
         /// <param name="connectionStringBuilder"> A connection string builder with the connection string of the database to connect to. </param>
-        /// <param name="sqlCeOptionsAction">An optional action to allow additional SQL Server Compact specific configuration.</param>
+        /// <param name="vistaDBOptionsAction">An optional action to allow additional SQL Server Compact specific configuration.</param>
         /// <returns> The options builder so that further configuration can be chained. </returns>
         public static DbContextOptionsBuilder UseVistaDB(
             [NotNull] this DbContextOptionsBuilder optionsBuilder,

@@ -69,20 +69,21 @@ namespace Microsoft.Extensions.DependencyInjection
                 .TryAdd<IUpdateSqlGenerator, VistaDBUpdateSqlGenerator>()
                 .TryAdd<ISingletonUpdateSqlGenerator, VistaDBUpdateSqlGenerator>()
                 .TryAdd<IModificationCommandBatchFactory, VistaDBModificationCommandBatchFactory>()
+                .TryAdd<IRelationalConnection>(p => p.GetService<IVistaDBRelationalConnection>())
                 .TryAdd<ICompositeMethodCallTranslator, VistaDBCompositeMethodCallTranslator>()
                 .TryAdd<IMemberTranslator, VistaDBCompositeMemberTranslator>()
                 .TryAdd<IQuerySqlGeneratorFactory, VistaDBQuerySqlGeneratorFactory>()
+                .TryAdd<IRelationalDatabaseCreator, VistaDBDatabaseCreator>()
 
                 //.TryAdd<IModelValidator, SqlServerModelValidator>()
                 //.TryAdd<IConventionSetBuilder, SqlServerConventionSetBuilder>()
 
-                //.TryAdd<IRelationalDatabaseCreator, VistaDBDatabaseCreator>()
-                
                 //.TryAdd<IMigrationsAnnotationProvider, SqlServerMigrationsAnnotationProvider>()
                 //.TryAdd<IMigrationsSqlGenerator, SqlServerMigrationsSqlGenerator>()
                 //.TryAdd<IHistoryRepository, SqlServerHistoryRepository>()
-
-                .TryAdd<IRelationalConnection, VistaDBRelationalConnection>();
+                
+                .TryAddProviderSpecificServices(b => b
+                    .TryAddScoped<IVistaDBRelationalConnection, VistaDBRelationalConnection>());
 
             builder.TryAddCoreServices();
 

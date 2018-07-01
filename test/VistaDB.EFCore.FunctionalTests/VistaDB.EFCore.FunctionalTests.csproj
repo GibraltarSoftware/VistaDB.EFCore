@@ -3,7 +3,19 @@
   <PropertyGroup>
     <TargetFramework>net461</TargetFramework>
     <LangVersion>7.2</LangVersion>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Northwind.vdb5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Northwind.vdb5">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational.Specification.Tests" Version="2.1.0" />

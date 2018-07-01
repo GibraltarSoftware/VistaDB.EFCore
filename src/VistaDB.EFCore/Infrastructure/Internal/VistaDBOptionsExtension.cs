@@ -5,22 +5,40 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace VistaDB.EFCore.Infrastructure.Internal
 {
+    /// <summary>
+    ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
+    ///     directly from your code. This API may change or be removed in future releases.
+    /// </summary>
     public class VistaDBOptionsExtension : RelationalOptionsExtension
     {
-        private long? _serviceProviderHash;
-
+        /// <summary>
+        ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
+        ///     directly from your code. This API may change or be removed in future releases.
+        /// </summary>
         public VistaDBOptionsExtension()
         {
         }
 
+        /// <summary>
+        ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
+        ///     directly from your code. This API may change or be removed in future releases.
+        /// </summary>
         public VistaDBOptionsExtension([NotNull] VistaDBOptionsExtension copyFrom)
             : base(copyFrom)
         {
         }
 
+        /// <summary>
+        ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
+        ///     directly from your code. This API may change or be removed in future releases.
+        /// </summary>
         protected override RelationalOptionsExtension Clone()
             => new VistaDBOptionsExtension(this);
 
+        /// <summary>
+        ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
+        ///     directly from your code. This API may change or be removed in future releases.
+        /// </summary>
         public override bool ApplyServices(IServiceCollection services)
         {
             Check.NotNull(services, nameof(services));
