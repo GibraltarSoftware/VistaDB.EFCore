@@ -5,6 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using VistaDB;
+using VistaDB.DDA;
 using VistaDB.EFCore.Storage.Internal;
 using VistaDB.Provider;
 
@@ -116,6 +118,41 @@ namespace Microsoft.EntityFrameworkCore.TestUtilities
                     return results;
                 }
             }
+        }
+
+        public IEnumerable<string> GetTableInfo()
+        {
+            var result = new List<string>();
+            using (IVistaDBDDA DDAObj = VistaDBEngine.Connections.OpenDDA())
+            {
+                using (IVistaDBDatabase db1 = DDAObj.OpenDatabase((Connection as VistaDBConnection).DataSource, VistaDBDatabaseOpenMode.NonexclusiveReadWrite, null))
+                {                    
+                    return db1.GetTableNames();
+                }
+            }
+        }
+
+        public IEnumerable<string> GetColumnInfo()
+        {
+            var result = new List<string>();
+            using (IVistaDBDDA DDAObj = VistaDBEngine.Connections.OpenDDA())
+            {
+                using (IVistaDBDatabase db = DDAObj.OpenDatabase((Connection as VistaDBConnection).DataSource, VistaDBDatabaseOpenMode.NonexclusiveReadWrite, null))
+                {
+                    foreach (var tableInfo in db.GetTableNames())
+                    {
+                        using (IVistaDBTableSchema tableSchema = db.TableSchema(tableInfo))
+                        {
+                            for (int i = 0; i < tableSchema.ColumnCount; i++)
+                            {
+                                var columnInfo = tableSchema[i];
+                                result.Add($"{tableSchema.Name}.{columnInfo.Name} ({columnInfo.Type})");
+                            }
+                        }
+                    }
+                }
+            }
+            return result;
         }
 
         public bool Exists()

@@ -235,31 +235,35 @@ namespace Microsoft.EntityFrameworkCore
                     await testStore.OpenConnectionAsync();
                 }
 
-                var tables = testStore.Query<string>("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES ");
+                var tables = testStore.GetTableInfo();
                 Assert.Equal(1, tables.Count());
                 Assert.Equal("Blogs", tables.Single());
 
-                var columns = (testStore.Query<string>(
-                    "SELECT TABLE_NAME + '.' + COLUMN_NAME + ' (' + DATA_TYPE + ')' FROM INFORMATION_SCHEMA.COLUMNS ORDER BY TABLE_NAME, COLUMN_NAME")).ToArray();
+                var columns = testStore.GetColumnInfo().ToArray();
                 Assert.Equal(14, columns.Length);
+
+                foreach (var item in columns)
+                {
+                    System.Diagnostics.Debug.WriteLine(item);
+                }
 
                 Assert.Equal(
                     new[]
                         {
-                            "Blogs.AndChew (image)",
-                            "Blogs.AndRow (rowversion)",
-                            "Blogs.Cheese (nvarchar)",
-                            "Blogs.ErMilan (int)",
-                            "Blogs.Fuse (smallint)",
-                            "Blogs.George (bit)",
-                            "Blogs.Key1 (nvarchar)",
-                            "Blogs.Key2 (varbinary)",
-                            "Blogs.NotFigTime (datetime)",
-                            "Blogs.On (real)",
-                            "Blogs.OrNothing (float)",
-                            "Blogs.TheGu (uniqueidentifier)",
-                            "Blogs.ToEat (tinyint)",
-                            "Blogs.WayRound (bigint)"
+"Blogs.Key1 (NVarChar)",
+"Blogs.Key2 (VarBinary)",
+"Blogs.Cheese (NText)",
+"Blogs.ErMilan (Int)",
+"Blogs.George (Bit)",
+"Blogs.TheGu (UniqueIdentifier)",
+"Blogs.NotFigTime (DateTime2)",
+"Blogs.ToEat (TinyInt)",
+"Blogs.OrNothing (Float)",
+"Blogs.Fuse (SmallInt)",
+"Blogs.WayRound (BigInt)",
+"Blogs.On (Real)",
+"Blogs.AndChew (Image)",
+"Blogs.AndRow (Timestamp)"
                         },
                     columns);
             }

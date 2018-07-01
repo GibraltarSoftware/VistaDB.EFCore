@@ -241,14 +241,14 @@ namespace Microsoft.EntityFrameworkCore
                         await testDatabase.OpenConnectionAsync();
                     }
 
-                    var tables = testDatabase.Query<string>("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES");
+                    var tables = testDatabase.GetTableInfo();
                     Assert.Equal(1, tables.Count());
                     Assert.Equal("Blogs", tables.Single());
 
-                    var columns = testDatabase.Query<string>("SELECT TABLE_NAME + '.' + COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS");
+                    var columns = testDatabase.GetColumnInfo();
                     Assert.Equal(2, columns.Count());
-                    Assert.True(columns.Any(c => c == "Blogs.Id"));
-                    Assert.True(columns.Any(c => c == "Blogs.Name"));
+                    Assert.True(columns.Any(c => c == "Blogs.Id (Int)"));
+                    Assert.True(columns.Any(c => c == "Blogs.Name (NText)"));
                 }
             }
         }
@@ -318,8 +318,7 @@ namespace Microsoft.EntityFrameworkCore
                     await testDatabase.OpenConnectionAsync();
                 }
 
-                //TODO How to do this?
-                //Assert.Equal(0, (testDatabase.Query<string>("SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES")).Count());
+                Assert.Equal(0, testDatabase.GetColumnInfo().Count());
 
                 Assert.True(testDatabase.Exists());
             }
@@ -386,9 +385,8 @@ namespace Microsoft.EntityFrameworkCore
         {
             public TestDatabaseCreator(
                 RelationalDatabaseCreatorDependencies dependencies,
-                IVistaDBRelationalConnection connection,
-                IRawSqlCommandBuilder rawSqlCommandBuilder)
-                : base(dependencies, connection, rawSqlCommandBuilder)
+                IVistaDBRelationalConnection connection)
+                : base(dependencies, connection)
             {
             }
 

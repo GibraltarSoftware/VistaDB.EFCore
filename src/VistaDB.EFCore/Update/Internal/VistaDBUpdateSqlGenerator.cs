@@ -55,7 +55,7 @@ namespace VistaDB.EFCore.Update.Internal
             SqlGenerationHelper.DelimitIdentifier(commandStringBuilder, columnModification.ColumnName);
             commandStringBuilder.Append(" = ");
 
-            commandStringBuilder.Append("@@IDENTITY");
+            commandStringBuilder.Append("SCOPE_IDENTITY()");
         }
 
         /// <summary>
