@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore.Query.Expressions;
 using Microsoft.EntityFrameworkCore.Query.Sql;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Utilities;
+using Remotion.Linq.Clauses;
 
 namespace VistaDB.EFCore.Query.Sql.Internal
 {
@@ -53,10 +54,27 @@ namespace VistaDB.EFCore.Query.Sql.Internal
             if (selectExpression.Offset != null
                 && !selectExpression.OrderBy.Any())
             {
-                Sql.AppendLine().Append("ORDER BY (SELECT 1)");
+                Sql.AppendLine().Append("ORDER BY GETDATE()");
             }
 
             base.GenerateLimitOffset(selectExpression);
+        }
+
+        /// <summary>
+        ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
+        ///     directly from your code. This API may change or be removed in future releases.
+        /// </summary>
+        protected override void GenerateOrdering(Ordering ordering)
+        {
+            if (ordering.Expression is ParameterExpression
+                || ordering.Expression is ConstantExpression)
+            {
+                Sql.Append("GETDATE()");
+            }
+            else
+            {
+                base.GenerateOrdering(ordering);
+            }
         }
 
         /// <summary>

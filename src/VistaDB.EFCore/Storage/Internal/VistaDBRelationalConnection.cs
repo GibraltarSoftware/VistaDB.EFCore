@@ -24,8 +24,14 @@ namespace VistaDB.EFCore.Storage.Internal
         ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
-        protected override DbConnection CreateDbConnection() => new  VistaDBConnection(ConnectionString);
-
+        protected override DbConnection CreateDbConnection()
+        {
+            var builder = new VistaDBConnectionStringBuilder(ConnectionString);
+            //TODO Investigate why tests fail if enabled
+            //builder.Pooling = true;
+            builder.OpenMode = VistaDBDatabaseOpenMode.NonexclusiveReadWrite;
+            return new VistaDBConnection(builder.ConnectionString);
+        }
         /// <summary>
         ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
