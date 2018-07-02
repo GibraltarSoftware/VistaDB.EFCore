@@ -11,26 +11,24 @@ namespace VistaDB.EFCore.Query.ExpressionTranslators.Internal
     {
         private static readonly IMethodCallTranslator[] _methodCallTranslators =
         {
-            //TODO Implement and test!
-
-            //new SqlServerContainsOptimizedTranslator(),
-            //new SqlServerConvertTranslator(),
-            //new SqlServerDateAddTranslator(),
+            new SqlServerContainsOptimizedTranslator(),
+            new SqlServerConvertTranslator(),
+            new SqlServerDateAddTranslator(),
             //new SqlServerDateDiffTranslator(),
-            //new SqlServerEndsWithOptimizedTranslator(),
-            //new SqlServerMathTranslator(),
-            //new SqlServerNewGuidTranslator(),
-            //new SqlServerObjectToStringTranslator(),
-            //new SqlServerStartsWithOptimizedTranslator(),
-            //new SqlServerStringIsNullOrWhiteSpaceTranslator(),
-            //new SqlServerStringReplaceTranslator(),
-            //new SqlServerStringSubstringTranslator(),
-            //new SqlServerStringToLowerTranslator(),
-            //new SqlServerStringToUpperTranslator(),
-            //new SqlServerStringTrimEndTranslator(),
-            //new SqlServerStringTrimStartTranslator(),
-            //new SqlServerStringTrimTranslator(),
-            //new SqlServerStringIndexOfTranslator()
+            new SqlServerEndsWithOptimizedTranslator(),
+            new SqlServerMathTranslator(),
+            new SqlServerNewGuidTranslator(),
+            new SqlServerObjectToStringTranslator(),
+            new SqlServerStartsWithOptimizedTranslator(),
+            new SqlServerStringIsNullOrWhiteSpaceTranslator(),
+            new SqlServerStringReplaceTranslator(),
+            new SqlServerStringSubstringTranslator(),
+            new SqlServerStringToLowerTranslator(),
+            new SqlServerStringToUpperTranslator(),
+            new SqlServerStringTrimEndTranslator(),
+            new SqlServerStringTrimStartTranslator(),
+            new SqlServerStringTrimTranslator(),
+            new SqlServerStringIndexOfTranslator()
         };
 
         /// <summary>

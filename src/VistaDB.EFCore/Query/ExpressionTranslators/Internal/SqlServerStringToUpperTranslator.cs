@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Query.ExpressionTranslators;
 
 namespace VistaDB.EFCore.Query.ExpressionTranslators.Internal
@@ -8,22 +6,15 @@ namespace VistaDB.EFCore.Query.ExpressionTranslators.Internal
     ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
     ///     directly from your code. This API may change or be removed in future releases.
     /// </summary>
-    public class VistaDBCompositeMemberTranslator : RelationalCompositeMemberTranslator
+    public class SqlServerStringToUpperTranslator : ParameterlessInstanceMethodCallTranslator
     {
         /// <summary>
         ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
-        public VistaDBCompositeMemberTranslator([NotNull] RelationalCompositeMemberTranslatorDependencies dependencies)
-            : base(dependencies)
+        public SqlServerStringToUpperTranslator()
+            : base(typeof(string), nameof(string.ToUpper), "UPPER")
         {
-            var sqlServerTranslators = new List<IMemberTranslator>
-            {
-                new SqlServerStringLengthTranslator(),
-                new SqlServerDateTimeMemberTranslator()
-            };
-
-            AddTranslators(sqlServerTranslators);
         }
     }
 }

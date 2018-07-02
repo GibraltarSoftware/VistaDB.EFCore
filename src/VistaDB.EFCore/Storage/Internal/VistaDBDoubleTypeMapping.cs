@@ -44,22 +44,5 @@ namespace VistaDB.EFCore.Storage.Internal
         /// </summary>
         public override CoreTypeMapping Clone(ValueConverter converter)
             => new VistaDBDoubleTypeMapping(Parameters.WithComposedConverter(converter));
-
-        /// <summary>
-        ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
-        protected override string GenerateNonNullSqlLiteral(object value)
-        {
-            var literal = base.GenerateNonNullSqlLiteral(value);
-
-            if (!literal.Contains("E")
-                && !literal.Contains("e"))
-            {
-                return literal + "E0";
-            }
-
-            return literal;
-        }
     }
 }

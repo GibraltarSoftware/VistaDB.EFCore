@@ -1,5 +1,4 @@
-using System.Collections.Generic;
-using JetBrains.Annotations;
+using System;
 using Microsoft.EntityFrameworkCore.Query.ExpressionTranslators;
 
 namespace VistaDB.EFCore.Query.ExpressionTranslators.Internal
@@ -8,22 +7,15 @@ namespace VistaDB.EFCore.Query.ExpressionTranslators.Internal
     ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
     ///     directly from your code. This API may change or be removed in future releases.
     /// </summary>
-    public class VistaDBCompositeMemberTranslator : RelationalCompositeMemberTranslator
+    public class SqlServerNewGuidTranslator : SingleOverloadStaticMethodCallTranslator
     {
         /// <summary>
         ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
-        public VistaDBCompositeMemberTranslator([NotNull] RelationalCompositeMemberTranslatorDependencies dependencies)
-            : base(dependencies)
+        public SqlServerNewGuidTranslator()
+            : base(typeof(Guid), nameof(Guid.NewGuid), "NEWID")
         {
-            var sqlServerTranslators = new List<IMemberTranslator>
-            {
-                new SqlServerStringLengthTranslator(),
-                new SqlServerDateTimeMemberTranslator()
-            };
-
-            AddTranslators(sqlServerTranslators);
         }
     }
 }
