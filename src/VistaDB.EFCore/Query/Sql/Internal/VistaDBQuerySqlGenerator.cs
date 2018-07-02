@@ -54,7 +54,8 @@ namespace VistaDB.EFCore.Query.Sql.Internal
             if (selectExpression.Offset != null
                 && !selectExpression.OrderBy.Any())
             {
-                Sql.AppendLine().Append("ORDER BY GETDATE()");
+                //TODO Investigate
+                Sql.AppendLine().Append("ORDER BY 1");
             }
 
             base.GenerateLimitOffset(selectExpression);
@@ -69,7 +70,8 @@ namespace VistaDB.EFCore.Query.Sql.Internal
             if (ordering.Expression is ParameterExpression
                 || ordering.Expression is ConstantExpression)
             {
-                Sql.Append("GETDATE()");
+                //TODO Investigate
+                Sql.Append("1");
             }
             else
             {
