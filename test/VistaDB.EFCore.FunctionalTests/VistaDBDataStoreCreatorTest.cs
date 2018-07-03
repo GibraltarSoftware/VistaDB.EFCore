@@ -243,12 +243,12 @@ namespace Microsoft.EntityFrameworkCore
 
                     var tables = testDatabase.GetTableInfo();
                     Assert.Equal(1, tables.Count());
-                    Assert.Equal("Blogs", tables.Single());
+                    Assert.Equal("Blogs", tables.Single().Trim());
 
                     var columns = testDatabase.GetColumnInfo();
                     Assert.Equal(2, columns.Count());
-                    Assert.True(columns.Any(c => c == "Blogs.Id (Int)"));
-                    Assert.True(columns.Any(c => c == "Blogs.Name (NText)"));
+                    Assert.True(columns.Any(c => c == "Id"));
+                    Assert.True(columns.Any(c => c == "Name"));
                 }
             }
         }
@@ -385,8 +385,9 @@ namespace Microsoft.EntityFrameworkCore
         {
             public TestDatabaseCreator(
                 RelationalDatabaseCreatorDependencies dependencies,
-                IVistaDBRelationalConnection connection)
-                : base(dependencies, connection)
+                IVistaDBRelationalConnection connection,
+                IRawSqlCommandBuilder rawSqlCommandBuilder)
+                : base(dependencies, connection, rawSqlCommandBuilder)
             {
             }
 

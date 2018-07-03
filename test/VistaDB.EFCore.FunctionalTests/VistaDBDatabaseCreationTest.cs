@@ -109,7 +109,6 @@ namespace Microsoft.EntityFrameworkCore
 
                     if (openConnection)
                     {
-
                         Assert.Throws<IOException>(() => context.Database.EnsureDeleted());
                     }
                     else
@@ -219,8 +218,7 @@ namespace Microsoft.EntityFrameworkCore
             {
                 var creator = context.GetService<IRelationalDatabaseCreator>();
 
-                if (async)
-                {
+                if (async)                {
                     Assert.True(await creator.EnsureCreatedAsync());
                 }
                 else
@@ -237,33 +235,29 @@ namespace Microsoft.EntityFrameworkCore
 
                 var tables = testStore.GetTableInfo();
                 Assert.Equal(1, tables.Count());
-                Assert.Equal("Blogs", tables.Single());
+                Assert.Equal("Blogs", tables.Single().Trim());
 
                 var columns = testStore.GetColumnInfo().ToArray();
-                Assert.Equal(14, columns.Length);
 
-                foreach (var item in columns)
-                {
-                    System.Diagnostics.Debug.WriteLine(item);
-                }
+                Assert.Equal(14, columns.Length);
 
                 Assert.Equal(
                     new[]
                         {
-"Blogs.Key1 (NVarChar)",
-"Blogs.Key2 (VarBinary)",
-"Blogs.Cheese (NText)",
-"Blogs.ErMilan (Int)",
-"Blogs.George (Bit)",
-"Blogs.TheGu (UniqueIdentifier)",
-"Blogs.NotFigTime (DateTime2)",
-"Blogs.ToEat (TinyInt)",
-"Blogs.OrNothing (Float)",
-"Blogs.Fuse (SmallInt)",
-"Blogs.WayRound (BigInt)",
-"Blogs.On (Real)",
-"Blogs.AndChew (Image)",
-"Blogs.AndRow (Timestamp)"
+"AndChew",
+"AndRow",
+"Cheese",
+"ErMilan",
+"Fuse",
+"George",
+"Key1",
+"Key2",
+"NotFigTime",
+"On",
+"OrNothing",
+"TheGu",
+"ToEat",
+"WayRound"
                         },
                     columns);
             }

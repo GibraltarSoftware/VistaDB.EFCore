@@ -26,6 +26,7 @@ namespace VistaDB.EFCore.Storage.Internal
                 command.ExecuteNonQuery();
             }
             connection.Close();
+            VistaDBConnection.ClearAllPools();
         }
 
         /// <summary>
@@ -51,6 +52,7 @@ namespace VistaDB.EFCore.Storage.Internal
                 connection.Open();
             }
             connection.Close();
+            VistaDBConnection.ClearAllPools();
             var path = connection.DataSource;
             if (File.Exists(path))
             {

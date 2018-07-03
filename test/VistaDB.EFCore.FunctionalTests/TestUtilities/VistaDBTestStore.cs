@@ -5,8 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using VistaDB;
-using VistaDB.DDA;
 using VistaDB.EFCore.Storage.Internal;
 using VistaDB.Provider;
 
@@ -122,35 +120,15 @@ namespace Microsoft.EntityFrameworkCore.TestUtilities
 
         public IEnumerable<string> GetTableInfo()
         {
-            var result = new List<string>();
-            using (IVistaDBDDA DDAObj = VistaDBEngine.Connections.OpenDDA())
-            {
-                using (IVistaDBDatabase db1 = DDAObj.OpenDatabase((Connection as VistaDBConnection).DataSource, VistaDBDatabaseOpenMode.NonexclusiveReadWrite, null))
-                {                    
-                    return db1.GetTableNames();
-                }
-            }
+            return Query<string>("SELECT name FROM [database schema] WHERE typeid = 1");
         }
 
         public IEnumerable<string> GetColumnInfo()
         {
-            var result = new List<string>();
-            using (IVistaDBDDA DDAObj = VistaDBEngine.Connections.OpenDDA())
+            var result = Query<string>("SELECT name FROM [database schema] WHERE typeid = 3").ToList();
+            for (int i = 0; i < result.Count(); i++)
             {
-                using (IVistaDBDatabase db = DDAObj.OpenDatabase((Connection as VistaDBConnection).DataSource, VistaDBDatabaseOpenMode.NonexclusiveReadWrite, null))
-                {
-                    foreach (var tableInfo in db.GetTableNames())
-                    {
-                        using (IVistaDBTableSchema tableSchema = db.TableSchema(tableInfo))
-                        {
-                            for (int i = 0; i < tableSchema.ColumnCount; i++)
-                            {
-                                var columnInfo = tableSchema[i];
-                                result.Add($"{tableSchema.Name}.{columnInfo.Name} ({columnInfo.Type})");
-                            }
-                        }
-                    }
-                }
+                result[i] = result[i].Trim();
             }
             return result;
         }
@@ -189,6 +167,7 @@ namespace Microsoft.EntityFrameworkCore.TestUtilities
             return new VistaDBConnectionStringBuilder
             {
                 DataSource = name + ".vdb5",
+                Pooling = true,
                 OpenMode = VistaDB.VistaDBDatabaseOpenMode.NonexclusiveReadWrite
             }
             .ToString();

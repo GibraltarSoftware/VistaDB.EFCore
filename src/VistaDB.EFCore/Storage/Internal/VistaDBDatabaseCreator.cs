@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Utilities;
-using VistaDB.DDA;
 using VistaDB.Provider;
 
 namespace VistaDB.EFCore.Storage.Internal
@@ -15,6 +14,7 @@ namespace VistaDB.EFCore.Storage.Internal
     public class VistaDBDatabaseCreator : RelationalDatabaseCreator
     {
         private readonly IVistaDBRelationalConnection _connection;
+        private readonly IRawSqlCommandBuilder _rawSqlCommandBuilder;
 
         /// <summary>
         ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
@@ -22,10 +22,12 @@ namespace VistaDB.EFCore.Storage.Internal
         /// </summary>
         public VistaDBDatabaseCreator(
             [NotNull] RelationalDatabaseCreatorDependencies dependencies,
-            [NotNull] IVistaDBRelationalConnection connection)
+            [NotNull] IVistaDBRelationalConnection connection,
+            [NotNull] IRawSqlCommandBuilder rawSqlCommandBuilder)
             : base(dependencies)
         {
             _connection = connection;
+            _rawSqlCommandBuilder = rawSqlCommandBuilder;
         }
 
         /// <summary>
@@ -49,31 +51,16 @@ namespace VistaDB.EFCore.Storage.Internal
             return (connection != null) && connection.Exists();
         }
 
-        /// <summary>
-        ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         protected override bool HasTables()
-            => GetTableCount() > 0;
+           => (int)CreateHasTablesCommand().ExecuteScalar(_connection) != 0;
 
-        /// <summary>
-        ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         protected override async Task<bool> HasTablesAsync(CancellationToken cancellationToken = default(CancellationToken))
-            => GetTableCount() > 0;
+            => (int)await CreateHasTablesCommand().ExecuteScalarAsync(_connection, cancellationToken: cancellationToken) != 0;
 
-        private int GetTableCount()
-        {
-            using (var DDAObj = VistaDBEngine.Connections.OpenDDA())
-            {
-                using (var db = DDAObj.OpenDatabase((_connection.DbConnection as VistaDBConnection).DataSource, VistaDBDatabaseOpenMode.NonexclusiveReadWrite, null))
-                {
-                    return db.GetTableNames().Count;
-                }
-            }
-        }
-        
+        private IRelationalCommand CreateHasTablesCommand()
+            => _rawSqlCommandBuilder
+                .Build("SELECT COUNT(*) FROM [database schema] WHERE typeid = 1;");
+
         /// <summary>
         ///     This API supports the Entity Framework Core infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
