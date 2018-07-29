@@ -49,7 +49,7 @@ namespace VistaDB.EFCore.Query.ExpressionTranslators.Internal
                 {
                     case nameof(DateTime.Now):
                         return declaringType == typeof(DateTimeOffset) ?
-                            new SqlFunctionExpression("SYSDATETIMEOFFSET", memberExpression.Type) :
+                            null :
                             new SqlFunctionExpression("GETDATE", memberExpression.Type);
 
                     case nameof(DateTime.UtcNow):
