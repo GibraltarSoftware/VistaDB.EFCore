@@ -1,19 +1,15 @@
 ﻿using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Internal;
-using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions.Internal;
-using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.EntityFrameworkCore.Query.ExpressionTranslators;
-using Microsoft.EntityFrameworkCore.Query.ExpressionVisitors;
 using Microsoft.EntityFrameworkCore.Query.Sql;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Update;
 using Microsoft.EntityFrameworkCore.Update.Internal;
 using Microsoft.EntityFrameworkCore.Utilities;
-using Microsoft.EntityFrameworkCore.ValueGeneration;
 using VistaDB.EFCore.Infrastructure.Internal;
+using VistaDB.EFCore.Internal;
+using VistaDB.EFCore.Metadata.Conventions.Internal;
 using VistaDB.EFCore.Query.ExpressionTranslators.Internal;
 using VistaDB.EFCore.Query.Sql.Internal;
 using VistaDB.EFCore.Storage.Internal;
@@ -75,8 +71,8 @@ namespace Microsoft.Extensions.DependencyInjection
                 .TryAdd<IQuerySqlGeneratorFactory, VistaDBQuerySqlGeneratorFactory>()
                 .TryAdd<IRelationalDatabaseCreator, VistaDBDatabaseCreator>()
 
-                //.TryAdd<IModelValidator, SqlServerModelValidator>()
-                //.TryAdd<IConventionSetBuilder, SqlServerConventionSetBuilder>()
+                .TryAdd<IModelValidator, VistaDBModelValidator>()
+                .TryAdd<IConventionSetBuilder, VistaDBConventionSetBuilder>()
 
                 //.TryAdd<IMigrationsAnnotationProvider, SqlServerMigrationsAnnotationProvider>()
                 //.TryAdd<IMigrationsSqlGenerator, SqlServerMigrationsSqlGenerator>()
