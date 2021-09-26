@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   
   <PropertyGroup>
-    <TargetFramework>net461</TargetFramework>
+    <TargetFrameworks>net461;net462;netcoreapp3.1</TargetFrameworks>
     <LangVersion>7.2</LangVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
@@ -9,18 +9,13 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational.Specification.Tests" Version="2.1.0" />
+    <PackageReference Include="VistaDB.6" Version="6.2.3" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\VistaDB.EFCore\VistaDB.EFCore.csproj" />
-    <ProjectReference Include="..\VistaDB.EFCore.FunctionalTests\VistaDB.EFCore.FunctionalTests.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="VistaDB.5.NET40">
-      <HintPath>C:\Program Files (x86)\Gibraltar Software\VistaDB 5\Redist\NET40\VistaDB.5.NET40.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\..\src\VistaDB.EFCore\VistaDB.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\VistaDB.EFCore.FunctionalTests\VistaDB.EntityFrameworkCore.FunctionalTests.csproj" />
   </ItemGroup>
 
 </Project>

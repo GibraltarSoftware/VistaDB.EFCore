@@ -1,7 +1,7 @@
-﻿using JetBrains.Annotations;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using VistaDB.EntityFrameworkCore.Utilities;
 
-namespace EFCore.SqlCe.Metadata.Internal
+namespace VistaDB.EntityFrameworkCore.MetaData.Internal
 {
     public static class VistaDBInternalMetadataBuilderExtensions
     {

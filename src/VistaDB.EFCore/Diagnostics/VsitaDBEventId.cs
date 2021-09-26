@@ -1,6 +1,8 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.Extensions.Logging;
 
-namespace Microsoft.EntityFrameworkCore.Diagnostics
+namespace VistaDB.EntityFrameworkCore.Diagnostics
 {
     /// <summary>
     ///     <para>

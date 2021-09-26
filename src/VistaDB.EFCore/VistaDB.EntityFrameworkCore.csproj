@@ -1,0 +1,63 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net461;net462;netstandard2.0</TargetFrameworks>
+		<AssemblyName>VistaDB.EntityFrameworkCore</AssemblyName>
+		<RootNamespace>VistaDB.EntityFrameworkCore</RootNamespace>
+		<Version>6.2.0.0</Version>
+		<FileVersion>6.2.0.0</FileVersion>
+		<AssemblyVersion>6.2.0.0</AssemblyVersion>
+		<Copyright>Copyright © 2008-2021 Gibraltar Software, Inc.</Copyright>
+		<Description>VistaDB database provider for Entity Framework Core.</Description>
+		<Product>VistaDB</Product>
+		<Company>Gibraltar Software, Inc.</Company>
+		<Authors>Gibraltar Software, Inc.</Authors>
+		<NeutralLanguage>en-US</NeutralLanguage>
+		<RepositoryUrl>https://github.com/gibraltarsoftware/vistadb.efcore</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+		<PackageProjectUrl>https://visadb.com</PackageProjectUrl>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<PackageId>VistaDB.EntityFrameworkCore</PackageId>
+		<DisableImplicitAssetTargetFallback>true</DisableImplicitAssetTargetFallback>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<MinClientVersion>3.6</MinClientVersion>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<PackageTags>Entity Framework Core;entity-framework-core;EF;Data;O/RM;EntityFramework;EntityFrameworkCore;EFCore;VistaDB</PackageTags>
+		<CodeAnalysisRuleSet>..\EFCore.ruleset</CodeAnalysisRuleSet>
+		<LangVersion>8.0</LangVersion>
+		<DocumentationFile>bin\VistaDB.EFCore.xml</DocumentationFile>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(TF_BUILD)' == 'true'">
+		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|AnyCPU'">
+		<DefineConstants>DEBUG;TRACE</DefineConstants>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="2.1.0" />
+		<PackageReference Include="VistaDB.6" Version="6.2.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+
+	<Choose>
+		<When Condition="'$(TargetFramework)' == 'net461' Or '$(TargetFramework)' == 'net462'">
+		</When>
+		<Otherwise>
+			<ItemGroup>
+				<PackageReference Include="Microsoft.Data.SqlClient" Version="2.1.0" />
+			</ItemGroup>
+		</Otherwise>
+	</Choose>
+</Project>

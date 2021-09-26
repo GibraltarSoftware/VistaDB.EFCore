@@ -5,8 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using VistaDB.EFCore.Storage.Internal;
 using VistaDB.Provider;
+using VistaDB.EntityFrameworkCore.Storage.Internal;
 
 namespace Microsoft.EntityFrameworkCore.TestUtilities
 {
@@ -34,7 +34,7 @@ namespace Microsoft.EntityFrameworkCore.TestUtilities
             {
                 name = "scratch-" + Interlocked.Increment(ref _scratchCount);
             }
-            while (File.Exists(name + ".vdb5"));
+            while (File.Exists(name + ".vdb6"));
 
             return new VistaDBTestStore(name).CreateTransient(createDatabase);
         }
@@ -166,7 +166,7 @@ namespace Microsoft.EntityFrameworkCore.TestUtilities
         {
             return new VistaDBConnectionStringBuilder
             {
-                DataSource = name + ".vdb5",
+                DataSource = name + ".vdb6",
                 Pooling = true,
                 OpenMode = VistaDB.VistaDBDatabaseOpenMode.NonexclusiveReadWrite
             }

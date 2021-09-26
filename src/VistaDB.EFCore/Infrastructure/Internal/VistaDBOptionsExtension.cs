@@ -1,9 +1,9 @@
-﻿using JetBrains.Annotations;
-using Microsoft.EntityFrameworkCore.Infrastructure;
+﻿using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Utilities;
 using Microsoft.Extensions.DependencyInjection;
+using VistaDB.EntityFrameworkCore.Utilities;
 
-namespace VistaDB.EFCore.Infrastructure.Internal
+namespace VistaDB.EntityFrameworkCore.Infrastructure.Internal
 {
     /// <summary>
     ///     This API supports the Entity Framework Core infrastructure and is not intended to be used

@@ -7,13 +7,14 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Update;
 using Microsoft.EntityFrameworkCore.Update.Internal;
 using Microsoft.EntityFrameworkCore.Utilities;
-using VistaDB.EFCore.Infrastructure.Internal;
-using VistaDB.EFCore.Internal;
-using VistaDB.EFCore.Metadata.Conventions.Internal;
-using VistaDB.EFCore.Query.ExpressionTranslators.Internal;
-using VistaDB.EFCore.Query.Sql.Internal;
-using VistaDB.EFCore.Storage.Internal;
-using VistaDB.EFCore.Update.Internal;
+using VistaDB.EntityFrameworkCore.Infrastructure.Internal;
+using VistaDB.EntityFrameworkCore.Internal;
+using VistaDB.EntityFrameworkCore.MetaData.Conventions.Internal;
+using VistaDB.EntityFrameworkCore.Query.ExpressionTranslators.Internal;
+using VistaDB.EntityFrameworkCore.Query.Sql.Internal;
+using VistaDB.EntityFrameworkCore.Storage.Internal;
+using VistaDB.EntityFrameworkCore.Update.Internal;
+using VistaDB.EntityFrameworkCore.Utilities;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.Extensions.DependencyInjection

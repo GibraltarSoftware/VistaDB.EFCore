@@ -1,7 +1,9 @@
-﻿using JetBrains.Annotations;
-using VistaDB.EFCore.Infrastructure.Internal;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using VistaDB.EntityFrameworkCore.Infrastructure.Internal;
+using VistaDB.EntityFrameworkCore.Utilities;
 
-namespace Microsoft.EntityFrameworkCore.Infrastructure
+namespace VistaDB.EntityFrameworkCore.Infrastructure
 {
     /// <summary>
     ///     <para>

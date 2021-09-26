@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using Microsoft.EntityFrameworkCore.Storage;
-using VistaDB.EFCore.Infrastructure.Internal;
-using VistaDB.EFCore.Storage.Internal;
+using VistaDB.EntityFrameworkCore.Infrastructure.Internal;
+using VistaDB.EntityFrameworkCore.Storage.Internal;
 using Xunit;
 
 namespace Microsoft.EntityFrameworkCore.Tests

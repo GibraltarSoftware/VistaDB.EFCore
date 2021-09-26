@@ -1,10 +1,10 @@
 using System;
 using System.Globalization;
 using System.Text;
-using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Update;
+using VistaDB.EntityFrameworkCore.Utilities;
 
-namespace VistaDB.EFCore.Update.Internal
+namespace VistaDB.EntityFrameworkCore.Update.Internal
 {
     //TODO verify and test!
 

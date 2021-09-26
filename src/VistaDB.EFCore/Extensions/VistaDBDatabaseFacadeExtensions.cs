@@ -2,7 +2,8 @@
 using System.Reflection;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using VistaDB.EFCore.Infrastructure.Internal;
+using VistaDB.EntityFrameworkCore.Infrastructure.Internal;
+using VistaDB.EntityFrameworkCore.Utilities;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.EntityFrameworkCore

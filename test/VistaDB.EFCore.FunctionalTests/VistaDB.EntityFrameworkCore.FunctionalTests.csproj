@@ -1,34 +1,30 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net461</TargetFramework>
-    <LangVersion>7.2</LangVersion>
+    <TargetFrameworks>net461;net462;netcoreapp3.1</TargetFrameworks>
+    <LangVersion>8.0</LangVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
+	  <DocumentationFile>bin\Loupe.Core.NETCore.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Northwind.vdb5" />
+    <None Remove="Northwind.vdb6" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Northwind.vdb5">
+    <Content Include="Northwind.vdb6">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational.Specification.Tests" Version="2.1.0" />
+    <PackageReference Include="VistaDB.6" Version="6.2.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\VistaDB.EFCore\VistaDB.EFCore.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="VistaDB.5.NET40">
-      <HintPath>C:\Program Files (x86)\Gibraltar Software\VistaDB 5\Redist\NET40\VistaDB.5.NET40.dll</HintPath>
-    </Reference>
+    <ProjectReference Include="..\..\src\VistaDB.EFCore\VistaDB.EntityFrameworkCore.csproj" />
   </ItemGroup>
 
 </Project>

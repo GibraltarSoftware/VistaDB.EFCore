@@ -1,10 +1,10 @@
 ﻿using System.Linq;
-using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using VistaDB.EntityFrameworkCore.Utilities;
 
-namespace VistaDB.EFCore.Internal
+namespace VistaDB.EntityFrameworkCore.Internal
 {
     public class VistaDBModelValidator : RelationalModelValidator
     {

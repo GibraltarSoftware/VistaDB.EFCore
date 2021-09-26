@@ -1,9 +1,10 @@
-﻿using JetBrains.Annotations;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Metadata;
+using VistaDB.EntityFrameworkCore.Diagnostics;
+using VistaDB.EntityFrameworkCore.Utilities;
 
-namespace VistaDB.EFCore.Internal
+namespace VistaDB.EntityFrameworkCore.Internal
 {
     public static class VistaDBLoggerExtensions
     {

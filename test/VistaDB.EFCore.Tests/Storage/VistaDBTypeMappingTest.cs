@@ -1,13 +1,17 @@
 using System;
 using System.Data;
 using System.Data.Common;
+#if NET461 || NET462
 using System.Data.SqlClient;
+#else
+using Microsoft.Data.SqlClient;
+#endif
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.TestUtilities;
-using VistaDB.EFCore.Storage.Internal;
+using VistaDB.EntityFrameworkCore.Storage.Internal;
 using Xunit;
 
 // ReSharper disable InconsistentNaming

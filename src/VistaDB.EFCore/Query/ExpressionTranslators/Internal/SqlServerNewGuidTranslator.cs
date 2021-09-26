@@ -1,7 +1,7 @@
 using System;
 using Microsoft.EntityFrameworkCore.Query.ExpressionTranslators;
 
-namespace VistaDB.EFCore.Query.ExpressionTranslators.Internal
+namespace VistaDB.EntityFrameworkCore.Query.ExpressionTranslators.Internal
 {
     /// <summary>
     ///     This API supports the Entity Framework Core infrastructure and is not intended to be used

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.TestUtilities;
 using Microsoft.Extensions.DependencyInjection;
 using VistaDB.Diagnostic;
-using VistaDB.EFCore.Storage.Internal;
+using VistaDB.EntityFrameworkCore.Storage.Internal;
 using Xunit;
 
 // ReSharper disable InconsistentNaming

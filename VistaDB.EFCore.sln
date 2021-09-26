@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2026
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31613.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VistaDB.EFCore", "src\VistaDB.EFCore\VistaDB.EFCore.csproj", "{AB540BBC-8123-44CD-BE24-01941622AC2C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VistaDB.EntityFrameworkCore", "src\VistaDB.EFCore\VistaDB.EntityFrameworkCore.csproj", "{AB540BBC-8123-44CD-BE24-01941622AC2C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VistaDB.EFCore.Tests", "test\VistaDB.EFCore.Tests\VistaDB.EFCore.Tests.csproj", "{113AD6A5-B107-4110-874D-27DFFB7C678C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VistaDB.EntityFrameworkCore.Tests", "test\VistaDB.EFCore.Tests\VistaDB.EntityFrameworkCore.Tests.csproj", "{113AD6A5-B107-4110-874D-27DFFB7C678C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VistaDB.EFCore.FunctionalTests", "test\VistaDB.EFCore.FunctionalTests\VistaDB.EFCore.FunctionalTests.csproj", "{A970FCC9-032D-4FE9-82B1-D1F82B130129}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VistaDB.EntityFrameworkCore.FunctionalTests", "test\VistaDB.EFCore.FunctionalTests\VistaDB.EntityFrameworkCore.FunctionalTests.csproj", "{A970FCC9-032D-4FE9-82B1-D1F82B130129}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

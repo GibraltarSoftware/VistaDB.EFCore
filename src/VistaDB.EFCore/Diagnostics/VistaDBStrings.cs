@@ -1,8 +1,8 @@
-﻿using JetBrains.Annotations;
-using Microsoft.EntityFrameworkCore.Diagnostics;
+﻿using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Logging;
+using VistaDB.EntityFrameworkCore.Utilities;
 
-namespace VistaDB.EFCore.Internal
+namespace VistaDB.EntityFrameworkCore.Diagnostics
 {
     /// <summary>
     ///		This API supports the Entity Framework Core infrastructure and is not intended to be used

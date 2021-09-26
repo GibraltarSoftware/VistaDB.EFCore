@@ -1,6 +1,7 @@
 ﻿using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Utilities;
+using VistaDB.EntityFrameworkCore.Utilities;
 
 // ReSharper disable once CheckNamespace
 

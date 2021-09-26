@@ -4,6 +4,7 @@
 using System;
 using System.Diagnostics;
 using JetBrains.Annotations;
+using VistaDB.EntityFrameworkCore.Utilities;
 
 // ReSharper disable once CheckNamespace
 

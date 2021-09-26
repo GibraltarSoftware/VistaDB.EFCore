@@ -3,7 +3,7 @@
 
 using System;
 
-namespace JetBrains.Annotations
+namespace VistaDB.EntityFrameworkCore.Utilities
 {
     [AttributeUsage(
         AttributeTargets.Method | AttributeTargets.Parameter |
@@ -97,10 +97,7 @@ namespace JetBrains.Annotations
         Members = 2,
         WithMembers = Itself | Members
     }
-}
 
-namespace Microsoft.EntityFrameworkCore.Relational.Utilities
-{
     internal sealed class ValidatedNotNullAttribute : Attribute
     {
     }

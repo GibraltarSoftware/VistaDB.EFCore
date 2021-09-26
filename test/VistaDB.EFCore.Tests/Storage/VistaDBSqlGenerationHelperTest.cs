@@ -1,5 +1,5 @@
 using System;
-using VistaDB.EFCore.Storage.Internal;
+using VistaDB.EntityFrameworkCore.Storage.Internal;
 using Xunit;
 
 namespace Microsoft.EntityFrameworkCore.Storage

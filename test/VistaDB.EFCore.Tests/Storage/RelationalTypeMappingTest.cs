@@ -517,10 +517,18 @@ namespace Microsoft.EntityFrameworkCore.Storage
         {
             var typeMapping = new FloatTypeMapping("float", DbType.Single);
             var literal = typeMapping.GenerateSqlLiteral(float.MinValue);
+#if NETFRAMEWORK
             Assert.Equal("-3.40282347E+38", literal);
+#else
+            Assert.Equal("-3.4028235E+38", literal);
+#endif
 
             literal = typeMapping.GenerateSqlLiteral(float.MaxValue);
+#if NETFRAMEWORK
             Assert.Equal("3.40282347E+38", literal);
+#else
+            Assert.Equal("3.4028235E+38", literal);
+#endif
         }
 
         [Fact]
