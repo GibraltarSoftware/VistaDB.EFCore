@@ -8,12 +8,14 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.TestUtilities;
 using Microsoft.Extensions.DependencyInjection;
 using VistaDB.Diagnostic;
+using VistaDB.EntityFrameworkCore.FunctionalTests;
 using VistaDB.EntityFrameworkCore.Storage.Internal;
 using Xunit;
 
 // ReSharper disable InconsistentNaming
 namespace Microsoft.EntityFrameworkCore
 {
+    [Collection(SetupFixture.CollectionName)]
     public class VistaDBDataStoreCreatorTest
     {
         [Fact]

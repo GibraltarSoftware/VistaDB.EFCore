@@ -1,9 +1,12 @@
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.TestModels.Northwind;
 using Microsoft.EntityFrameworkCore.TestUtilities;
+using VistaDB.EntityFrameworkCore.FunctionalTests;
+using Xunit;
 
 namespace Microsoft.EntityFrameworkCore.Query
 {
+    [Collection(SetupFixture.CollectionName)]
     public class NorthwindQueryVistaDBFixture<TModelCustomizer> : NorthwindQueryRelationalFixture<TModelCustomizer>
         where TModelCustomizer : IModelCustomizer, new()
     {

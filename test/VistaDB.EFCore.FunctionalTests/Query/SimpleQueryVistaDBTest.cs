@@ -2,6 +2,7 @@
 using System.Linq;
 using Microsoft.EntityFrameworkCore.TestModels.Northwind;
 using Microsoft.EntityFrameworkCore.TestUtilities;
+using VistaDB.EntityFrameworkCore.FunctionalTests;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -9,6 +10,7 @@ using Xunit.Abstractions;
 // ReSharper disable InconsistentNaming
 namespace Microsoft.EntityFrameworkCore.Query
 {
+    [Collection(SetupFixture.CollectionName)]
     public partial class SimpleQueryVistaDBTest : SimpleQueryTestBase<NorthwindQueryVistaDBFixture<NoopModelCustomizer>>
     {
         public SimpleQueryVistaDBTest(NorthwindQueryVistaDBFixture<NoopModelCustomizer> fixture, ITestOutputHelper testOutputHelper)

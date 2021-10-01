@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.TestUtilities;
+using VistaDB.EntityFrameworkCore.FunctionalTests;
 using Xunit;
 
 // ReSharper disable InconsistentNaming
 #pragma warning disable 1998
 namespace Microsoft.EntityFrameworkCore.Query
 {
+    [Collection(SetupFixture.CollectionName)]
     public class AsyncSimpleQueryVistaDBTest : AsyncSimpleQueryTestBase<NorthwindQueryVistaDBFixture<NoopModelCustomizer>>
     {
         public AsyncSimpleQueryVistaDBTest(NorthwindQueryVistaDBFixture<NoopModelCustomizer> fixture)

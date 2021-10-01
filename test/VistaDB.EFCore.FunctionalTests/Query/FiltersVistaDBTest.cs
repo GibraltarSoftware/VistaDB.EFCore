@@ -1,7 +1,10 @@
-﻿using Xunit.Abstractions;
+﻿using VistaDB.EntityFrameworkCore.FunctionalTests;
+using Xunit;
+using Xunit.Abstractions;
 
 namespace Microsoft.EntityFrameworkCore.Query
 {
+    [Collection(SetupFixture.CollectionName)]
     public class FiltersVistaDBTest : FiltersTestBase<NorthwindQueryVistaDBFixture<NorthwindFiltersCustomizer>>
     {
         public FiltersVistaDBTest(NorthwindQueryVistaDBFixture<NorthwindFiltersCustomizer> fixture, ITestOutputHelper testOutputHelper)

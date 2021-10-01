@@ -7,11 +7,13 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.TestUtilities;
 using Microsoft.Extensions.DependencyInjection;
+using VistaDB.EntityFrameworkCore.FunctionalTests;
 using Xunit;
 
 // ReSharper disable InconsistentNaming
 namespace Microsoft.EntityFrameworkCore
 {
+    [Collection(SetupFixture.CollectionName)]
     public class VistaDBDatabaseCreationTest
     {
         [Fact]

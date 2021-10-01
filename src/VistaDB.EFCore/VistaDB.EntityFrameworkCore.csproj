@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net461;net462;netstandard2.0</TargetFrameworks>
+		<TargetFrameworks>net462;netstandard2.0</TargetFrameworks>
 		<AssemblyName>VistaDB.EntityFrameworkCore</AssemblyName>
 		<RootNamespace>VistaDB.EntityFrameworkCore</RootNamespace>
 		<Version>6.2.0.0</Version>

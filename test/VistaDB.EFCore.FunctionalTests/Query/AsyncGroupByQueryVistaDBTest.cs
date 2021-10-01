@@ -1,9 +1,12 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.TestUtilities;
+using VistaDB.EntityFrameworkCore.FunctionalTests;
+using Xunit;
 using Xunit.Abstractions;
 
 namespace Microsoft.EntityFrameworkCore.Query
 {
+    [Collection(SetupFixture.CollectionName)]
     public class AsyncGroupByQueryVistaDBTest : AsyncGroupByQueryTestBase<NorthwindQueryVistaDBFixture<NoopModelCustomizer>>
     {
         // ReSharper disable once UnusedParameter.Local
