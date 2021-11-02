@@ -28,11 +28,9 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="3.0.0" />
-    <PackageReference Include="VistaDB.6" Version="6.2.3" />
-    <PackageReference Include="VistaDB.6.Loupe" Version="6.2.3" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
   </ItemGroup>
-
+  
   <ItemGroup>
     <ProjectReference Include="..\..\src\VistaDB.EFCore\VistaDB.EntityFrameworkCore.csproj" />
   </ItemGroup>
