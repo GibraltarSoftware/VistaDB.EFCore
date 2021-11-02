@@ -1,4 +1,5 @@
-﻿using System;
+﻿//#define USE_LOUPE
+using System;
 using Loupe.Agent.Core.Services;
 using Loupe.Agent.EntityFrameworkCore;
 using Loupe.Extensions.Logging;
@@ -15,15 +16,21 @@ namespace VistaDB.EntityFrameworkCore.FunctionalTests
         public SetupFixture()
         {
             var hostSetup = Host.CreateDefaultBuilder()
+#if USE_LOUPE
                 .AddLoupe(builder => builder.AddEntityFrameworkCoreDiagnostics())
                 .AddLoupeLogging();
+#else
+                ;
+#endif
 
             _host = hostSetup.Build();
 
             var task = _host.StartAsync();
             var results = task.Status;
 
+#if USE_LOUPE
             VistaDB.Loupe.Logger.Register();
+#endif
         }
 
         /// <inheritdoc />
