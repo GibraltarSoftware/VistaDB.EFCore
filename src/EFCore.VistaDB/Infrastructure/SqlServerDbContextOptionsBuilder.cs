@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
-using Microsoft.EntityFrameworkCore.SqlServer.Infrastructure.Internal;
+using VistaDB.EntityFrameworkCore.Provider.Infrastructure.Internal;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Microsoft.EntityFrameworkCore.Infrastructure

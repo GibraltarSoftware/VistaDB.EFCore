@@ -8,7 +8,7 @@ using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Logging;
 
-namespace Microsoft.EntityFrameworkCore.SqlServer.Internal
+namespace VistaDB.EntityFrameworkCore.Provider.Internal
 {
     /// <summary>
     ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to
@@ -19,7 +19,7 @@ namespace Microsoft.EntityFrameworkCore.SqlServer.Internal
     public static class SqlServerStrings
     {
         private static readonly ResourceManager _resourceManager
-            = new ResourceManager("Microsoft.EntityFrameworkCore.SqlServer.Properties.SqlServerStrings", typeof(SqlServerStrings).Assembly);
+            = new ResourceManager("VistaDB.EntityFrameworkCore.Provider.Properties.SqlServerStrings", typeof(SqlServerStrings).Assembly);
 
         /// <summary>
         ///     To change the IDENTITY property of a column, the column needs to be dropped and recreated.
@@ -222,7 +222,7 @@ namespace Microsoft.EntityFrameworkCore.SqlServer.Internal
     }
 }
 
-namespace Microsoft.EntityFrameworkCore.SqlServer.Internal
+namespace VistaDB.EntityFrameworkCore.Provider.Internal
 {
     /// <summary>
     ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to
@@ -233,7 +233,7 @@ namespace Microsoft.EntityFrameworkCore.SqlServer.Internal
     public static class SqlServerResources
     {
         private static readonly ResourceManager _resourceManager
-            = new ResourceManager("Microsoft.EntityFrameworkCore.SqlServer.Properties.SqlServerStrings", typeof(SqlServerResources).Assembly);
+            = new ResourceManager("VistaDB.EntityFrameworkCore.Provider.Properties.SqlServerStrings", typeof(SqlServerResources).Assembly);
 
         /// <summary>
         ///     The property '{property}' on entity type '{entityType}' is of type 'byte', but is set up to use a SQL Server identity column. This requires that values starting at 255 and counting down will be used for temporary key values. A temporary key value is needed for every entity inserted in a single call to 'SaveChanges'. Care must be taken that these values do not collide with real key values.

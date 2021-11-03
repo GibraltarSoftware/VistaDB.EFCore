@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Scaffolding;
 
 #nullable enable
 
-namespace Microsoft.EntityFrameworkCore.SqlServer.Scaffolding.Internal
+namespace VistaDB.EntityFrameworkCore.Provider.Scaffolding.Internal
 {
     /// <summary>
     ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to

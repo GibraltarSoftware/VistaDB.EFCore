@@ -8,7 +8,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal
+namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
 {
     /// <summary>
     ///     <para>

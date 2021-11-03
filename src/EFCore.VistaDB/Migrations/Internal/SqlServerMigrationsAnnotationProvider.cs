@@ -7,10 +7,10 @@ using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.SqlServer.Metadata.Internal;
+using VistaDB.EntityFrameworkCore.Provider.Metadata.Internal;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Microsoft.EntityFrameworkCore.SqlServer.Migrations.Internal
+namespace VistaDB.EntityFrameworkCore.Provider.Migrations.Internal
 {
     /// <summary>
     ///     <para>

@@ -3,7 +3,7 @@
 
 using System;
 using JetBrains.Annotations;
-using Microsoft.EntityFrameworkCore.SqlServer.Infrastructure.Internal;
+using VistaDB.EntityFrameworkCore.Provider.Infrastructure.Internal;
 
 // ReSharper disable once CheckNamespace
 namespace Microsoft.EntityFrameworkCore.Migrations

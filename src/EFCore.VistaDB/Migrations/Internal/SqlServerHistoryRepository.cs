@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Utilities;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Microsoft.EntityFrameworkCore.SqlServer.Migrations.Internal
+namespace VistaDB.EntityFrameworkCore.Provider.Migrations.Internal
 {
     /// <summary>
     ///     <para>

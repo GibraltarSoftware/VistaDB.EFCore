@@ -10,10 +10,10 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.EntityFrameworkCore.SqlServer.Metadata.Internal;
+using VistaDB.EntityFrameworkCore.Provider.Metadata.Internal;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Microsoft.EntityFrameworkCore.SqlServer.Internal
+namespace VistaDB.EntityFrameworkCore.Provider.Internal
 {
     /// <summary>
     ///     <para>

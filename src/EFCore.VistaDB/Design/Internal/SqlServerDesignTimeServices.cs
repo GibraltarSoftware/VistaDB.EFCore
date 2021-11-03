@@ -4,13 +4,13 @@
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Scaffolding;
-using Microsoft.EntityFrameworkCore.SqlServer.Diagnostics.Internal;
-using Microsoft.EntityFrameworkCore.SqlServer.Scaffolding.Internal;
-using Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal;
+using VistaDB.EntityFrameworkCore.Provider.Diagnostics.Internal;
+using VistaDB.EntityFrameworkCore.Provider.Scaffolding.Internal;
+using VistaDB.EntityFrameworkCore.Provider.Storage.Internal;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Microsoft.EntityFrameworkCore.SqlServer.Design.Internal
+namespace VistaDB.EntityFrameworkCore.Provider.Design.Internal
 {
     /// <summary>
     ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to

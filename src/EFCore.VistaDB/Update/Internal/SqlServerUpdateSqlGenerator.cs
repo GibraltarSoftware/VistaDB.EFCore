@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Update;
 using Microsoft.EntityFrameworkCore.Utilities;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Microsoft.EntityFrameworkCore.SqlServer.Update.Internal
+namespace VistaDB.EntityFrameworkCore.Provider.Update.Internal
 {
     /// <summary>
     ///     <para>

@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Utilities;
 using Microsoft.EntityFrameworkCore.ValueGeneration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Microsoft.EntityFrameworkCore.SqlServer.ValueGeneration.Internal
+namespace VistaDB.EntityFrameworkCore.Provider.ValueGeneration.Internal
 {
     /// <summary>
     ///     <para>

@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal;
+using VistaDB.EntityFrameworkCore.Provider.Storage.Internal;
 using Microsoft.EntityFrameworkCore.Storage;
 
 // ReSharper disable once CheckNamespace

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Microsoft.EntityFrameworkCore.SqlServer.Metadata.Internal
+namespace VistaDB.EntityFrameworkCore.Provider.Metadata.Internal
 {
     /// <summary>
     ///     <para>

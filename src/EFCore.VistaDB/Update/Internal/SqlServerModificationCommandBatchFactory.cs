@@ -4,12 +4,12 @@
 using System.Linq;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.SqlServer.Infrastructure.Internal;
+using VistaDB.EntityFrameworkCore.Provider.Infrastructure.Internal;
 using Microsoft.EntityFrameworkCore.Update;
 using Microsoft.EntityFrameworkCore.Utilities;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Microsoft.EntityFrameworkCore.SqlServer.Update.Internal
+namespace VistaDB.EntityFrameworkCore.Provider.Update.Internal
 {
     /// <summary>
     ///     <para>

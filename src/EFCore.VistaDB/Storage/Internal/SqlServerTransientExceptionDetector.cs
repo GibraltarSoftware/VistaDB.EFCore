@@ -5,7 +5,7 @@ using System;
 using JetBrains.Annotations;
 using Microsoft.Data.SqlClient;
 
-namespace Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal
+namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
 {
     /// <summary>
     ///     Detects the exceptions caused by SQL Server transient failures.

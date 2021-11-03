@@ -10,11 +10,11 @@ using JetBrains.Annotations;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
-using Microsoft.EntityFrameworkCore.SqlServer.Internal;
+using VistaDB.EntityFrameworkCore.Provider.Internal;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal
+namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
 {
     /// <summary>
     ///     <para>

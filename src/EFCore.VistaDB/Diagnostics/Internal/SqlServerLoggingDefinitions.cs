@@ -3,7 +3,7 @@
 
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
-namespace Microsoft.EntityFrameworkCore.SqlServer.Diagnostics.Internal
+namespace VistaDB.EntityFrameworkCore.Provider.Diagnostics.Internal
 {
     /// <summary>
     ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to

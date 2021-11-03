@@ -3,11 +3,11 @@
 
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Query;
-using Microsoft.EntityFrameworkCore.SqlServer.Storage.Internal;
+using VistaDB.EntityFrameworkCore.Provider.Storage.Internal;
 using Microsoft.EntityFrameworkCore.Utilities;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Microsoft.EntityFrameworkCore.SqlServer.Query.Internal
+namespace VistaDB.EntityFrameworkCore.Provider.Query.Internal
 {
     /// <summary>
     ///     <para>

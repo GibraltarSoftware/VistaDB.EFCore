@@ -5,7 +5,7 @@ using System.Data.Common;
 using JetBrains.Annotations;
 using CA = System.Diagnostics.CodeAnalysis;
 
-namespace Microsoft.EntityFrameworkCore.SqlServer.Scaffolding.Internal
+namespace VistaDB.EntityFrameworkCore.Provider.Scaffolding.Internal
 {
     /// <summary>
     ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to

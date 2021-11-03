@@ -4,7 +4,7 @@
 using System;
 using System.Linq;
 using JetBrains.Annotations;
-using Microsoft.EntityFrameworkCore.SqlServer.Internal;
+using VistaDB.EntityFrameworkCore.Provider.Internal;
 
 namespace Microsoft.EntityFrameworkCore.Metadata.Internal
 {

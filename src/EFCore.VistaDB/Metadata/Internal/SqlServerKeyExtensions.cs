@@ -3,7 +3,7 @@
 
 using System;
 using JetBrains.Annotations;
-using Microsoft.EntityFrameworkCore.SqlServer.Internal;
+using VistaDB.EntityFrameworkCore.Provider.Internal;
 
 namespace Microsoft.EntityFrameworkCore.Metadata.Internal
 {
