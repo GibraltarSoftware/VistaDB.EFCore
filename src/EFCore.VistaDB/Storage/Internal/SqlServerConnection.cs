@@ -5,6 +5,7 @@ using System.Collections.Concurrent;
 using System.Data.Common;
 using JetBrains.Annotations;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
 

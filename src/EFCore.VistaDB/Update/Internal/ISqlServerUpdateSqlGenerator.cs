@@ -4,6 +4,7 @@
 using System.Collections.Generic;
 using System.Text;
 using JetBrains.Annotations;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Update;
 using Microsoft.Extensions.DependencyInjection;
 

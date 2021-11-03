@@ -3,6 +3,7 @@
 
 using System.Linq;
 using JetBrains.Annotations;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using VistaDB.EntityFrameworkCore.Provider.Infrastructure.Internal;
 using Microsoft.EntityFrameworkCore.Update;

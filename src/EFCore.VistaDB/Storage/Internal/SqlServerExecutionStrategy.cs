@@ -5,6 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Microsoft.EntityFrameworkCore;
 using VistaDB.EntityFrameworkCore.Provider.Internal;
 using Microsoft.EntityFrameworkCore.Storage;
 

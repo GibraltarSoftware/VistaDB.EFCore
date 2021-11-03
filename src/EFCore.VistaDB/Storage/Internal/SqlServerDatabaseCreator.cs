@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Transactions;
 using JetBrains.Annotations;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using VistaDB.EntityFrameworkCore.Provider.Internal;

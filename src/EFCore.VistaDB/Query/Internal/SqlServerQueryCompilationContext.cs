@@ -40,7 +40,7 @@ namespace VistaDB.EntityFrameworkCore.Provider.Query.Internal
         /// </summary>
         public override bool IsBuffering
             => base.IsBuffering
-                || (QuerySplittingBehavior == EntityFrameworkCore.QuerySplittingBehavior.SplitQuery
+                || (QuerySplittingBehavior == Microsoft.EntityFrameworkCore.QuerySplittingBehavior.SplitQuery
                     && !_multipleActiveResultSetsEnabled);
     }
 }

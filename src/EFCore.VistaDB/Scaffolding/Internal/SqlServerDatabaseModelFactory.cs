@@ -11,6 +11,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using JetBrains.Annotations;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
