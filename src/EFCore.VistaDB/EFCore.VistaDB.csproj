@@ -4,7 +4,7 @@
     <Description>Microsoft SQL Server database provider for Entity Framework Core.</Description>
     <TargetFramework>netstandard2.1</TargetFramework>
     <MinClientVersion>3.6</MinClientVersion>
-    <AssemblyName>Microsoft.EntityFrameworkCore.SqlServer</AssemblyName>
+    <AssemblyName>VistaDB.6.EFCore.5.0</AssemblyName>
     <RootNamespace>VistaDB.EntityFrameworkCore.Provider</RootNamespace>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageTags>$(PackageTags);SQL Server</PackageTags>
