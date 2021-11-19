@@ -8,6 +8,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
+using VistaDB.Provider;
 
 namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
 {
@@ -71,7 +72,7 @@ namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
         ///     doing so can result in application failures when updating to a new Entity Framework Core release.
         /// </summary>
         protected override DbConnection CreateDbConnection()
-            => new SqlConnection(GetValidatedConnectionString());
+            => new VistaDBConnection(GetValidatedConnectionString());
 
         /// <summary>
         ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to
@@ -81,7 +82,7 @@ namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
         /// </summary>
         public virtual ISqlServerConnection CreateMasterConnection()
         {
-            var connectionStringBuilder = new SqlConnectionStringBuilder(GetValidatedConnectionString()) { InitialCatalog = "master" };
+            var connectionStringBuilder = new VistaDBConnectionStringBuilder(GetValidatedConnectionString()) { };
             connectionStringBuilder.Remove("AttachDBFilename");
 
             var contextOptions = new DbContextOptionsBuilder()
@@ -90,7 +91,7 @@ namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
                     b => b.CommandTimeout(CommandTimeout ?? DefaultMasterConnectionCommandTimeout))
                 .Options;
 
-            return new SqlServerConnection(Dependencies.With(contextOptions));
+            return new VistaDBConnection(connectionStringBuilder.ConnectionString); // (Dependencies.With(contextOptions));
         }
 
         /// <summary>
@@ -99,17 +100,7 @@ namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
         ///     any release. You should only use it directly in your code with extreme caution and knowing that
         ///     doing so can result in application failures when updating to a new Entity Framework Core release.
         /// </summary>
-        public virtual bool IsMultipleActiveResultSetsEnabled
-        {
-            get
-            {
-                var connectionString = ConnectionString;
-
-                return connectionString != null
-                    && _multipleActiveResultSetsEnabledMap.GetOrAdd(
-                        connectionString, cs => new SqlConnectionStringBuilder(cs).MultipleActiveResultSets);
-            }
-        }
+        public virtual bool IsMultipleActiveResultSetsEnabled => false;
 
         /// <summary>
         ///     Indicates whether the store connection supports ambient transactions

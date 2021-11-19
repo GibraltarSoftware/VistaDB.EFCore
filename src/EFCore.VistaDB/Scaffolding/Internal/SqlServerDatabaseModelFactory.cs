@@ -20,6 +20,7 @@ using Microsoft.EntityFrameworkCore.Scaffolding.Metadata;
 using VistaDB.EntityFrameworkCore.Provider.Internal;
 using VistaDB.EntityFrameworkCore.Provider.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Utilities;
+using VistaDB.Provider;
 
 #nullable enable
 
@@ -104,7 +105,7 @@ namespace VistaDB.EntityFrameworkCore.Provider.Scaffolding.Internal
             Check.NotEmpty(connectionString, nameof(connectionString));
             Check.NotNull(options, nameof(options));
 
-            using var connection = new SqlConnection(connectionString);
+            using var connection = new VistaDBConnection(connectionString);
             return Create(connection, options);
         }
 

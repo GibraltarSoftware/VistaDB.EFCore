@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using VistaDB.EntityFrameworkCore.Provider.Internal;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.DependencyInjection;
+using VistaDB.Provider;
 
 namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
 {
@@ -393,11 +394,11 @@ SELECT 1 ELSE SELECT 0");
 
         // Clear connection pools in case there are active connections that are pooled
         private static void ClearAllPools()
-            => SqlConnection.ClearAllPools();
+            => VistaDBConnection.ClearAllPools();
 
         // Clear connection pool for the database connection since after the 'create database' call, a previously
         // invalid connection may now be valid.
         private void ClearPool()
-            => SqlConnection.ClearPool((SqlConnection)_connection.DbConnection);
+            => VistaDBConnection.ClearPool((VistaDBConnection)_connection.DbConnection);
     }
 }
