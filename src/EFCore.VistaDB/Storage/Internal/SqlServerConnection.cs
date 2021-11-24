@@ -91,7 +91,7 @@ namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
                     b => b.CommandTimeout(CommandTimeout ?? DefaultMasterConnectionCommandTimeout))
                 .Options;
 
-            return new VistaDBConnection(connectionStringBuilder.ConnectionString); // (Dependencies.With(contextOptions));
+            return new SqlServerConnection(Dependencies.With(contextOptions));
         }
 
         /// <summary>
