@@ -12,6 +12,8 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore.Query;
 using VistaDB.EntityFrameworkCore.Provider.Storage.Internal;
 using Microsoft.EntityFrameworkCore.Storage;
+using VistaDB.Diagnostic;
+using VistaDB.Provider;
 
 namespace VistaDB.EntityFrameworkCore.Provider.Query.Internal
 {
@@ -139,6 +141,44 @@ namespace VistaDB.EntityFrameworkCore.Provider.Query.Internal
 
         public static string CreateTypeName(DbParameter parameter)
         {
+            if (parameter is VistaDBParameter vdbParameter)
+            {
+                var builder = new StringBuilder();
+#pragma warning disable SA1119 // Statement should not use unnecessary parenthesis
+                return (vdbParameter.VistaDBType switch
+                {
+                    VistaDBType.BigInt => builder.Append("bigint"),
+                    VistaDBType.Binary => builder.Append("binary").AppendSize(parameter),
+                    VistaDBType.Bit => builder.Append("bit"),
+                    VistaDBType.Char => builder.Append("char").AppendSize(parameter),
+                    VistaDBType.Date => builder.Append("date"),
+                    VistaDBType.DateTime => builder.Append("datetime"),
+                    VistaDBType.DateTime2 => builder.Append("datetime2"),
+                    VistaDBType.DateTimeOffset => builder.Append("datetimeoffset"),
+                    VistaDBType.Decimal => builder.Append("decimal").AppendPrecisionAndScale(parameter), // Or probably just Precision...
+                    VistaDBType.Float => builder.Append("float").AppendSize(parameter),
+                    VistaDBType.Image => builder.Append("image"),
+                    VistaDBType.Int => builder.Append("int"),
+                    VistaDBType.Money => builder.Append("money"),
+                    VistaDBType.NChar => builder.Append("nchar").AppendSize(parameter),
+                    VistaDBType.NText => builder.Append("ntext"),
+                    VistaDBType.NVarChar => builder.Append("nvarchar").AppendSizeOrMax(parameter),
+                    VistaDBType.Real => builder.Append("real"),
+                    VistaDBType.SmallDateTime => builder.Append("smalldatetime"),
+                    VistaDBType.SmallInt => builder.Append("smallint"),
+                    VistaDBType.SmallMoney => builder.Append("smallmoney"),
+                    VistaDBType.Text => builder.Append("text"),
+                    VistaDBType.Time => builder.Append("time"),
+                    VistaDBType.Timestamp => builder.Append("timestamp"),
+                    VistaDBType.TinyInt => builder.Append("tinyint"),
+                    VistaDBType.UniqueIdentifier => builder.Append("uniqueIdentifier"),
+                    VistaDBType.VarBinary => builder.Append("varbinary").AppendSizeOrMax(parameter),
+                    VistaDBType.VarChar => builder.Append("varchar").AppendSizeOrMax(parameter),
+                    _ => throw new Exception("Unknown VistaDBType: " + vdbParameter.VistaDBType)
+                }).ToString();
+#pragma warning restore SA1119 // Statement should not use unnecessary parenthesis
+            }
+
             if (parameter is SqlParameter sqlParameter)
             {
                 var builder = new StringBuilder();

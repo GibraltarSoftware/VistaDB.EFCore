@@ -6,6 +6,7 @@ using System.Data.Common;
 using JetBrains.Annotations;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore.Storage;
+using VistaDB.Provider;
 
 namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
 {
@@ -60,7 +61,11 @@ namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
             // Workaround for a SQLClient bug
             if (DbType == System.Data.DbType.Time)
             {
-                ((SqlParameter)parameter).SqlDbType = SqlDbType.Time;
+                if (parameter is VistaDBParameter vdbParameter) // Not sure if this is needed for VistaDB, but just in case...
+                    vdbParameter.VistaDBType = VistaDBType.Time;
+
+                if (parameter is SqlParameter sqlParameter)
+                    sqlParameter.SqlDbType = SqlDbType.Time;
             }
         }
     }

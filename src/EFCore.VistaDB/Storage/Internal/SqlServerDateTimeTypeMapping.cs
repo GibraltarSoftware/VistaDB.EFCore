@@ -7,6 +7,7 @@ using System.Data.Common;
 using JetBrains.Annotations;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore.Storage;
+using VistaDB.Provider;
 
 namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
 {
@@ -78,7 +79,11 @@ namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
             // Workaround for a SQLClient bug
             if (DbType == System.Data.DbType.Date)
             {
-                ((SqlParameter)parameter).SqlDbType = SqlDbType.Date;
+                if (parameter is VistaDBParameter vdbParameter) // Not sure if this is needed for VistaDB, but just in case...
+                    vdbParameter.VistaDBType = VistaDBType.Date;
+
+                if (parameter is SqlParameter sqlParameter)
+                    sqlParameter.SqlDbType = SqlDbType.Date;
             }
 
             if (Size.HasValue
