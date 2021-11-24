@@ -78,9 +78,6 @@ namespace VistaDB.EntityFrameworkCore.Provider.Scaffolding.Internal
                 { "bigint", new[] { -9223372036854775808L, 9223372036854775807L } }
             };
 
-        private byte? _compatibilityLevel;
-        private int? _engineEdition;
-
         /// <summary>
         ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to
         ///     the same compatibility standards as public APIs. It may be changed or removed without notice in
@@ -130,9 +127,6 @@ namespace VistaDB.EntityFrameworkCore.Provider.Scaffolding.Internal
 
             try
             {
-                _compatibilityLevel = GetCompatibilityLevel(connection);
-                _engineEdition = GetEngineEdition(connection);
-
                 databaseModel.DatabaseName = connection.Database;
                 databaseModel.DefaultSchema = GetDefaultSchema(connection);
                 databaseModel.Collation = GetCollation(connection);
@@ -175,33 +169,10 @@ namespace VistaDB.EntityFrameworkCore.Provider.Scaffolding.Internal
             }
             finally
             {
-                _compatibilityLevel = null;
-                _engineEdition = null;
-
                 if (!connectionStartedOpen)
                 {
                     connection.Close();
                 }
-            }
-
-            static int GetEngineEdition(DbConnection connection)
-            {
-                using var command = connection.CreateCommand();
-                command.CommandText = @"
-SELECT SERVERPROPERTY('EngineEdition');";
-                return (int)command.ExecuteScalar();
-            }
-
-            static byte GetCompatibilityLevel(DbConnection connection)
-            {
-                using var command = connection.CreateCommand();
-                command.CommandText = $@"
-SELECT compatibility_level
-FROM sys.databases
-WHERE name = '{connection.Database}';";
-
-                var result = command.ExecuteScalar();
-                return result != null ? Convert.ToByte(result) : (byte)0;
             }
 
             static string? GetCollation(DbConnection connection)
@@ -1162,17 +1133,17 @@ ORDER BY [table_schema], [table_name], [f].[name], [fc].[constraint_column_id]";
 
         private bool SupportsTemporalTable()
         {
-            return _compatibilityLevel >= 130 && _engineEdition != 6;
+            return false; // SqlServer: return _compatibilityLevel >= 130 && _engineEdition != 6;
         }
 
         private bool SupportsMemoryOptimizedTable()
         {
-            return _compatibilityLevel >= 120 && _engineEdition != 6;
+            return false; // SqlServer: return _compatibilityLevel >= 120 && _engineEdition != 6;
         }
 
         private bool SupportsSequences()
         {
-            return _compatibilityLevel >= 110 && _engineEdition != 6;
+            return false; // SqlServer: return _compatibilityLevel >= 110 && _engineEdition != 6;
         }
 
         private static string DisplayName(string? schema, string name)
