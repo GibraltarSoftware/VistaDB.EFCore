@@ -2,11 +2,8 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using System.Data;
-using System.Data.Common;
 using JetBrains.Annotations;
-using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore.Storage;
-using VistaDB.Provider;
 
 namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
 {
@@ -16,7 +13,7 @@ namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
     ///     any release. You should only use it directly in your code with extreme caution and knowing that
     ///     doing so can result in application failures when updating to a new Entity Framework Core release.
     /// </summary>
-    public class SqlServerTimeSpanTypeMapping : TimeSpanTypeMapping
+    public class VistaDBBoolTypeMapping : BoolTypeMapping
     {
         /// <summary>
         ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to
@@ -24,7 +21,9 @@ namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
         ///     any release. You should only use it directly in your code with extreme caution and knowing that
         ///     doing so can result in application failures when updating to a new Entity Framework Core release.
         /// </summary>
-        public SqlServerTimeSpanTypeMapping([NotNull] string storeType, DbType? dbType = null)
+        public VistaDBBoolTypeMapping(
+            [NotNull] string storeType,
+            DbType? dbType = null)
             : base(storeType, dbType)
         {
         }
@@ -35,7 +34,7 @@ namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
         ///     any release. You should only use it directly in your code with extreme caution and knowing that
         ///     doing so can result in application failures when updating to a new Entity Framework Core release.
         /// </summary>
-        protected SqlServerTimeSpanTypeMapping(RelationalTypeMappingParameters parameters)
+        protected VistaDBBoolTypeMapping(RelationalTypeMappingParameters parameters)
             : base(parameters)
         {
         }
@@ -46,7 +45,7 @@ namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
         /// <param name="parameters"> The parameters for this mapping. </param>
         /// <returns> The newly created mapping. </returns>
         protected override RelationalTypeMapping Clone(RelationalTypeMappingParameters parameters)
-            => new SqlServerTimeSpanTypeMapping(parameters);
+            => new VistaDBBoolTypeMapping(parameters);
 
         /// <summary>
         ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to
@@ -54,19 +53,7 @@ namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
         ///     any release. You should only use it directly in your code with extreme caution and knowing that
         ///     doing so can result in application failures when updating to a new Entity Framework Core release.
         /// </summary>
-        protected override void ConfigureParameter(DbParameter parameter)
-        {
-            base.ConfigureParameter(parameter);
-
-            // Workaround for a SQLClient bug
-            if (DbType == System.Data.DbType.Time)
-            {
-                if (parameter is VistaDBParameter vdbParameter) // Not sure if this is needed for VistaDB, but just in case...
-                    vdbParameter.VistaDBType = VistaDBType.Time;
-
-                if (parameter is SqlParameter sqlParameter)
-                    sqlParameter.SqlDbType = SqlDbType.Time;
-            }
-        }
+        protected override string GenerateNonNullSqlLiteral(object value)
+            => $"CAST({base.GenerateNonNullSqlLiteral(value)} AS {StoreType})";
     }
 }

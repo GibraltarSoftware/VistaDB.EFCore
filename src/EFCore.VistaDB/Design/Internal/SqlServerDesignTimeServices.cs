@@ -29,7 +29,7 @@ namespace VistaDB.EntityFrameworkCore.Provider.Design.Internal
         public virtual void ConfigureDesignTimeServices(IServiceCollection serviceCollection)
             => serviceCollection
                 .AddSingleton<LoggingDefinitions, SqlServerLoggingDefinitions>()
-                .AddSingleton<IRelationalTypeMappingSource, SqlServerTypeMappingSource>()
+                .AddSingleton<IRelationalTypeMappingSource, VistaDBTypeMappingSource>()
                 .AddSingleton<IDatabaseModelFactory, SqlServerDatabaseModelFactory>()
                 .AddSingleton<IProviderConfigurationCodeGenerator, SqlServerCodeGenerator>()
                 .AddSingleton<IAnnotationCodeGenerator, SqlServerAnnotationCodeGenerator>();

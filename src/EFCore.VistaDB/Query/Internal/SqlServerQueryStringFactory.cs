@@ -68,7 +68,7 @@ namespace VistaDB.EntityFrameworkCore.Provider.Query.Internal
                             || parameter.Value == null)
                             ? "NULL"
                             : parameter.Value is SqlBytes sqlBytes
-                                ? new SqlServerByteArrayTypeMapping(typeName).GenerateSqlLiteral(sqlBytes.Value)
+                                ? new VistaDBByteArrayTypeMapping(typeName).GenerateSqlLiteral(sqlBytes.Value)
                                 : typeMapping != null
                                     ? typeMapping.GenerateSqlLiteral(parameter.Value)
                                     : parameter.Value.ToString())

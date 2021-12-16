@@ -27,25 +27,25 @@ namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
     ///         This service cannot depend on services registered as <see cref="ServiceLifetime.Scoped" />.
     ///     </para>
     /// </summary>
-    public class SqlServerTypeMappingSource : RelationalTypeMappingSource
+    public class VistaDBTypeMappingSource : RelationalTypeMappingSource
     {
         private readonly RelationalTypeMapping _sqlVariant
             = new SqlServerSqlVariantTypeMapping("sql_variant");
 
         private readonly FloatTypeMapping _real
-            = new SqlServerFloatTypeMapping("real");
+            = new VistaDBFloatTypeMapping("real");
 
         private readonly ByteTypeMapping _byte
-            = new SqlServerByteTypeMapping("tinyint", DbType.Byte);
+            = new VistaDBByteTypeMapping("tinyint", DbType.Byte);
 
         private readonly ShortTypeMapping _short
-            = new SqlServerShortTypeMapping("smallint", DbType.Int16);
+            = new VistaDBShortTypeMapping("smallint", DbType.Int16);
 
         private readonly LongTypeMapping _long
-            = new SqlServerLongTypeMapping("bigint", DbType.Int64);
+            = new VistaDBLongTypeMapping("bigint", DbType.Int64);
 
-        private readonly SqlServerByteArrayTypeMapping _rowversion
-            = new SqlServerByteArrayTypeMapping(
+        private readonly VistaDBByteArrayTypeMapping _rowversion
+            = new VistaDBByteArrayTypeMapping(
                 "rowversion",
                 size: 8,
                 comparer: new ValueComparer<byte[]>(
@@ -58,78 +58,78 @@ namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
             = new IntTypeMapping("int", DbType.Int32);
 
         private readonly BoolTypeMapping _bool
-            = new SqlServerBoolTypeMapping("bit");
+            = new VistaDBBoolTypeMapping("bit");
 
-        private readonly SqlServerStringTypeMapping _fixedLengthUnicodeString
-            = new SqlServerStringTypeMapping(unicode: true, fixedLength: true);
+        private readonly VistaDBStringTypeMapping _fixedLengthUnicodeString
+            = new VistaDBStringTypeMapping(unicode: true, fixedLength: true);
 
-        private readonly SqlServerStringTypeMapping _textUnicodeString
-            = new SqlServerStringTypeMapping("ntext", unicode: true, sqlDbType: SqlDbType.NText, storeTypePostfix: StoreTypePostfix.None);
+        private readonly VistaDBStringTypeMapping _textUnicodeString
+            = new VistaDBStringTypeMapping("ntext", unicode: true, sqlDbType: SqlDbType.NText, storeTypePostfix: StoreTypePostfix.None);
 
-        private readonly SqlServerStringTypeMapping _variableLengthUnicodeString
-            = new SqlServerStringTypeMapping(unicode: true);
+        private readonly VistaDBStringTypeMapping _variableLengthUnicodeString
+            = new VistaDBStringTypeMapping(unicode: true);
 
-        private readonly SqlServerStringTypeMapping _variableLengthMaxUnicodeString
-            = new SqlServerStringTypeMapping("nvarchar(max)", unicode: true, storeTypePostfix: StoreTypePostfix.None);
+        private readonly VistaDBStringTypeMapping _variableLengthMaxUnicodeString
+            = new VistaDBStringTypeMapping("nvarchar(max)", unicode: true, storeTypePostfix: StoreTypePostfix.None);
 
-        private readonly SqlServerStringTypeMapping _fixedLengthAnsiString
-            = new SqlServerStringTypeMapping(fixedLength: true);
+        private readonly VistaDBStringTypeMapping _fixedLengthAnsiString
+            = new VistaDBStringTypeMapping(fixedLength: true);
 
-        private readonly SqlServerStringTypeMapping _textAnsiString
-            = new SqlServerStringTypeMapping("text", sqlDbType: SqlDbType.Text, storeTypePostfix: StoreTypePostfix.None);
+        private readonly VistaDBStringTypeMapping _textAnsiString
+            = new VistaDBStringTypeMapping("text", sqlDbType: SqlDbType.Text, storeTypePostfix: StoreTypePostfix.None);
 
-        private readonly SqlServerStringTypeMapping _variableLengthAnsiString
-            = new SqlServerStringTypeMapping();
+        private readonly VistaDBStringTypeMapping _variableLengthAnsiString
+            = new VistaDBStringTypeMapping();
 
-        private readonly SqlServerStringTypeMapping _variableLengthMaxAnsiString
-            = new SqlServerStringTypeMapping("varchar(max)", storeTypePostfix: StoreTypePostfix.None);
+        private readonly VistaDBStringTypeMapping _variableLengthMaxAnsiString
+            = new VistaDBStringTypeMapping("varchar(max)", storeTypePostfix: StoreTypePostfix.None);
 
-        private readonly SqlServerByteArrayTypeMapping _variableLengthBinary
-            = new SqlServerByteArrayTypeMapping();
+        private readonly VistaDBByteArrayTypeMapping _variableLengthBinary
+            = new VistaDBByteArrayTypeMapping();
 
-        private readonly SqlServerByteArrayTypeMapping _imageBinary
-            = new SqlServerByteArrayTypeMapping("image", sqlDbType: SqlDbType.Image);
+        private readonly VistaDBByteArrayTypeMapping _imageBinary
+            = new VistaDBByteArrayTypeMapping("image", sqlDbType: SqlDbType.Image);
 
-        private readonly SqlServerByteArrayTypeMapping _variableLengthMaxBinary
-            = new SqlServerByteArrayTypeMapping("varbinary(max)", storeTypePostfix: StoreTypePostfix.None);
+        private readonly VistaDBByteArrayTypeMapping _variableLengthMaxBinary
+            = new VistaDBByteArrayTypeMapping("varbinary(max)", storeTypePostfix: StoreTypePostfix.None);
 
-        private readonly SqlServerByteArrayTypeMapping _fixedLengthBinary
-            = new SqlServerByteArrayTypeMapping(fixedLength: true);
+        private readonly VistaDBByteArrayTypeMapping _fixedLengthBinary
+            = new VistaDBByteArrayTypeMapping(fixedLength: true);
 
-        private readonly SqlServerDateTimeTypeMapping _date
-            = new SqlServerDateTimeTypeMapping("date", DbType.Date);
+        private readonly VistaDBDateTimeTypeMapping _date
+            = new VistaDBDateTimeTypeMapping("date", DbType.Date);
 
-        private readonly SqlServerDateTimeTypeMapping _datetime
-            = new SqlServerDateTimeTypeMapping("datetime", DbType.DateTime);
+        private readonly VistaDBDateTimeTypeMapping _datetime
+            = new VistaDBDateTimeTypeMapping("datetime", DbType.DateTime);
 
-        private readonly SqlServerDateTimeTypeMapping _datetime2
-            = new SqlServerDateTimeTypeMapping("datetime2", DbType.DateTime2);
+        private readonly VistaDBDateTimeTypeMapping _datetime2
+            = new VistaDBDateTimeTypeMapping("datetime2", DbType.DateTime2);
 
         private readonly DoubleTypeMapping _double
-            = new SqlServerDoubleTypeMapping("float");
+            = new VistaDBDoubleTypeMapping("float");
 
-        private readonly SqlServerDateTimeOffsetTypeMapping _datetimeoffset
-            = new SqlServerDateTimeOffsetTypeMapping("datetimeoffset");
+        private readonly VistaDBDateTimeOffsetTypeMapping _datetimeoffset
+            = new VistaDBDateTimeOffsetTypeMapping("datetimeoffset");
 
         private readonly GuidTypeMapping _uniqueidentifier
             = new GuidTypeMapping("uniqueidentifier", DbType.Guid);
 
         private readonly DecimalTypeMapping _decimal
-            = new SqlServerDecimalTypeMapping(
+            = new VistaDBDecimalTypeMapping(
                 "decimal");
 
         private readonly DecimalTypeMapping _decimal182
-            = new SqlServerDecimalTypeMapping(
+            = new VistaDBDecimalTypeMapping(
                 "decimal(18, 2)", precision: 18, scale: 2);
 
         private readonly DecimalTypeMapping _money
-            = new SqlServerDecimalTypeMapping("money", storeTypePostfix: StoreTypePostfix.None);
+            = new VistaDBDecimalTypeMapping("money", storeTypePostfix: StoreTypePostfix.None);
 
         private readonly TimeSpanTypeMapping _time
-            = new SqlServerTimeSpanTypeMapping("time");
+            = new VistaDBTimeSpanTypeMapping("time");
 
-        private readonly SqlServerStringTypeMapping _xml
-            = new SqlServerStringTypeMapping("xml", unicode: true, storeTypePostfix: StoreTypePostfix.None);
+        private readonly VistaDBStringTypeMapping _xml
+            = new VistaDBStringTypeMapping("xml", unicode: true, storeTypePostfix: StoreTypePostfix.None);
 
         private readonly Dictionary<Type, RelationalTypeMapping> _clrTypeMappings;
 
@@ -141,7 +141,7 @@ namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
         ///     any release. You should only use it directly in your code with extreme caution and knowing that
         ///     doing so can result in application failures when updating to a new Entity Framework Core release.
         /// </summary>
-        public SqlServerTypeMappingSource(
+        public VistaDBTypeMappingSource(
             [NotNull] TypeMappingSourceDependencies dependencies,
             [NotNull] RelationalTypeMappingSourceDependencies relationalDependencies)
             : base(dependencies, relationalDependencies)
@@ -289,7 +289,7 @@ namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
                                 : _variableLengthMaxUnicodeString;
                     }
 
-                    return new SqlServerStringTypeMapping(
+                    return new VistaDBStringTypeMapping(
                         unicode: !isAnsi,
                         size: size,
                         fixedLength: isFixedLength);
@@ -312,7 +312,7 @@ namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
 
                     return size == null
                         ? _variableLengthMaxBinary
-                        : new SqlServerByteArrayTypeMapping(size: size, fixedLength: isFixedLength);
+                        : new VistaDBByteArrayTypeMapping(size: size, fixedLength: isFixedLength);
                 }
             }
 

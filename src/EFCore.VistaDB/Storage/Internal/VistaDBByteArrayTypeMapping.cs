@@ -19,7 +19,7 @@ namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
     ///     any release. You should only use it directly in your code with extreme caution and knowing that
     ///     doing so can result in application failures when updating to a new Entity Framework Core release.
     /// </summary>
-    public class SqlServerByteArrayTypeMapping : ByteArrayTypeMapping
+    public class VistaDBByteArrayTypeMapping : ByteArrayTypeMapping
     {
         private const int MaxSize = 8000;
 
@@ -31,7 +31,7 @@ namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
         ///     any release. You should only use it directly in your code with extreme caution and knowing that
         ///     doing so can result in application failures when updating to a new Entity Framework Core release.
         /// </summary>
-        public SqlServerByteArrayTypeMapping(
+        public VistaDBByteArrayTypeMapping(
             [CanBeNull] string storeType = null,
             int? size = null,
             bool fixedLength = false,
@@ -56,7 +56,7 @@ namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
         ///     any release. You should only use it directly in your code with extreme caution and knowing that
         ///     doing so can result in application failures when updating to a new Entity Framework Core release.
         /// </summary>
-        protected SqlServerByteArrayTypeMapping(RelationalTypeMappingParameters parameters, SqlDbType? sqlDbType)
+        protected VistaDBByteArrayTypeMapping(RelationalTypeMappingParameters parameters, SqlDbType? sqlDbType)
             : base(parameters)
         {
             _sqlDbType = sqlDbType;
@@ -71,7 +71,7 @@ namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
         /// <param name="parameters"> The parameters for this mapping. </param>
         /// <returns> The newly created mapping. </returns>
         protected override RelationalTypeMapping Clone(RelationalTypeMappingParameters parameters)
-            => new SqlServerByteArrayTypeMapping(parameters, _sqlDbType);
+            => new VistaDBByteArrayTypeMapping(parameters, _sqlDbType);
 
         /// <summary>
         ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to

@@ -18,7 +18,7 @@ namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
     ///     any release. You should only use it directly in your code with extreme caution and knowing that
     ///     doing so can result in application failures when updating to a new Entity Framework Core release.
     /// </summary>
-    public class SqlServerStringTypeMapping : StringTypeMapping
+    public class VistaDBStringTypeMapping : StringTypeMapping
     {
         private const int UnicodeMax = 4000;
         private const int AnsiMax = 8000;
@@ -33,7 +33,7 @@ namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
         ///     any release. You should only use it directly in your code with extreme caution and knowing that
         ///     doing so can result in application failures when updating to a new Entity Framework Core release.
         /// </summary>
-        public SqlServerStringTypeMapping(
+        public VistaDBStringTypeMapping(
             [CanBeNull] string storeType = null,
             bool unicode = false,
             int? size = null,
@@ -75,7 +75,7 @@ namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
         ///     any release. You should only use it directly in your code with extreme caution and knowing that
         ///     doing so can result in application failures when updating to a new Entity Framework Core release.
         /// </summary>
-        protected SqlServerStringTypeMapping(RelationalTypeMappingParameters parameters, SqlDbType? sqlDbType)
+        protected VistaDBStringTypeMapping(RelationalTypeMappingParameters parameters, SqlDbType? sqlDbType)
             : base(parameters)
         {
             if (parameters.Unicode)
@@ -98,7 +98,7 @@ namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
         /// <param name="parameters"> The parameters for this mapping. </param>
         /// <returns> The newly created mapping. </returns>
         protected override RelationalTypeMapping Clone(RelationalTypeMappingParameters parameters)
-            => new SqlServerStringTypeMapping(parameters, _sqlDbType);
+            => new VistaDBStringTypeMapping(parameters, _sqlDbType);
 
         /// <summary>
         ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to

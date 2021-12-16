@@ -5,7 +5,9 @@ using System;
 using System.Data;
 using System.Data.Common;
 using JetBrains.Annotations;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore.Storage;
+using VistaDB.Provider;
 
 namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
 {
@@ -15,20 +17,24 @@ namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
     ///     any release. You should only use it directly in your code with extreme caution and knowing that
     ///     doing so can result in application failures when updating to a new Entity Framework Core release.
     /// </summary>
-    public class SqlServerDateTimeOffsetTypeMapping : DateTimeOffsetTypeMapping
+    public class VistaDBDateTimeTypeMapping : DateTimeTypeMapping
     {
+        private const string DateFormatConst = "'{0:yyyy-MM-dd}'";
+        private const string SmallDateTimeFormatConst = "'{0:yyyy-MM-ddTHH:mm:ss}'";
+        private const string DateTimeFormatConst = "'{0:yyyy-MM-ddTHH:mm:ss.fff}'";
+
         // Note: this array will be accessed using the precision as an index
         // so the order of the entries in this array is important
-        private readonly string[] _dateTimeOffsetFormats =
+        private readonly string[] _dateTime2Formats =
         {
-            "'{0:yyyy-MM-ddTHH:mm:sszzz}'",
-            "'{0:yyyy-MM-ddTHH:mm:ss.fzzz}'",
-            "'{0:yyyy-MM-ddTHH:mm:ss.ffzzz}'",
-            "'{0:yyyy-MM-ddTHH:mm:ss.fffzzz}'",
-            "'{0:yyyy-MM-ddTHH:mm:ss.ffffzzz}'",
-            "'{0:yyyy-MM-ddTHH:mm:ss.fffffzzz}'",
-            "'{0:yyyy-MM-ddTHH:mm:ss.ffffffzzz}'",
-            "'{0:yyyy-MM-ddTHH:mm:ss.fffffffzzz}'"
+            "'{0:yyyy-MM-ddTHH:mm:ss}'",
+            "'{0:yyyy-MM-ddTHH:mm:ss.fK}'",
+            "'{0:yyyy-MM-ddTHH:mm:ss.ffK}'",
+            "'{0:yyyy-MM-ddTHH:mm:ss.fffK}'",
+            "'{0:yyyy-MM-ddTHH:mm:ss.ffffK}'",
+            "'{0:yyyy-MM-ddTHH:mm:ss.fffffK}'",
+            "'{0:yyyy-MM-ddTHH:mm:ss.ffffffK}'",
+            "'{0:yyyy-MM-ddTHH:mm:ss.fffffffK}'"
         };
 
         /// <summary>
@@ -37,12 +43,12 @@ namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
         ///     any release. You should only use it directly in your code with extreme caution and knowing that
         ///     doing so can result in application failures when updating to a new Entity Framework Core release.
         /// </summary>
-        public SqlServerDateTimeOffsetTypeMapping(
+        public VistaDBDateTimeTypeMapping(
             [NotNull] string storeType,
-            DbType? dbType = System.Data.DbType.DateTimeOffset)
+            DbType? dbType = null)
             : base(
                 new RelationalTypeMappingParameters(
-                    new CoreTypeMappingParameters(typeof(DateTimeOffset)),
+                    new CoreTypeMappingParameters(typeof(DateTime)),
                     storeType,
                     StoreTypePostfix.Precision,
                     dbType))
@@ -55,41 +61,9 @@ namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
         ///     any release. You should only use it directly in your code with extreme caution and knowing that
         ///     doing so can result in application failures when updating to a new Entity Framework Core release.
         /// </summary>
-        protected SqlServerDateTimeOffsetTypeMapping(RelationalTypeMappingParameters parameters)
+        protected VistaDBDateTimeTypeMapping(RelationalTypeMappingParameters parameters)
             : base(parameters)
         {
-        }
-
-        /// <summary>
-        ///     Creates a copy of this mapping.
-        /// </summary>
-        /// <param name="parameters"> The parameters for this mapping. </param>
-        /// <returns> The newly created mapping. </returns>
-        protected override RelationalTypeMapping Clone(RelationalTypeMappingParameters parameters)
-            => new SqlServerDateTimeOffsetTypeMapping(parameters);
-
-        /// <summary>
-        ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to
-        ///     the same compatibility standards as public APIs. It may be changed or removed without notice in
-        ///     any release. You should only use it directly in your code with extreme caution and knowing that
-        ///     doing so can result in application failures when updating to a new Entity Framework Core release.
-        /// </summary>
-        protected override string SqlLiteralFormatString
-        {
-            get
-            {
-                if (Precision.HasValue)
-                {
-                    var precision = Precision.Value;
-                    if (precision <= 7
-                        && precision >= 0)
-                    {
-                        return _dateTimeOffsetFormats[precision];
-                    }
-                }
-
-                return _dateTimeOffsetFormats[7];
-            }
         }
 
         /// <summary>
@@ -102,6 +76,16 @@ namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
         {
             base.ConfigureParameter(parameter);
 
+            // Workaround for a SQLClient bug
+            if (DbType == System.Data.DbType.Date)
+            {
+                if (parameter is VistaDBParameter vdbParameter) // Not sure if this is needed for VistaDB, but just in case...
+                    vdbParameter.VistaDBType = VistaDBType.Date;
+
+                if (parameter is SqlParameter sqlParameter)
+                    sqlParameter.SqlDbType = SqlDbType.Date;
+            }
+
             if (Size.HasValue
                 && Size.Value != -1)
             {
@@ -111,6 +95,48 @@ namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
             if (Precision.HasValue)
             {
                 parameter.Precision = unchecked((byte)Precision.Value);
+            }
+        }
+
+        /// <summary>
+        ///     Creates a copy of this mapping.
+        /// </summary>
+        /// <param name="parameters"> The parameters for this mapping. </param>
+        /// <returns> The newly created mapping. </returns>
+        protected override RelationalTypeMapping Clone(RelationalTypeMappingParameters parameters)
+            => new VistaDBDateTimeTypeMapping(parameters);
+
+        /// <summary>
+        ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to
+        ///     the same compatibility standards as public APIs. It may be changed or removed without notice in
+        ///     any release. You should only use it directly in your code with extreme caution and knowing that
+        ///     doing so can result in application failures when updating to a new Entity Framework Core release.
+        /// </summary>
+        protected override string SqlLiteralFormatString
+        {
+            get
+            {
+                switch (StoreType)
+                {
+                    case "date":
+                        return DateFormatConst;
+                    case "datetime":
+                        return DateTimeFormatConst;
+                    case "smalldatetime":
+                        return SmallDateTimeFormatConst;
+                    default:
+                        if (Precision.HasValue)
+                        {
+                            var precision = Precision.Value;
+                            if (precision <= 7
+                                && precision >= 0)
+                            {
+                                return _dateTime2Formats[precision];
+                            }
+                        }
+
+                        return _dateTime2Formats[7];
+                }
             }
         }
     }

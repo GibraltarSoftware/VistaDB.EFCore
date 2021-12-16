@@ -13,7 +13,7 @@ namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
     ///     any release. You should only use it directly in your code with extreme caution and knowing that
     ///     doing so can result in application failures when updating to a new Entity Framework Core release.
     /// </summary>
-    public class SqlServerByteTypeMapping : ByteTypeMapping
+    public class VistaDBShortTypeMapping : ShortTypeMapping
     {
         /// <summary>
         ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to
@@ -21,7 +21,7 @@ namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
         ///     any release. You should only use it directly in your code with extreme caution and knowing that
         ///     doing so can result in application failures when updating to a new Entity Framework Core release.
         /// </summary>
-        public SqlServerByteTypeMapping(
+        public VistaDBShortTypeMapping(
             [NotNull] string storeType,
             DbType? dbType = null)
             : base(storeType, dbType)
@@ -34,7 +34,7 @@ namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
         ///     any release. You should only use it directly in your code with extreme caution and knowing that
         ///     doing so can result in application failures when updating to a new Entity Framework Core release.
         /// </summary>
-        protected SqlServerByteTypeMapping(RelationalTypeMappingParameters parameters)
+        protected VistaDBShortTypeMapping(RelationalTypeMappingParameters parameters)
             : base(parameters)
         {
         }
@@ -45,7 +45,7 @@ namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
         /// <param name="parameters"> The parameters for this mapping. </param>
         /// <returns> The newly created mapping. </returns>
         protected override RelationalTypeMapping Clone(RelationalTypeMappingParameters parameters)
-            => new SqlServerByteTypeMapping(parameters);
+            => new VistaDBShortTypeMapping(parameters);
 
         /// <summary>
         ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to

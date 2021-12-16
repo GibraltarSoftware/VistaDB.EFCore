@@ -14,7 +14,7 @@ namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
     ///     any release. You should only use it directly in your code with extreme caution and knowing that
     ///     doing so can result in application failures when updating to a new Entity Framework Core release.
     /// </summary>
-    public class SqlServerDecimalTypeMapping : DecimalTypeMapping
+    public class VistaDBDecimalTypeMapping : DecimalTypeMapping
     {
         /// <summary>
         ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to
@@ -22,7 +22,7 @@ namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
         ///     any release. You should only use it directly in your code with extreme caution and knowing that
         ///     doing so can result in application failures when updating to a new Entity Framework Core release.
         /// </summary>
-        public SqlServerDecimalTypeMapping(
+        public VistaDBDecimalTypeMapping(
             [NotNull] string storeType,
             DbType? dbType = null,
             int? precision = null,
@@ -44,7 +44,7 @@ namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
         ///     any release. You should only use it directly in your code with extreme caution and knowing that
         ///     doing so can result in application failures when updating to a new Entity Framework Core release.
         /// </summary>
-        protected SqlServerDecimalTypeMapping(RelationalTypeMappingParameters parameters)
+        protected VistaDBDecimalTypeMapping(RelationalTypeMappingParameters parameters)
             : base(parameters)
         {
         }
@@ -56,7 +56,7 @@ namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
         ///     doing so can result in application failures when updating to a new Entity Framework Core release.
         /// </summary>
         protected override RelationalTypeMapping Clone(RelationalTypeMappingParameters parameters)
-            => new SqlServerDecimalTypeMapping(parameters);
+            => new VistaDBDecimalTypeMapping(parameters);
 
         /// <summary>
         ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to

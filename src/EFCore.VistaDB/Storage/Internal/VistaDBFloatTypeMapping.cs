@@ -14,7 +14,7 @@ namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
     ///     any release. You should only use it directly in your code with extreme caution and knowing that
     ///     doing so can result in application failures when updating to a new Entity Framework Core release.
     /// </summary>
-    public class SqlServerFloatTypeMapping : FloatTypeMapping
+    public class VistaDBFloatTypeMapping : FloatTypeMapping
     {
         /// <summary>
         ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to
@@ -22,7 +22,7 @@ namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
         ///     any release. You should only use it directly in your code with extreme caution and knowing that
         ///     doing so can result in application failures when updating to a new Entity Framework Core release.
         /// </summary>
-        public SqlServerFloatTypeMapping(
+        public VistaDBFloatTypeMapping(
             [NotNull] string storeType,
             DbType? dbType = null)
             : base(
@@ -40,7 +40,7 @@ namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
         ///     any release. You should only use it directly in your code with extreme caution and knowing that
         ///     doing so can result in application failures when updating to a new Entity Framework Core release.
         /// </summary>
-        protected SqlServerFloatTypeMapping(RelationalTypeMappingParameters parameters)
+        protected VistaDBFloatTypeMapping(RelationalTypeMappingParameters parameters)
             : base(parameters)
         {
         }
@@ -51,7 +51,7 @@ namespace VistaDB.EntityFrameworkCore.Provider.Storage.Internal
         /// <param name="parameters"> The parameters for this mapping. </param>
         /// <returns> The newly created mapping. </returns>
         protected override RelationalTypeMapping Clone(RelationalTypeMappingParameters parameters)
-            => new SqlServerFloatTypeMapping(parameters);
+            => new VistaDBFloatTypeMapping(parameters);
 
         /// <summary>
         ///     This is an internal API that supports the Entity Framework Core infrastructure and not subject to
