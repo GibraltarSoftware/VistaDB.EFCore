@@ -244,6 +244,9 @@ namespace Microsoft.EntityFrameworkCore.Storage
                     fixedLength: fixedLength);
             }
 
+            protected override RelationalTypeMapping Clone(RelationalTypeMappingParameters parameters)
+                => throw new NotImplementedException();
+
             public override RelationalTypeMapping Clone(string storeType, int? size)
                 => throw new NotImplementedException();
 
@@ -587,8 +590,8 @@ namespace Microsoft.EntityFrameworkCore.Storage
             using (var context = new FruityContext(ContextOptions))
             {
                 Assert.Same(
-                    context.Model.FindEntityType(typeof(Banana)).FindProperty("Id").FindMapping(),
-                    context.Model.FindEntityType(typeof(Kiwi)).FindProperty("BananaId").FindMapping());
+                    context.Model.FindEntityType(typeof(Banana)).FindProperty("Id").FindRelationalTypeMapping(),
+                    context.Model.FindEntityType(typeof(Kiwi)).FindProperty("BananaId").FindRelationalTypeMapping());
             }
         }
 
@@ -609,8 +612,8 @@ namespace Microsoft.EntityFrameworkCore.Storage
             using (var context = new MismatchedFruityContext(ContextOptions))
             {
                 Assert.Equal(typeof(short),
-                    context.Model.FindEntityType(typeof(Banana)).FindProperty("Id").FindMapping().Converter.ProviderClrType);
-                Assert.Null(context.Model.FindEntityType(typeof(Kiwi)).FindProperty("Id").FindMapping().Converter);
+                    context.Model.FindEntityType(typeof(Banana)).FindProperty("Id").FindRelationalTypeMapping().Converter.ProviderClrType);
+                Assert.Null(context.Model.FindEntityType(typeof(Kiwi)).FindProperty("Id").FindRelationalTypeMapping().Converter);
             }
         }
 

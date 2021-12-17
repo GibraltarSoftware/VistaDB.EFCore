@@ -57,7 +57,68 @@ namespace Microsoft.Extensions.DependencyInjection
                 .TryAdd<LoggingDefinitions, SqlServerLoggingDefinitions>()
                 .TryAdd<IDatabaseProvider, DatabaseProvider<SqlServerOptionsExtension>>()
                 .TryAdd<IValueGeneratorCache>(p => p.GetService<ISqlServerValueGeneratorCache>())
-                .TryAdd<IRelationalTypeMappingSource, SqlServerTypeMappingSource>()
+                .TryAdd<IRelationalTypeMappingSource, VistaDBTypeMappingSource>()
+                .TryAdd<ISqlGenerationHelper, SqlServerSqlGenerationHelper>()
+                .TryAdd<IRelationalAnnotationProvider, SqlServerAnnotationProvider>()
+                .TryAdd<IMigrationsAnnotationProvider, SqlServerMigrationsAnnotationProvider>()
+                .TryAdd<IModelValidator, SqlServerModelValidator>()
+                .TryAdd<IProviderConventionSetBuilder, SqlServerConventionSetBuilder>()
+                .TryAdd<IUpdateSqlGenerator>(p => p.GetService<ISqlServerUpdateSqlGenerator>())
+                .TryAdd<IEvaluatableExpressionFilter, SqlServerEvaluatableExpressionFilter>()
+                .TryAdd<IRelationalTransactionFactory, SqlServerTransactionFactory>()
+                .TryAdd<IModificationCommandBatchFactory, SqlServerModificationCommandBatchFactory>()
+                .TryAdd<IValueGeneratorSelector, SqlServerValueGeneratorSelector>()
+                .TryAdd<IRelationalConnection>(p => p.GetService<ISqlServerConnection>())
+                .TryAdd<IMigrationsSqlGenerator, SqlServerMigrationsSqlGenerator>()
+                .TryAdd<IRelationalDatabaseCreator, SqlServerDatabaseCreator>()
+                .TryAdd<IHistoryRepository, SqlServerHistoryRepository>()
+                .TryAdd<IExecutionStrategyFactory, SqlServerExecutionStrategyFactory>()
+                .TryAdd<IRelationalQueryStringFactory, SqlServerQueryStringFactory>()
+                .TryAdd<ICompiledQueryCacheKeyGenerator, SqlServerCompiledQueryCacheKeyGenerator>()
+                .TryAdd<IQueryCompilationContextFactory, SqlServerQueryCompilationContextFactory>()
+                .TryAdd<IMethodCallTranslatorProvider, SqlServerMethodCallTranslatorProvider>()
+                .TryAdd<IMemberTranslatorProvider, SqlServerMemberTranslatorProvider>()
+                .TryAdd<IQuerySqlGeneratorFactory, SqlServerQuerySqlGeneratorFactory>()
+                .TryAdd<IRelationalSqlTranslatingExpressionVisitorFactory, SqlServerSqlTranslatingExpressionVisitorFactory>()
+                .TryAdd<IRelationalParameterBasedSqlProcessorFactory, SqlServerParameterBasedSqlProcessorFactory>()
+                .TryAddProviderSpecificServices(
+                    b => b
+                        .TryAddSingleton<ISqlServerValueGeneratorCache, SqlServerValueGeneratorCache>()
+                        .TryAddSingleton<ISqlServerUpdateSqlGenerator, SqlServerUpdateSqlGenerator>()
+                        .TryAddSingleton<ISqlServerSequenceValueGeneratorFactory, SqlServerSequenceValueGeneratorFactory>()
+                        .TryAddScoped<ISqlServerConnection, SqlServerConnection>());
+
+            builder.TryAddCoreServices();
+
+            return serviceCollection;
+        }
+
+        /// <summary>
+        ///     <para>
+        ///         Adds the services required by the VistaDB database provider for Entity Framework
+        ///         to an <see cref="IServiceCollection" />.
+        ///     </para>
+        ///     <para>
+        ///         Calling this method is no longer necessary when building most applications, including those that
+        ///         use dependency injection in ASP.NET or elsewhere.
+        ///         It is only needed when building the internal service provider for use with
+        ///         the <see cref="DbContextOptionsBuilder.UseInternalServiceProvider" /> method.
+        ///         This is not recommend other than for some advanced scenarios.
+        ///     </para>
+        /// </summary>
+        /// <param name="serviceCollection"> The <see cref="IServiceCollection" /> to add services to. </param>
+        /// <returns>
+        ///     The same service collection so that multiple calls can be chained.
+        /// </returns>
+        public static IServiceCollection AddEntityFrameworkVistaDB([NotNull] this IServiceCollection serviceCollection)
+        {
+            Check.NotNull(serviceCollection, nameof(serviceCollection));
+
+            var builder = new EntityFrameworkRelationalServicesBuilder(serviceCollection)
+                .TryAdd<LoggingDefinitions, SqlServerLoggingDefinitions>()
+                .TryAdd<IDatabaseProvider, DatabaseProvider<SqlServerOptionsExtension>>()
+                .TryAdd<IValueGeneratorCache>(p => p.GetService<ISqlServerValueGeneratorCache>())
+                .TryAdd<IRelationalTypeMappingSource, VistaDBTypeMappingSource>()
                 .TryAdd<ISqlGenerationHelper, SqlServerSqlGenerationHelper>()
                 .TryAdd<IRelationalAnnotationProvider, SqlServerAnnotationProvider>()
                 .TryAdd<IMigrationsAnnotationProvider, SqlServerMigrationsAnnotationProvider>()

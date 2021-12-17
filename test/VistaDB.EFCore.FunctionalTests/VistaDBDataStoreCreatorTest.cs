@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.TestUtilities;
 using Microsoft.Extensions.DependencyInjection;
 using VistaDB.Diagnostic;
 using VistaDB.EntityFrameworkCore.FunctionalTests;
-using VistaDB.EntityFrameworkCore.Storage.Internal;
+using VistaDB.EntityFrameworkCore.Provider.Storage.Internal;
 using Xunit;
 
 // ReSharper disable InconsistentNaming
@@ -383,11 +383,11 @@ namespace Microsoft.EntityFrameworkCore
             }
         }
 
-        public class TestDatabaseCreator : VistaDBDatabaseCreator
+        public class TestDatabaseCreator : SqlServerDatabaseCreator
         {
             public TestDatabaseCreator(
                 RelationalDatabaseCreatorDependencies dependencies,
-                IVistaDBRelationalConnection connection,
+                ISqlServerConnection connection, // IVistaDBRelationalConnection connection,
                 IRawSqlCommandBuilder rawSqlCommandBuilder)
                 : base(dependencies, connection, rawSqlCommandBuilder)
             {

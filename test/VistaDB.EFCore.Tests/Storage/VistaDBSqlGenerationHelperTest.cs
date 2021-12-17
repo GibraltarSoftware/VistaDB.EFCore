@@ -1,5 +1,5 @@
 using System;
-using VistaDB.EntityFrameworkCore.Storage.Internal;
+using VistaDB.EntityFrameworkCore.Provider.Storage.Internal;
 using Xunit;
 
 namespace Microsoft.EntityFrameworkCore.Storage
@@ -12,6 +12,6 @@ namespace Microsoft.EntityFrameworkCore.Storage
         }
 
         protected override ISqlGenerationHelper CreateSqlGenerationHelper()
-            => new VistaDBSqlGenerationHelper(new RelationalSqlGenerationHelperDependencies());
+            => new SqlServerSqlGenerationHelper(new RelationalSqlGenerationHelperDependencies());
     }
 }
