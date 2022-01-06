@@ -9,6 +9,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="TestUtilities\VistaDBTestStore.cs" />
+    <Compile Remove="VistaDBDatabaseCreationTest.cs" />
+    <Compile Remove="VistaDBDataStoreCreatorTest.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Northwind.vdb6" />
   </ItemGroup>
 
@@ -16,6 +22,12 @@
     <Content Include="Northwind.vdb6">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="TestUtilities\VistaDBTestStore.cs" />
+    <None Include="VistaDBDatabaseCreationTest.cs" />
+    <None Include="VistaDBDataStoreCreatorTest.cs" />
   </ItemGroup>
   
   <ItemGroup>

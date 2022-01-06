@@ -53,7 +53,8 @@ namespace Microsoft.EntityFrameworkCore.TestUtilities
             _name = name;
         }
 
-        protected override void Initialize(Func<DbContext> createContext, Action<DbContext> seed)
+        public override TestStore Initialize(IServiceProvider serviceProvider, Func<DbContext> createContext,
+                                             Action<DbContext> seed, Action<DbContext> clear)
         {
             using (var context = createContext())
             {

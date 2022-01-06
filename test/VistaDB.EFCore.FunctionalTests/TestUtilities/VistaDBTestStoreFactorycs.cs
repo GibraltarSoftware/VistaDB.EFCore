@@ -1,7 +1,8 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.EntityFrameworkCore.TestUtilities;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace Microsoft.EntityFrameworkCore.TestUtilities
+namespace VistaDB.EntityFrameworkCore.FunctionalTests.TestUtilities
 {
     public class VistaDBTestStoreFactory : RelationalTestStoreFactory
     {
@@ -12,10 +13,10 @@ namespace Microsoft.EntityFrameworkCore.TestUtilities
         }
 
         public override TestStore Create(string storeName)
-            => VistaDBTestStore.Create(storeName);
+            => VistaDBNewTestStore.Create(storeName);
 
         public override TestStore GetOrCreate(string storeName)
-            => VistaDBTestStore.CreateScratch(true);
+            => VistaDBNewTestStore.CreateScratch(true);
 
         public override IServiceCollection AddProviderServices(IServiceCollection serviceCollection)
             => serviceCollection.AddEntityFrameworkVistaDB()
