@@ -21,7 +21,7 @@ namespace Microsoft.EntityFrameworkCore.Query
         }
 
         protected override bool CanExecuteQueryString
-            => true;s
+            => true;
 
         public override async Task Negate_on_binary_expression(bool async)
         {
