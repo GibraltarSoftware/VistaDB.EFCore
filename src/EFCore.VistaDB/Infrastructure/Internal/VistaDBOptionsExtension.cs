@@ -6,6 +6,7 @@ using System.Text;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
+using VistaDB.Provider;
 
 namespace VistaDB.EntityFrameworkCore.Provider.Infrastructure.Internal
 {
