@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -13,8 +14,11 @@ using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.TestUtilities;
+using VistaDB.DDA;
 using VistaDB.EntityFrameworkCore.Provider.Storage.Internal;
+using VistaDB.Provider;
 
 #pragma warning disable IDE0022 // Use block body for methods
 // ReSharper disable SuggestBaseTypeForParameter
@@ -22,7 +26,14 @@ namespace VistaDB.EntityFrameworkCore.FunctionalTests.TestUtilities
 {
     public class VistaDBNewTestStore : RelationalTestStore
     {
+        private const string NorthwindName = "Northwind";
+        private const string VistaDBExtension = ".vdb6";
+
+        private static int _scratchCount;
+
         public const int CommandTimeout = 300;
+
+        private static readonly IVistaDBDDA ddaObj = VistaDBEngine.Connections.OpenDDA();
 
         private static string CurrentDirectory
             => Environment.CurrentDirectory;
@@ -38,13 +49,13 @@ namespace VistaDB.EntityFrameworkCore.FunctionalTests.TestUtilities
             => new VistaDBNewTestStore(name).InitializeVistaDB(null, (Func<DbContext>)null, null);
 
         public static VistaDBNewTestStore GetOrCreate(string name, string scriptPath, bool? multipleActiveResultSets = null)
-            => new VistaDBNewTestStore(name, scriptPath: scriptPath, multipleActiveResultSets: multipleActiveResultSets);
+            => new VistaDBNewTestStore(name, scriptPath: scriptPath);
 
         public static VistaDBNewTestStore Create(string name, bool useFileName = false)
-            => new VistaDBNewTestStore(name, useFileName, shared: false);
+            => new VistaDBNewTestStore(name, shared: false);
 
         public static VistaDBNewTestStore CreateInitialized(string name, bool useFileName = false, bool? multipleActiveResultSets = null)
-            => new VistaDBNewTestStore(name, useFileName, shared: false, multipleActiveResultSets: multipleActiveResultSets)
+            => new VistaDBNewTestStore(name, shared: false)
                 .InitializeVistaDB(null, (Func<DbContext>)null, null);
 
         private readonly string _fileName;
@@ -52,24 +63,22 @@ namespace VistaDB.EntityFrameworkCore.FunctionalTests.TestUtilities
 
         private VistaDBNewTestStore(
             string name,
-            bool useFileName = false,
-            bool? multipleActiveResultSets = null,
+            //bool useFileName = false,
+            //bool? multipleActiveResultSets = null,
             string scriptPath = null,
             bool shared = true)
             : base(name, shared)
         {
-            if (useFileName)
-            {
-                _fileName = Path.Combine(CurrentDirectory, name + ".mdf");
-            }
+            _name = name;
+            _fileName = Path.Combine(CurrentDirectory, name + VistaDBExtension);
 
             if (scriptPath != null)
             {
                 _scriptPath = Path.Combine(Path.GetDirectoryName(typeof(VistaDBNewTestStore).Assembly.Location), scriptPath);
             }
 
-            ConnectionString = CreateConnectionString(Name, _fileName, multipleActiveResultSets);
-            Connection = new SqlConnection(ConnectionString);
+            ConnectionString = CreateConnectionString(Name, _fileName);
+            Connection = new VistaDBConnection(ConnectionString);
         }
 
         public VistaDBNewTestStore InitializeVistaDB(
@@ -101,6 +110,38 @@ namespace VistaDB.EntityFrameworkCore.FunctionalTests.TestUtilities
             }
         }
 
+        private bool _deleteDatabase;
+        private string _name;
+
+        public static VistaDBNewTestStore CreateScratch(bool createDatabase)
+        {
+            string name;
+            do
+            {
+                name = "scratch-" + Interlocked.Increment(ref _scratchCount);
+            }
+            while (File.Exists(name + VistaDBExtension));
+
+            return new VistaDBNewTestStore(name).CreateTransient(createDatabase);
+        }
+
+        private VistaDBNewTestStore CreateTransient(bool createDatabase)
+        {
+            ConnectionString = CreateConnectionString(_name);
+
+            Connection = new VistaDBConnection(ConnectionString);
+
+            if (createDatabase)
+            {
+                ((VistaDBConnection)Connection).CreateEmptyDatabase();
+                Connection.Open();
+            }
+
+            _deleteDatabase = true;
+
+            return this;
+        }
+
         public override DbContextOptionsBuilder AddProviderOptions(DbContextOptionsBuilder builder)
             => builder
                 .UseSqlServer(Connection, b => b.ApplyConfiguration())
@@ -108,6 +149,34 @@ namespace VistaDB.EntityFrameworkCore.FunctionalTests.TestUtilities
 
         private bool CreateDatabase(Action<DbContext> clean)
         {
+            string filename =_fileName ?? (Name + VistaDBExtension);
+            if (File.Exists(filename))
+            {
+                if (_scriptPath != null && !TestEnvironment.IsCI) // Is this applicable?
+                    return false;
+
+                if (_fileName == null) // It is always null for SqlServerTestStore but now is not null for VistaDBNewTestStore.
+                {
+                    // Does this need to be done for VistaDB at all?  Perhaps if clean action is not null?
+                    using (var context = new DbContext(
+                        AddProviderOptions(new DbContextOptionsBuilder().EnableServiceProviderCaching(false)).Options))
+                    {
+                        clean?.Invoke(context);
+                        Clean(context);
+                        return true;
+                    }
+                }
+
+                DeleteDatabase();
+            }
+
+            // Create an empty database
+            using (ddaObj.CreateDatabase(filename, true, null, 8, CultureInfo.CurrentCulture.LCID, false))
+            {
+                Thread.Sleep(200);
+            }
+
+            /* TO BE REMOVED...
             using (var master = new SqlConnection(CreateConnectionString("master", fileName: null, multipleActiveResultSets: false)))
             {
                 if (ExecuteScalar<int>(master, $"SELECT COUNT(*) FROM sys.databases WHERE name = N'{Name}'") > 0)
@@ -138,12 +207,15 @@ namespace VistaDB.EntityFrameworkCore.FunctionalTests.TestUtilities
                 ExecuteNonQuery(master, GetCreateDatabaseStatement(Name, _fileName));
                 WaitForExists((SqlConnection)Connection);
             }
+            */
 
             return true;
         }
 
         public override void Clean(DbContext context)
-            => context.Database.EnsureClean();
+        {
+            // VistaDB doesn't really need to "clean" the database, just delete and re-copy the file?
+        }
 
         public void ExecuteScript(string scriptPath)
         {
@@ -225,6 +297,14 @@ namespace VistaDB.EntityFrameworkCore.FunctionalTests.TestUtilities
 
         public void DeleteDatabase()
         {
+            string filename = _fileName ?? (Name + VistaDBExtension);
+            VistaDBConnection.ClearAllPools(); // Although pooling isn't necessarily being used.
+            Thread.Sleep(100);
+
+            File.Delete(filename);
+            Thread.Sleep(100);
+
+            /* TO BE REMOVED...
             using var master = new SqlConnection(CreateConnectionString("master"));
             ExecuteNonQuery(
                 master, string.Format(
@@ -235,6 +315,7 @@ namespace VistaDB.EntityFrameworkCore.FunctionalTests.TestUtilities
                                           END", Name));
 
             SqlConnection.ClearAllPools();
+            */
         }
 
         public override void OpenConnection()
@@ -430,6 +511,7 @@ namespace VistaDB.EntityFrameworkCore.FunctionalTests.TestUtilities
             return command;
         }
 
+        /*
         public override void Dispose()
         {
             base.Dispose();
@@ -440,20 +522,52 @@ namespace VistaDB.EntityFrameworkCore.FunctionalTests.TestUtilities
                 DeleteDatabase();
             }
         }
+        */
+
+        public override void Dispose()
+        {
+            if (_deleteDatabase)
+            {
+                ((VistaDBConnection)Connection).Drop(/*throwOnOpen: false*/);
+            }
+
+            Connection?.Dispose();
+            base.Dispose();
+        }
 
         public static string CreateConnectionString(string name, string fileName = null, bool? multipleActiveResultSets = null)
         {
-            var builder = new SqlConnectionStringBuilder(TestEnvironment.DefaultConnection)
+            var builder = new VistaDBConnectionStringBuilder(TestEnvironment.DefaultConnection)
             {
-                MultipleActiveResultSets = multipleActiveResultSets ?? new Random().Next(0, 2) == 1,
-                InitialCatalog = name
+                //MultipleActiveResultSets = multipleActiveResultSets ?? new Random().Next(0, 2) == 1,
+                //InitialCatalog = name,
+                DataSource = fileName ?? (name + VistaDBExtension),
+                OpenMode = VistaDBDatabaseOpenMode.MultiProcessReadWrite,
             };
+            /*
             if (fileName != null)
             {
                 builder.AttachDBFilename = fileName;
             }
+            */
 
             return builder.ToString();
+        }
+    }
+
+    public static class VistaDBTestExtensions
+    {
+        public static void CreateEmptyDatabase(this VistaDBConnection conn)
+        {
+            // Needs implementation.
+            throw new NotImplementedException(
+                "VistaDBTestExtensions.CreateEmptyDatabase(this VistaDBConnection conn) is not yet implemented");
+        }
+
+        public static void Drop(this VistaDBConnection conn)
+        {
+            // Needs implementation.
+            throw new NotImplementedException("VistaDBTestExtensions.Drop(this VistaDBConnection conn) is not yet implemented");
         }
     }
 }
