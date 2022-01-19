@@ -27,6 +27,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using NetTopologySuite.Geometries;
 using Newtonsoft.Json.Linq;
+using VistaDB.EntityFrameworkCore.FunctionalTests;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -38,11 +39,11 @@ using Xunit.Abstractions;
 // ReSharper disable UnusedMember.Local
 namespace Microsoft.EntityFrameworkCore.Query
 {
-    public class QueryBugsTest : IClassFixture<SqlServerFixture>
+    public class QueryBugsTest : IClassFixture<VistaDBFixture>
     {
         // ReSharper disable once UnusedParameter.Local
 #pragma warning disable IDE0060 // Remove unused parameter
-        public QueryBugsTest(SqlServerFixture fixture, ITestOutputHelper testOutputHelper)
+        public QueryBugsTest(VistaDBFixture fixture, ITestOutputHelper testOutputHelper)
 #pragma warning restore IDE0060 // Remove unused parameter
         {
             Fixture = fixture;
@@ -50,7 +51,7 @@ namespace Microsoft.EntityFrameworkCore.Query
             //Fixture.TestSqlLoggerFactory.SetTestOutputHelper(testOutputHelper);
         }
 
-        protected SqlServerFixture Fixture { get; }
+        protected VistaDBFixture Fixture { get; }
 
         [ConditionalTheory]
         [InlineData(false)]
