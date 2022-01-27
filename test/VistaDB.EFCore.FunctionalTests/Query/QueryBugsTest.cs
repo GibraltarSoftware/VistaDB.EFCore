@@ -28,6 +28,7 @@ using Microsoft.Extensions.Logging;
 using NetTopologySuite.Geometries;
 using Newtonsoft.Json.Linq;
 using VistaDB.EntityFrameworkCore.FunctionalTests;
+using VistaDB.EntityFrameworkCore.FunctionalTests.TestUtilities;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -9348,12 +9349,14 @@ WHERE [l].[Name] = N'My Location'" });
 
         private (DbContextOptions, TestSqlLoggerFactory) CreateOptions23282()
         {
-            var testStore = SqlServerTestStore.CreateInitialized("QueryBugsTest");
+            var testStore = VistaDBNewTestStore.CreateInitialized("QueryBugsTest");
             var testSqlLoggerFactory = new TestSqlLoggerFactory();
-            var serviceProvider = new ServiceCollection().AddSingleton<ILoggerFactory>(testSqlLoggerFactory).BuildServiceProvider();
+            var serviceProvider = new ServiceCollection()
+                .AddSingleton<ILoggerFactory>(testSqlLoggerFactory)
+                .BuildServiceProvider();
 
             var optionsBuilder = Fixture.AddOptions(new DbContextOptionsBuilder()
-                    .UseSqlServer(testStore.ConnectionString, b => b.EnableRetryOnFailure().UseNetTopologySuite()))
+                    .UseVistaDB(testStore.ConnectionString))
                 .EnableDetailedErrors()
                 .EnableServiceProviderCaching(false)
                 .UseApplicationServiceProvider(serviceProvider);
