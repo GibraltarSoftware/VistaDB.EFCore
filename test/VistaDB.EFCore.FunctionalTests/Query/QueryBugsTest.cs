@@ -247,7 +247,7 @@ WHERE ((((((((([d].[SmallDateTime] IN ('1970-09-03T12:00:00', '1971-09-03T12:00:
             public DbSet<DatesAndPrunes> Dates { get; set; }
         }
 
-        private SqlServerTestStore CreateDateTimeStore()
+        private VistaDBNewTestStore CreateDateTimeStore()
             => CreateTestStore(
                 () => new DateTimeContext(_options),
                 c =>
@@ -276,7 +276,7 @@ WHERE ((((((((([d].[SmallDateTime] IN ('1970-09-03T12:00:00', '1971-09-03T12:00:
         [ConditionalFact]
         public void Left_outer_join_bug_6091()
         {
-            using var testStore = SqlServerTestStore.CreateInitialized("QueryBugsTest");
+            using var testStore = VistaDBNewTestStore.CreateInitialized("QueryBugsTest");
             testStore.ExecuteNonQuery(
                 @"
 CREATE TABLE [dbo].[Customers](
@@ -359,7 +359,7 @@ INSERT [dbo].[Postcodes] ([PostcodeID], [PostcodeValue], [TownName]) VALUES (5, 
         [ConditionalFact]
         public async Task Multiple_optional_navs_should_not_deadlock_bug_5481()
         {
-            using var testStore = SqlServerTestStore.CreateInitialized("QueryBugsTest");
+            using var testStore = VistaDBNewTestStore.CreateInitialized("QueryBugsTest");
             using var context = new DeadlockContext(Fixture.CreateOptions(testStore));
             context.Database.EnsureCreatedResiliently();
             context.EnsureSeeded();
@@ -453,7 +453,7 @@ INSERT [dbo].[Postcodes] ([PostcodeID], [PostcodeValue], [TownName]) VALUES (5, 
         [ConditionalFact]
         public void Query_when_null_key_in_database_should_throw()
         {
-            using var testStore = SqlServerTestStore.CreateInitialized("QueryBugsTest");
+            using var testStore = VistaDBNewTestStore.CreateInitialized("QueryBugsTest");
             testStore.ExecuteNonQuery(
                 @"CREATE TABLE ZeroKey (Id int);
                       INSERT ZeroKey VALUES (NULL)");
@@ -549,7 +549,7 @@ INSERT [dbo].[Postcodes] ([PostcodeID], [PostcodeValue], [TownName]) VALUES (5, 
             }
         }
 
-        private SqlServerTestStore CreateDatabase603()
+        private VistaDBNewTestStore CreateDatabase603()
         {
             return CreateTestStore(() => new MyContext603(_options), null);
         }
@@ -602,7 +602,7 @@ LEFT JOIN [Customer] AS [c] ON ([o].[CustomerFirstName] = [c].[FirstName]) AND (
             }
         }
 
-        private SqlServerTestStore CreateDatabase925()
+        private VistaDBNewTestStore CreateDatabase925()
         {
             return CreateTestStore(
                 () => new MyContext925(_options),
@@ -735,7 +735,7 @@ LEFT JOIN [Customer] AS [c] ON ([o].[CustomerFirstName] = [c].[FirstName]) AND (
             }
         }
 
-        private SqlServerTestStore CreateDatabase963()
+        private VistaDBNewTestStore CreateDatabase963()
         {
             return CreateTestStore(
                 () => new MyContext963(_options),
@@ -960,7 +960,7 @@ Queen of the Andals and the Rhoynar and the First Men, Khaleesi of the Great Gra
             }
         }
 
-        private SqlServerTestStore CreateDatabase3758()
+        private VistaDBNewTestStore CreateDatabase3758()
         {
             return CreateTestStore(
                 () => new MyContext3758(_options),
@@ -1146,7 +1146,7 @@ Queen of the Andals and the Rhoynar and the First Men, Khaleesi of the Great Gra
             public IChild3409 SelfReferenceBackNavigation { get; set; }
         }
 
-        private SqlServerTestStore CreateDatabase3409()
+        private VistaDBNewTestStore CreateDatabase3409()
         {
             return CreateTestStore(
                 () => new MyContext3409(_options),
@@ -1350,7 +1350,7 @@ Queen of the Andals and the Rhoynar and the First Men, Khaleesi of the Great Gra
             }
         }
 
-        private SqlServerTestStore CreateDatabase3101()
+        private VistaDBNewTestStore CreateDatabase3101()
         {
             return CreateTestStore(
                 () => new MyContext3101(_options),
@@ -1460,7 +1460,7 @@ Queen of the Andals and the Rhoynar and the First Men, Khaleesi of the Great Gra
             }
         }
 
-        private SqlServerTestStore CreateDatabase6986()
+        private VistaDBNewTestStore CreateDatabase6986()
         {
             return CreateTestStore(
                 () => new ReproContext6986(_options),
@@ -1648,7 +1648,7 @@ Queen of the Andals and the Rhoynar and the First Men, Khaleesi of the Great Gra
             }
         }
 
-        private SqlServerTestStore CreateDatabase5456()
+        private VistaDBNewTestStore CreateDatabase5456()
         {
             return CreateTestStore(
                 () => new MyContext5456(_options),
@@ -1762,7 +1762,7 @@ Queen of the Andals and the Rhoynar and the First Men, Khaleesi of the Great Gra
             }
         }
 
-        private SqlServerTestStore CreateDatabase7359()
+        private VistaDBNewTestStore CreateDatabase7359()
         {
             return CreateTestStore(
                 () => new MyContext7359(_options),
@@ -1826,7 +1826,7 @@ Queen of the Andals and the Rhoynar and the First Men, Khaleesi of the Great Gra
             public DbSet<ProposalLeave7312> ProposalLeaves { get; set; }
         }
 
-        private SqlServerTestStore CreateDatabase7312()
+        private VistaDBNewTestStore CreateDatabase7312()
         {
             return CreateTestStore(
                 () => new MyContext7312(_options),
@@ -1882,7 +1882,7 @@ Queen of the Andals and the Rhoynar and the First Men, Khaleesi of the Great Gra
             public DbSet<Entity8282> Entity { get; set; }
         }
 
-        private SqlServerTestStore CreateDatabase8282()
+        private VistaDBNewTestStore CreateDatabase8282()
         {
             return CreateTestStore(
                 () => new MyContext8282(_options),
@@ -2009,7 +2009,7 @@ WHERE ([e].[PermissionShort] & CAST(4 AS smallint)) = CAST(4 AS smallint)");
             public DbSet<Entity8538> Entity { get; set; }
         }
 
-        private SqlServerTestStore CreateDatabase8538()
+        private VistaDBNewTestStore CreateDatabase8538()
         {
             return CreateTestStore(
                 () => new MyContext8538(_options),
@@ -2234,7 +2234,7 @@ WHERE [e].[Name] IS NULL");
             }
         }
 
-        private SqlServerTestStore CreateDatabase8909()
+        private VistaDBNewTestStore CreateDatabase8909()
         {
             return CreateTestStore(
                 () => new MyContext8909(_options),
@@ -2317,7 +2317,7 @@ ORDER BY [m].[Id], [a].[Id]");
             }
         }
 
-        private SqlServerTestStore CreateDatabase9202()
+        private VistaDBNewTestStore CreateDatabase9202()
         {
             return CreateTestStore(
                 () => new MyContext9202(_options),
@@ -2423,7 +2423,7 @@ WHERE [w].[Val] = 1");
             }
         }
 
-        private SqlServerTestStore CreateDatabase9214()
+        private VistaDBNewTestStore CreateDatabase9214()
         {
             return CreateTestStore(
                 () => new MyContext9214(_options),
@@ -2529,7 +2529,7 @@ WHERE [w].[Val] = 1");
             }
         }
 
-        private SqlServerTestStore CreateDatabase9277()
+        private VistaDBNewTestStore CreateDatabase9277()
         {
             return CreateTestStore(
                 () => new MyContext9277(_options),
@@ -2683,7 +2683,7 @@ BEGIN
             }
         }
 
-        private SqlServerTestStore CreateDatabase9038()
+        private VistaDBNewTestStore CreateDatabase9038()
         {
             return CreateTestStore(
                 () => new MyContext9038(_options),
@@ -2811,7 +2811,7 @@ ORDER BY [t].[c], [t].[c0], [t].[Id], [t].[Id0], [t].[Id1], [o].[Id]");
             public DbSet<Customer9735> Customers { get; set; }
         }
 
-        private SqlServerTestStore CreateDatabase9735()
+        private VistaDBNewTestStore CreateDatabase9735()
         {
             return CreateTestStore(
                 () => new MyContext9735(_options),
@@ -2857,7 +2857,7 @@ LEFT JOIN [Configuration9468] AS [c0] ON [c].[ConfigurationId] = [c0].[Id]");
             }
         }
 
-        private SqlServerTestStore CreateDatabase9468()
+        private VistaDBNewTestStore CreateDatabase9468()
         {
             return CreateTestStore(
                 () => new MyContext9468(_options),
@@ -2934,7 +2934,7 @@ ORDER BY [p].[Id], [c].[Id]");
             }
         }
 
-        private SqlServerTestStore CreateDatabase10635()
+        private VistaDBNewTestStore CreateDatabase10635()
         {
             return CreateTestStore(
                 () => new MyContext10635(_options),
@@ -3024,7 +3024,7 @@ WHERE [b].[SomeValue] = @__ef_filter__Tenant_0");
             }
         }
 
-        private SqlServerTestStore CreateDatabase10301()
+        private VistaDBNewTestStore CreateDatabase10301()
         {
             return CreateTestStore(
                 () => new FilterContext10301(_options),
@@ -3094,7 +3094,7 @@ FROM [Bases] AS [b]");
             }
         }
 
-        private SqlServerTestStore CreateDatabase11104()
+        private VistaDBNewTestStore CreateDatabase11104()
         {
             return CreateTestStore(
                 () => new MyContext11104(_options),
@@ -3246,7 +3246,7 @@ GROUP BY [t2].[AnotherEntity11818_Name], [t5].[MaumarEntity11818_Name]");
             }
         }
 
-        private SqlServerTestStore CreateDatabase11818()
+        private VistaDBNewTestStore CreateDatabase11818()
         {
             return CreateTestStore(
                 () => new MyContext11818(_options),
@@ -3342,7 +3342,7 @@ WHERE ([t].[Name] <> N'Bar') OR [t].[Name] IS NULL");
             }
         }
 
-        private SqlServerTestStore CreateDatabase11803()
+        private VistaDBNewTestStore CreateDatabase11803()
         {
             return CreateTestStore(
                 () => new MyContext11803(_options),
@@ -3505,7 +3505,7 @@ WHERE ([t].[Name] <> N'Bar') OR [t].[Name] IS NULL");
             }
         }
 
-        private SqlServerTestStore CreateDatabase11923()
+        private VistaDBNewTestStore CreateDatabase11923()
         {
             return CreateTestStore(
                 () => new MyContext11923(_options),
@@ -3672,7 +3672,7 @@ FROM [Prices] AS [p]");
             }
         }
 
-        private SqlServerTestStore CreateDatabase11885()
+        private VistaDBNewTestStore CreateDatabase11885()
         {
             return CreateTestStore(
                 () => new MyContext11885(_options),
@@ -3799,7 +3799,7 @@ FROM [Prices] AS [p]");
             }
         }
 
-        private SqlServerTestStore CreateDatabase12582()
+        private VistaDBNewTestStore CreateDatabase12582()
         {
             return CreateTestStore(
                 () => new MyContext12582(_options),
@@ -3875,7 +3875,7 @@ FROM [Prices] AS [p]");
             }
         }
 
-        private SqlServerTestStore CreateDatabase12748()
+        private VistaDBNewTestStore CreateDatabase12748()
         {
             return CreateTestStore(
                 () => new MyContext12748(_options),
@@ -3942,7 +3942,7 @@ FROM [Prices] AS [p]");
             public int? DeviceId { get; set; }
         }
 
-        private SqlServerTestStore CreateDatabase13025()
+        private VistaDBNewTestStore CreateDatabase13025()
         {
             return CreateTestStore(
                 () => new MyContext13025(_options),
@@ -4005,7 +4005,7 @@ FROM [Prices] AS [p]");
             }
         }
 
-        private SqlServerTestStore CreateDatabase12170()
+        private VistaDBNewTestStore CreateDatabase12170()
         {
             return CreateTestStore(
                 () => new MyContext12170(_options),
@@ -4098,7 +4098,7 @@ FROM [Prices] AS [p]");
             }
         }
 
-        private SqlServerTestStore CreateDatabase11944()
+        private VistaDBNewTestStore CreateDatabase11944()
         {
             return CreateTestStore(
                 () => new MyContext11944(_options),
@@ -4179,7 +4179,7 @@ WHERE [r].[MyTime] = '2018-10-07T00:00:00'");
             }
         }
 
-        private SqlServerTestStore CreateDatabase13118()
+        private VistaDBNewTestStore CreateDatabase13118()
         {
             return CreateTestStore(
                 () => new MyContext13118(_options),
@@ -4247,7 +4247,7 @@ END IN ('0a47bcb7-a1cb-4345-8944-c58f82d6aac7', '5f221fb9-66f4-442a-92c9-d97ed59
             }
         }
 
-        private SqlServerTestStore CreateDatabase12732()
+        private VistaDBNewTestStore CreateDatabase12732()
         {
             return CreateTestStore(
                 () => new MyContext12732(_options),
@@ -4328,7 +4328,7 @@ ORDER BY [p].[Id], [a].[Id]");
             }
         }
 
-        private SqlServerTestStore CreateDatabase13157()
+        private VistaDBNewTestStore CreateDatabase13157()
         {
             return CreateTestStore(
                 () => new MyContext13157(_options),
@@ -4401,7 +4401,7 @@ ORDER BY [p].[Id], [a].[Id]");
             }
         }
 
-        private SqlServerTestStore CreateDatabase13346()
+        private VistaDBNewTestStore CreateDatabase13346()
         {
             return CreateTestStore(
                 () => new MyContext13346(_options),
@@ -4472,7 +4472,7 @@ WHERE @@ROWCOUNT = 1 AND [Id] = scope_identity();");
             }
         }
 
-        private SqlServerTestStore CreateDatabase13079()
+        private VistaDBNewTestStore CreateDatabase13079()
         {
             return CreateTestStore(
                 () => new MyContext13079(_options),
@@ -4534,7 +4534,7 @@ FROM [InventoryPools] AS [i]");
             }
         }
 
-        private SqlServerTestStore CreateDatabase13587()
+        private VistaDBNewTestStore CreateDatabase13587()
         {
             return CreateTestStore(
                 () => new MyContext13587(_options),
@@ -4601,7 +4601,7 @@ ORDER BY [p].[Id]");
             }
         }
 
-        private SqlServerTestStore CreateDatabase12518()
+        private VistaDBNewTestStore CreateDatabase12518()
         {
             return CreateTestStore(
                 () => new MyContext12518(_options),
@@ -4683,7 +4683,7 @@ ORDER BY [p].[Id]");
             }
         }
 
-        private SqlServerTestStore CreateDatabase12549()
+        private VistaDBNewTestStore CreateDatabase12549()
             => CreateTestStore(() => new MyContext12549(_options), context => { });
 
         private class MyContext12549 : DbContext
@@ -4753,7 +4753,7 @@ ORDER BY [b].[Id]");
             }
         }
 
-        private SqlServerTestStore CreateDatabase16233()
+        private VistaDBNewTestStore CreateDatabase16233()
         {
             return CreateTestStore(
                 () => new MyContext16233(_options),
@@ -4833,7 +4833,7 @@ LEFT JOIN [Categories] AS [c] ON [p].[CategoryId] = [c].[Id]");
             }
         }
 
-        private SqlServerTestStore CreateDatabase15684()
+        private VistaDBNewTestStore CreateDatabase15684()
             => CreateTestStore(
                 () => new MyContext15684(_options),
                 context =>
@@ -4965,7 +4965,7 @@ WHERE [c].[Name] = N'Leeds'");
             }
         }
 
-        private SqlServerTestStore CreateDatabase15204()
+        private VistaDBNewTestStore CreateDatabase15204()
             => CreateTestStore(
                 () => new MyContext15204(_options),
                 context =>
@@ -5113,7 +5113,7 @@ WHERE [c].[Name] = N'Leeds'");
             }
         }
 
-        private SqlServerTestStore CreateDatabase15518()
+        private VistaDBNewTestStore CreateDatabase15518()
             => CreateTestStore(
                 () => new MyContext15518(_options),
                 context =>
@@ -5169,7 +5169,7 @@ WHERE [c].[Name] = N'Leeds'");
         private static Customer8864 Get(MyContext8864 context, int id)
             => context.Customers.Single(c => c.Id == id);
 
-        private SqlServerTestStore CreateDatabase8864()
+        private VistaDBNewTestStore CreateDatabase8864()
             => CreateTestStore(
                 () => new MyContext8864(_options),
                 context =>
@@ -5220,7 +5220,7 @@ FROM [Posts] AS [p]");
             }
         }
 
-        private SqlServerTestStore CreateDatabase7983()
+        private VistaDBNewTestStore CreateDatabase7983()
             => CreateTestStore(
                 () => new MyContext7983(_options),
                 context =>
@@ -5354,7 +5354,7 @@ WHERE EXISTS (
             }
         }
 
-        private SqlServerTestStore CreateDatabase17253()
+        private VistaDBNewTestStore CreateDatabase17253()
             => CreateTestStore(
                 () => new MyContext17253(_options),
                 context =>
@@ -5493,7 +5493,7 @@ WHERE [p].[Id] = @__id_0");
             }
         }
 
-        private SqlServerTestStore CreateDatabase17276()
+        private VistaDBNewTestStore CreateDatabase17276()
             => CreateTestStore(
                 () => new MyContext17276(_options),
                 context =>
@@ -5663,7 +5663,7 @@ WHERE [f].[String] = N'1337'");
             }
         }
 
-        private SqlServerTestStore CreateDatabase6864()
+        private VistaDBNewTestStore CreateDatabase6864()
             => CreateTestStore(
                 () => new MyContext6864(_options),
                 context =>
@@ -5747,7 +5747,7 @@ WHERE [t].[Nombre] LIKE '%lla%'");
             }
         }
 
-        private SqlServerTestStore CreateDatabase9582()
+        private VistaDBNewTestStore CreateDatabase9582()
             => CreateTestStore(
                 () => new MyContext9582(_options),
                 context =>
@@ -5813,7 +5813,7 @@ FROM [Blogs] AS [b]");
                 => blog.Id;
         }
 
-        private SqlServerTestStore CreateDatabase7222()
+        private VistaDBNewTestStore CreateDatabase7222()
             => CreateTestStore(
                 () => new MyContext7222(_options),
                 context =>
@@ -5952,7 +5952,7 @@ ORDER BY [p].[Id] DESC");
             }
         }
 
-        private SqlServerTestStore CreateDatabase17644()
+        private VistaDBNewTestStore CreateDatabase17644()
             => CreateTestStore(
                 () => new MyContext17644(_options),
                 context =>
@@ -6033,7 +6033,7 @@ ORDER BY [e].[Id], [t0].[Id], [t0].[Id0]");
             }
         }
 
-        private SqlServerTestStore CreateDatabase11023()
+        private VistaDBNewTestStore CreateDatabase11023()
             => CreateTestStore(
                 () => new MyContext11023(_options),
                 context =>
@@ -6140,7 +6140,7 @@ CROSS JOIN (
             }
         }
 
-        private SqlServerTestStore CreateDatabase7973()
+        private VistaDBNewTestStore CreateDatabase7973()
             => CreateTestStore(
                 () => new MyContext7973(_options),
                 context =>
@@ -6214,7 +6214,7 @@ CROSS JOIN (
             }
         }
 
-        private SqlServerTestStore CreateDatabase10447()
+        private VistaDBNewTestStore CreateDatabase10447()
             => CreateTestStore(
                 () => new MyContext10447(_options),
                 context =>
@@ -6337,7 +6337,7 @@ INNER JOIN [ActivityType12456] AS [a1] ON [a0].[ActivityTypeId] = [a1].[Id]");
             }
         }
 
-        private SqlServerTestStore CreateDatabase12456()
+        private VistaDBNewTestStore CreateDatabase12456()
             => CreateTestStore(
                 () => new MyContext12456(_options),
                 context =>
@@ -6453,7 +6453,7 @@ ORDER BY [t0].[Id], [t1].[Id], [t1].[Id0], [t1].[Id1]");
             }
         }
 
-        private SqlServerTestStore CreateDatabase15137()
+        private VistaDBNewTestStore CreateDatabase15137()
             => CreateTestStore(
                 () => new MyContext15137(_options),
                 context =>
@@ -6549,7 +6549,7 @@ LEFT JOIN (
 WHERE [e].[Id] = 1");
         }
 
-        private SqlServerTestStore CreateDatabase13517()
+        private VistaDBNewTestStore CreateDatabase13517()
             => CreateTestStore(
                 () => new BugContext13517(_options),
                 context =>
@@ -6630,7 +6630,7 @@ WHERE EXISTS (
     WHERE ([o].[Id] = [o0].[OfferId]) AND ([o0].[Action] = @__action_0))");
         }
 
-        private SqlServerTestStore CreateDatabase17794()
+        private VistaDBNewTestStore CreateDatabase17794()
             => CreateTestStore(
                 () => new BugContext17794(_options),
                 context =>
@@ -6758,7 +6758,7 @@ FROM [MockEntities] AS [m]");
                 message.Replace("\r", "").Replace("\n", ""));
         }
 
-        private SqlServerTestStore CreateDatabase18087()
+        private VistaDBNewTestStore CreateDatabase18087()
             => CreateTestStore(
                 () => new BugContext18087(_options),
                 context =>
@@ -6820,7 +6820,7 @@ LEFT JOIN [User18759] AS [u] ON [p].[UserDeleteId] = [u].[Id]
 WHERE [u].[Id] IS NOT NULL");
         }
 
-        private SqlServerTestStore CreateDatabase18759()
+        private VistaDBNewTestStore CreateDatabase18759()
             => CreateTestStore(
                 () => new BugContext18759(_options),
                 context =>
@@ -6881,7 +6881,7 @@ LEFT JOIN (
 ) AS [t0] ON [b].[Data] = [t0].[OtherEntityData]");
         }
 
-        private SqlServerTestStore CreateDatabase19138()
+        private VistaDBNewTestStore CreateDatabase19138()
             => CreateTestStore(
                 () => new BugContext19138(_options),
                 context =>
@@ -6993,7 +6993,7 @@ FROM [Customers] AS [c]
 LEFT JOIN [CustomerMemberships] AS [c0] ON [c].[Id] = [c0].[CustomerId]");
         }
 
-        private SqlServerTestStore CreateDatabase19708()
+        private VistaDBNewTestStore CreateDatabase19708()
             => CreateTestStore(
                 () => new BugContext19708(_options),
                 context =>
@@ -7186,7 +7186,7 @@ WHERE [e].[Id] = CAST(1 AS bigint)");
             return query.Where(a => a.Id == id);
         }
 
-        private SqlServerTestStore CreateDatabase20097()
+        private VistaDBNewTestStore CreateDatabase20097()
             => CreateTestStore(
                 () => new BugContext20097(_options),
                 context =>
@@ -7265,7 +7265,7 @@ WHERE [e].[Id] = CAST(1 AS bigint)");
 
         private BugContext20609 CreateContext20609()
         {
-            var testStore = SqlServerTestStore.CreateInitialized("QueryBugsTest", multipleActiveResultSets: true);
+            var testStore = VistaDBNewTestStore.CreateInitialized("QueryBugsTest", multipleActiveResultSets: true);
             var options = Fixture.AddOptions(testStore.AddProviderOptions(new DbContextOptionsBuilder()))
                 .EnableDetailedErrors()
                 .EnableServiceProviderCaching(false)
@@ -7549,7 +7549,7 @@ ORDER BY [p].[Id]"
 
             context.Parents.Include(p => p.Children1).Include(p => p.Children2).AsSplitQuery().ToList();
 
-            var connectionStringWithoutMars = SqlServerTestStore.CreateConnectionString("QueryBugsTest", multipleActiveResultSets: false);
+            var connectionStringWithoutMars = VistaDBNewTestStore.CreateConnectionString("QueryBugsTest", multipleActiveResultSets: false);
             var connection = context.GetService<IRelationalConnection>();
             connection.ConnectionString = connectionStringWithoutMars;
 
@@ -7581,11 +7581,11 @@ ORDER BY [p].[Id]"
             QuerySplittingBehavior? querySplittingBehavior,
             bool mars = true)
         {
-            var testStore = SqlServerTestStore.CreateInitialized("QueryBugsTest", multipleActiveResultSets: mars);
+            var testStore = VistaDBNewTestStore.CreateInitialized("QueryBugsTest", multipleActiveResultSets: mars);
             var testSqlLoggerFactory = new TestSqlLoggerFactory();
             var serviceProvider = new ServiceCollection().AddSingleton<ILoggerFactory>(testSqlLoggerFactory).BuildServiceProvider();
 
-            var optionsBuilder = Fixture.AddOptions(new DbContextOptionsBuilder().UseSqlServer(testStore.ConnectionString))
+            var optionsBuilder = Fixture.AddOptions(new DbContextOptionsBuilder().UseVistaDB(testStore.ConnectionString))
                 .EnableDetailedErrors()
                 .EnableServiceProviderCaching(false)
                 .UseApplicationServiceProvider(serviceProvider);
@@ -7737,7 +7737,7 @@ FROM [Parents] AS [p]");
             }
         }
 
-        private SqlServerTestStore CreateDatabase21540()
+        private VistaDBNewTestStore CreateDatabase21540()
             => CreateTestStore(
                 () => new MyContext21540(_options),
                 context =>
@@ -7822,7 +7822,7 @@ FROM [Businesses] AS [b]");
             }
         }
 
-        private SqlServerTestStore CreateDatabase18346()
+        private VistaDBNewTestStore CreateDatabase18346()
             => CreateTestStore(
                 () => new MyContext18346(_options),
                 context =>
@@ -7877,7 +7877,7 @@ FROM [Businesses] AS [b]");
             }
         }
 
-        private SqlServerTestStore CreateDatabase21666()
+        private VistaDBNewTestStore CreateDatabase21666()
             => CreateTestStore(
                 () => new MyContext21666(_options),
                 context =>
@@ -8026,7 +8026,7 @@ WHERE [b].[Id] = 1");
             }
         }
 
-        private SqlServerTestStore CreateDatabase21768()
+        private VistaDBNewTestStore CreateDatabase21768()
             => CreateTestStore(
                 () => new MyContext21768(_options),
                 context =>
@@ -8096,7 +8096,7 @@ CROSS JOIN (
             }
         }
 
-        private SqlServerTestStore CreateDatabase19206()
+        private VistaDBNewTestStore CreateDatabase19206()
             => CreateTestStore(
                 () => new MyContext19206(_options),
                 context =>
@@ -8185,7 +8185,7 @@ WHERE (([e].[Name] <> N'Foo') OR [e].[Name] IS NULL) AND ([e].[TenantId] = @__ef
             }
         }
 
-        private SqlServerTestStore CreateDatabase18510()
+        private VistaDBNewTestStore CreateDatabase18510()
             => CreateTestStore(
                 () => new MyContext18510(_options),
                 context =>
@@ -8281,7 +8281,7 @@ ORDER BY [e].[Id], [o].[Id]");
             }
         }
 
-        private SqlServerTestStore CreateDatabase21803()
+        private VistaDBNewTestStore CreateDatabase21803()
             => CreateTestStore(
                 () => new MyContext21803(_options),
                 context =>
@@ -8367,7 +8367,7 @@ FROM [Entity21807] AS [e]");
             }
         }
 
-        private SqlServerTestStore CreateDatabase21807()
+        private VistaDBNewTestStore CreateDatabase21807()
             => CreateTestStore(
                 () => new MyContext21807(_options),
                 context =>
@@ -8479,7 +8479,7 @@ ORDER BY [u].[Id] DESC");
             }
         }
 
-        private SqlServerTestStore CreateDatabase22054()
+        private VistaDBNewTestStore CreateDatabase22054()
             => CreateTestStore(
                 () => new MyContext22054(_options),
                 context =>
@@ -8644,7 +8644,7 @@ ORDER BY [t].[Id] DESC, [t3].[Id], [t3].[Id0], [t3].[Id1], [t3].[Id00]");
             }
         }
 
-        private SqlServerTestStore CreateDatabase14911()
+        private VistaDBNewTestStore CreateDatabase14911()
             => CreateTestStore(
                 () => new MyContext14911(_options),
                 context =>
@@ -8760,7 +8760,7 @@ WHERE (([a].[Id] = @__entity_equality_a_0_Id) AND ([a0].[Id] = @__entity_equalit
             public DbSet<EqualAuto15215> EqualAutos { get; set; }
         }
 
-        private SqlServerTestStore CreateDatabase15215()
+        private VistaDBNewTestStore CreateDatabase15215()
             => CreateTestStore(
                 () => new MyContext15215(_options),
                 context =>
@@ -8875,7 +8875,7 @@ ORDER BY [t].[Id], [t].[MasterTrunk22340Id], [t].[MasterTrunk22340Id0], [f0].[Cu
             }
         }
 
-        private SqlServerTestStore CreateDatabase22340()
+        private VistaDBNewTestStore CreateDatabase22340()
             => CreateTestStore(
                 () => new MyContext22340(_options),
                 context =>
@@ -9123,7 +9123,7 @@ FROM [CycleC] AS [c]");
             }
         }
 
-        private SqlServerTestStore CreateDatabase22568()
+        private VistaDBNewTestStore CreateDatabase22568()
             => CreateTestStore(
                 () => new MyContext22568(_options),
                 context =>
@@ -9263,7 +9263,7 @@ ORDER BY [t].[Id]");
             }
         }
 
-        private SqlServerTestStore CreateDatabase23211()
+        private VistaDBNewTestStore CreateDatabase23211()
             => CreateTestStore(
                 () => new MyContext23211(_options),
                 context =>
@@ -9515,11 +9515,11 @@ WHERE JSON_VALUE([b].[JObject], '$.Author') = N'Maumar'" });
 
         private (DbContextOptions, TestSqlLoggerFactory) CreateOptions23410()
         {
-            var testStore = SqlServerTestStore.CreateInitialized("QueryBugsTest");
+            var testStore = VistaDBNewTestStore.CreateInitialized("QueryBugsTest");
             var testSqlLoggerFactory = new TestSqlLoggerFactory();
             var serviceCollection = new ServiceCollection()
                 .AddSingleton<ILoggerFactory>(testSqlLoggerFactory)
-                .AddEntityFrameworkSqlServer();
+                .AddEntityFrameworkVistaDB();
             serviceCollection.TryAddEnumerable(new ServiceDescriptor(
                 typeof(IMethodCallTranslatorPlugin), typeof(JsonMethodCallTranslatorPlugin), ServiceLifetime.Singleton));
             var serviceProvider = serviceCollection.BuildServiceProvider();
@@ -9661,7 +9661,7 @@ WHERE JSON_VALUE([b].[JObject], '$.Author') = N'Maumar'" });
             }
         }
 
-        private SqlServerTestStore CreateDatabase23674()
+        private VistaDBNewTestStore CreateDatabase23674()
             => CreateTestStore(
                 () => new MyContext23674(_options),
                 context =>
@@ -9673,12 +9673,12 @@ WHERE JSON_VALUE([b].[JObject], '$.Author') = N'Maumar'" });
 
         private DbContextOptions _options;
 
-        private SqlServerTestStore CreateTestStore<TContext>(
+        private VistaDBNewTestStore CreateTestStore<TContext>(
             Func<TContext> contextCreator,
             Action<TContext> contextInitializer)
             where TContext : DbContext, IDisposable
         {
-            var testStore = SqlServerTestStore.CreateInitialized("QueryBugsTest", multipleActiveResultSets: true);
+            var testStore = VistaDBNewTestStore.CreateInitialized("QueryBugsTest", multipleActiveResultSets: true);
 
             _options = Fixture.CreateOptions(testStore);
 
