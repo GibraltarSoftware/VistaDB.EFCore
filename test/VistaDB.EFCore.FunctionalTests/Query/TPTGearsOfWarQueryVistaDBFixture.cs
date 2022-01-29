@@ -3,13 +3,14 @@
 
 using Microsoft.EntityFrameworkCore.TestModels.GearsOfWarModel;
 using Microsoft.EntityFrameworkCore.TestUtilities;
+using VistaDB.EntityFrameworkCore.FunctionalTests.TestUtilities;
 
 namespace Microsoft.EntityFrameworkCore.Query
 {
     public class TPTGearsOfWarQueryVistaDBFixture : TPTGearsOfWarQueryRelationalFixture
     {
         protected override ITestStoreFactory TestStoreFactory
-            => SqlServerTestStoreFactory.Instance;
+            => VistaDBTestStoreFactory.Instance;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder, DbContext context)
         {

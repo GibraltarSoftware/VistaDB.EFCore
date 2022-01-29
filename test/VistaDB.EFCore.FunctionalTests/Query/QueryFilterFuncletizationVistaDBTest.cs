@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using Microsoft.EntityFrameworkCore.TestUtilities;
+using VistaDB.EntityFrameworkCore.FunctionalTests.TestUtilities;
 using Xunit.Abstractions;
 
 namespace Microsoft.EntityFrameworkCore.Query
@@ -439,7 +440,7 @@ WHERE ([m].[IsEnabled] = @__ef_filter__Property_0) AND ([m].[BossId] = 1)");
         public class QueryFilterFuncletizationSqlServerFixture : QueryFilterFuncletizationRelationalFixture
         {
             protected override ITestStoreFactory TestStoreFactory
-                => SqlServerTestStoreFactory.Instance;
+                => VistaDBTestStoreFactory.Instance;
         }
     }
 }

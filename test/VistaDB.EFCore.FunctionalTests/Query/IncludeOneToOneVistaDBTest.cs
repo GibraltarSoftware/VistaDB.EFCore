@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using Microsoft.EntityFrameworkCore.TestUtilities;
+using VistaDB.EntityFrameworkCore.FunctionalTests.TestUtilities;
 using Xunit.Abstractions;
 
 namespace Microsoft.EntityFrameworkCore.Query
@@ -60,7 +61,7 @@ LEFT JOIN [Address2] AS [a] ON [p].[Id] = [a].[PersonId]");
         public class OneToOneQuerySqlServerFixture : OneToOneQueryFixtureBase
         {
             protected override ITestStoreFactory TestStoreFactory
-                => SqlServerTestStoreFactory.Instance;
+                => VistaDBTestStoreFactory.Instance;
 
             public TestSqlLoggerFactory TestSqlLoggerFactory
                 => (TestSqlLoggerFactory)ListLoggerFactory;

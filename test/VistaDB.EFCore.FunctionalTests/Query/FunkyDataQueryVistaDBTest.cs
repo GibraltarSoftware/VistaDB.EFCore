@@ -3,6 +3,7 @@
 
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.TestUtilities;
+using VistaDB.EntityFrameworkCore.FunctionalTests.TestUtilities;
 using Xunit.Abstractions;
 
 namespace Microsoft.EntityFrameworkCore.Query
@@ -468,7 +469,7 @@ ORDER BY [f].[Id]");
                 => (TestSqlLoggerFactory)ListLoggerFactory;
 
             protected override ITestStoreFactory TestStoreFactory
-                => SqlServerTestStoreFactory.Instance;
+                => VistaDBTestStoreFactory.Instance;
         }
     }
 }
