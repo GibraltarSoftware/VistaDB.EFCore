@@ -2,10 +2,11 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using Microsoft.EntityFrameworkCore.TestUtilities;
+using VistaDB.EntityFrameworkCore.FunctionalTests.TestUtilities;
 
 namespace Microsoft.EntityFrameworkCore.Query
 {
-    public class MappingQuerySqlServerTest : MappingQueryTestBase<MappingQuerySqlServerTest.MappingQuerySqlServerFixture>
+    public class MappingQuerySqlServerTest : MappingQueryTestBase<MappingQuerySqlServerTest.MappingQueryVistaDBFixture>
     {
         public override void All_customers()
         {
@@ -43,7 +44,7 @@ FROM [dbo].[Orders] AS [o]");
 FROM [dbo].[Orders] AS [o]");
         }
 
-        public MappingQuerySqlServerTest(MappingQuerySqlServerFixture fixture)
+        public MappingQuerySqlServerTest(MappingQueryVistaDBFixture fixture)
             : base(fixture)
         {
             Fixture.TestSqlLoggerFactory.Clear();
@@ -52,10 +53,10 @@ FROM [dbo].[Orders] AS [o]");
         private void AssertSql(params string[] expected)
             => Fixture.TestSqlLoggerFactory.AssertBaseline(expected);
 
-        public class MappingQuerySqlServerFixture : MappingQueryFixtureBase
+        public class MappingQueryVistaDBFixture : MappingQueryFixtureBase
         {
             protected override ITestStoreFactory TestStoreFactory
-                => SqlServerNorthwindTestStoreFactory.Instance;
+                => VistaDBNorthwindTestStoreFactory.Instance;
 
             protected override string DatabaseSchema { get; } = "dbo";
 

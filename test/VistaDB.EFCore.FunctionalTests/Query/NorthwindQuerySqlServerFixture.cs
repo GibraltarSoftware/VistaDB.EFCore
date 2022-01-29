@@ -4,6 +4,7 @@
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.TestModels.Northwind;
 using Microsoft.EntityFrameworkCore.TestUtilities;
+using VistaDB.EntityFrameworkCore.FunctionalTests.TestUtilities;
 
 namespace Microsoft.EntityFrameworkCore.Query
 {
@@ -11,7 +12,7 @@ namespace Microsoft.EntityFrameworkCore.Query
         where TModelCustomizer : IModelCustomizer, new()
     {
         protected override ITestStoreFactory TestStoreFactory
-            => SqlServerNorthwindTestStoreFactory.Instance;
+            => VistaDBNorthwindTestStoreFactory.Instance;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder, DbContext context)
         {

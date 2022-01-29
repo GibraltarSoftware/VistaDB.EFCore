@@ -39,8 +39,8 @@ namespace VistaDB.EntityFrameworkCore.FunctionalTests.TestUtilities
             => Environment.CurrentDirectory;
 
         public static VistaDBNewTestStore GetNorthwindStore()
-            => (VistaDBNewTestStore)SqlServerNorthwindTestStoreFactory.Instance
-                .GetOrCreate(SqlServerNorthwindTestStoreFactory.Name).Initialize(null, (Func<DbContext>)null);
+            => (VistaDBNewTestStore)VistaDBNorthwindTestStoreFactory.Instance
+                .GetOrCreate(VistaDBNorthwindTestStoreFactory.Name).Initialize(null, (Func<DbContext>)null);
 
         public static VistaDBNewTestStore GetOrCreate(string name)
             => new VistaDBNewTestStore(name);
