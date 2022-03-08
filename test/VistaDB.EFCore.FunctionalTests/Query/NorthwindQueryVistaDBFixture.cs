@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.TestModels.Northwind;
 using Microsoft.EntityFrameworkCore.TestUtilities;
@@ -12,6 +13,11 @@ namespace Microsoft.EntityFrameworkCore.Query
         where TModelCustomizer : IModelCustomizer, new()
     {
         protected override ITestStoreFactory TestStoreFactory => VistaDBNorthwindTestStoreFactory.Instance;
+
+        public override async Task InitializeAsync()
+        {
+            await base.InitializeAsync();
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder, DbContext context)
         {

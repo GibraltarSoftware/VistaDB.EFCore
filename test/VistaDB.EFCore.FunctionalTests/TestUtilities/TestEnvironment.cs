@@ -21,6 +21,9 @@ namespace Microsoft.EntityFrameworkCore.TestUtilities
         public static string DefaultConnection { get; } = Config["DefaultConnection"]
             ?? "Data Source=(localdb)\\MSSQLLocalDB;Database=master;Integrated Security=True;Connect Timeout=60;ConnectRetryCount=0";
 
+        public static string EmptyVistaDBConnection { get; } = Config["VistaDBConnection"]
+            ?? "Open Mode=ExclusiveReadWrite"; // No default Data Source; allow them to CREATE DATABASE....
+
         private static readonly string _dataSource = new SqlConnectionStringBuilder(DefaultConnection).DataSource;
 
         public static bool IsConfigured { get; } = !string.IsNullOrEmpty(_dataSource);

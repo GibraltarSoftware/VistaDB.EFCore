@@ -537,7 +537,7 @@ namespace VistaDB.EntityFrameworkCore.FunctionalTests.TestUtilities
 
         public static string CreateConnectionString(string name, string fileName = null, bool? multipleActiveResultSets = null)
         {
-            var builder = new VistaDBConnectionStringBuilder(TestEnvironment.DefaultConnection)
+            var builder = new VistaDBConnectionStringBuilder(TestEnvironment.EmptyVistaDBConnection)
             {
                 //MultipleActiveResultSets = multipleActiveResultSets ?? new Random().Next(0, 2) == 1,
                 //InitialCatalog = name,
