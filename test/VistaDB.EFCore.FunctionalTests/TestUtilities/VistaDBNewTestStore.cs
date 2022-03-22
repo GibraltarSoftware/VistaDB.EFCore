@@ -107,7 +107,7 @@ namespace VistaDB.EntityFrameworkCore.FunctionalTests.TestUtilities
                 else
                 {
                     using var context = createContext();
-                    context.Database.EnsureCreatedResiliently();
+                    //context.Database.EnsureCreatedResiliently();
                     seed?.Invoke(context);
                 }
             }
