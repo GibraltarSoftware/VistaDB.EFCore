@@ -10,10 +10,10 @@ using Xunit.Abstractions;
 
 namespace Microsoft.EntityFrameworkCore.Query
 {
-    public class NorthwindCompiledQueryVistaDBTest : NorthwindCompiledQueryTestBase<NorthwindQuerySqlServerFixture<NoopModelCustomizer>>
+    public class NorthwindCompiledQueryVistaDBTest : NorthwindCompiledQueryTestBase<NorthwindQueryVistaDBFixture<NoopModelCustomizer>>
     {
         public NorthwindCompiledQueryVistaDBTest(
-            NorthwindQuerySqlServerFixture<NoopModelCustomizer> fixture,
+            NorthwindQueryVistaDBFixture<NoopModelCustomizer> fixture,
             ITestOutputHelper testOutputHelper)
             : base(fixture)
         {
