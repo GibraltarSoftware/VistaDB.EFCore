@@ -8,10 +8,7 @@ namespace Microsoft.EntityFrameworkCore.Query
     [Collection(SetupFixture.CollectionName)]
     public class IncludeVistaDBFixture : NorthwindQueryVistaDBFixture<NoopModelCustomizer>
     {
-        /* IncludeIgnoredWarning is apparently now obsolete and no property is provided for it,
-         * so this override is probably no longer needed.
         public override DbContextOptionsBuilder AddOptions(DbContextOptionsBuilder builder)
-            => base.AddOptions(builder).ConfigureWarnings(c => c.Log(CoreEventId.IncludeIgnoredWarning));
-        */
+            => base.AddOptions(builder).ConfigureWarnings(c => c.Log(CoreEventId.NavigationBaseIncludeIgnored)); // Obsolete: CoreEventId.IncludeIgnoredWarning));
     }
 }

@@ -7549,7 +7549,7 @@ ORDER BY [p].[Id]"
 
             context.Parents.Include(p => p.Children1).Include(p => p.Children2).AsSplitQuery().ToList();
 
-            var connectionStringWithoutMars = VistaDBNewTestStore.CreateConnectionString("QueryBugsTest", multipleActiveResultSets: false);
+            var connectionStringWithoutMars = VistaDBNewTestStore.CreateConnectionString("QueryBugsTest"); //, multipleActiveResultSets: false);
             var connection = context.GetService<IRelationalConnection>();
             connection.ConnectionString = connectionStringWithoutMars;
 

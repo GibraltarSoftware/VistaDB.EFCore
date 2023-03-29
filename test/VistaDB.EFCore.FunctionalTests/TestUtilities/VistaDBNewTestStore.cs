@@ -39,11 +39,15 @@ namespace VistaDB.EntityFrameworkCore.FunctionalTests.TestUtilities
             => Environment.CurrentDirectory;
 
         public static VistaDBNewTestStore GetNorthwindStore()
-            => new VistaDBNewTestStore(VistaDBNorthwindTestStoreFactory.Name).InitializeVistaDB(null, (Func<DbContext>)null, null);
+            => new VistaDBNewTestStore(VistaDBNorthwindTestStoreFactory.Name, readOnlyConnection: true)
+                .InitializeVistaDB(null, (Func<DbContext>)null, null);
         /* Was:
             => (VistaDBNewTestStore)VistaDBNorthwindTestStoreFactory.Instance
                 .GetOrCreate(VistaDBNorthwindTestStoreFactory.Name).Initialize(null, (Func<DbContext>)null);
         */
+
+        public VistaDBNewTestStore InitializeNorthwind()
+            => InitializeVistaDB(null, (Func<DbContext>)null, null, null);
 
         public static VistaDBNewTestStore GetOrCreate(string name)
             => new VistaDBNewTestStore(name);
@@ -69,7 +73,8 @@ namespace VistaDB.EntityFrameworkCore.FunctionalTests.TestUtilities
             //bool useFileName = false,
             //bool? multipleActiveResultSets = null,
             string scriptPath = null,
-            bool shared = true)
+            bool shared = true,
+            bool readOnlyConnection = false)
             : base(name, shared)
         {
             _name = name;
@@ -80,24 +85,27 @@ namespace VistaDB.EntityFrameworkCore.FunctionalTests.TestUtilities
                 _scriptPath = Path.Combine(Path.GetDirectoryName(typeof(VistaDBNewTestStore).Assembly.Location), scriptPath);
             }
 
-            ConnectionString = CreateConnectionString(Name, _fileName);
+            ConnectionString = CreateConnectionString(Name, _fileName, readOnlyConnection: readOnlyConnection);
             Connection = new VistaDBConnection(ConnectionString);
         }
 
         public VistaDBNewTestStore InitializeVistaDB(
             IServiceProvider serviceProvider,
             Func<DbContext> createContext,
-            Action<DbContext> seed)
-            => (VistaDBNewTestStore)Initialize(serviceProvider, createContext, seed);
+            Action<DbContext> seed,
+            Action<DbContext> clean = null)
+            => (VistaDBNewTestStore)Initialize(serviceProvider, createContext, seed, clean);
 
         public VistaDBNewTestStore InitializeVistaDB(
             IServiceProvider serviceProvider,
             Func<VistaDBNewTestStore, DbContext> createContext,
-            Action<DbContext> seed)
-            => InitializeVistaDB(serviceProvider, () => createContext(this), seed);
+            Action<DbContext> seed,
+            Action<DbContext> clean = null)
+            => InitializeVistaDB(serviceProvider, () => createContext(this), seed, clean);
 
         protected override void Initialize(Func<DbContext> createContext, Action<DbContext> seed, Action<DbContext> clean)
         {
+            // TODO: Need to tweak this (or elsewhere and remove this).  Is it important for non-Northwind cases?
             if (CreateDatabase(clean))
             {
                 if (_scriptPath != null)
@@ -147,7 +155,7 @@ namespace VistaDB.EntityFrameworkCore.FunctionalTests.TestUtilities
 
         public override DbContextOptionsBuilder AddProviderOptions(DbContextOptionsBuilder builder)
             => builder
-                .UseSqlServer(Connection, b => b.ApplyConfiguration())
+                .UseVistaDB(Connection, b => b.ApplyConfiguration())
                 .ConfigureWarnings(b => b.Ignore(SqlServerEventId.SavepointsDisabledBecauseOfMARS));
 
         private bool CreateDatabase(Action<DbContext> clean)
@@ -169,6 +177,9 @@ namespace VistaDB.EntityFrameworkCore.FunctionalTests.TestUtilities
                         return true;
                     }
                 }
+
+                if (Shared || _deleteDatabase == false) // Don't delete a shared database that already exists.
+                    return false; // TODO: Or should this return true???
 
                 DeleteDatabase();
             }
@@ -538,15 +549,17 @@ namespace VistaDB.EntityFrameworkCore.FunctionalTests.TestUtilities
             base.Dispose();
         }
 
-        public static string CreateConnectionString(string name, string fileName = null, bool? multipleActiveResultSets = null)
+        public static string CreateConnectionString(string name, string fileName = null, bool readOnlyConnection = false)
         {
             var builder = new VistaDBConnectionStringBuilder(TestEnvironment.EmptyVistaDBConnection)
-            {
-                //MultipleActiveResultSets = multipleActiveResultSets ?? new Random().Next(0, 2) == 1,
-                //InitialCatalog = name,
-                DataSource = fileName ?? (name + VistaDBExtension),
-                OpenMode = VistaDBDatabaseOpenMode.MultiProcessReadWrite,
-            };
+                          {
+                              //MultipleActiveResultSets = multipleActiveResultSets ?? new Random().Next(0, 2) == 1,
+                              //InitialCatalog = name,
+                              DataSource = fileName ?? (name + VistaDBExtension),
+                              OpenMode = readOnlyConnection
+                                  ? VistaDBDatabaseOpenMode.SharedReadOnly
+                                  : VistaDBDatabaseOpenMode.MultiProcessReadWrite,
+                          };
             /*
             if (fileName != null)
             {
