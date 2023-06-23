@@ -10,10 +10,10 @@ namespace Microsoft.EntityFrameworkCore.Query
 {
     public class InheritanceRelationshipsQueryVistaDBTest
         : InheritanceRelationshipsQueryRelationalTestBase<
-            InheritanceRelationshipsQueryVistaDBTest.InheritanceRelationshipsQuerySqlServerFixture>
+            InheritanceRelationshipsQueryVistaDBTest.InheritanceRelationshipsQueryVistaDBFixture>
     {
         public InheritanceRelationshipsQueryVistaDBTest(
-            InheritanceRelationshipsQuerySqlServerFixture fixture,
+            InheritanceRelationshipsQueryVistaDBFixture fixture,
             ITestOutputHelper testOutputHelper)
             : base(fixture)
         {
@@ -1249,10 +1249,15 @@ ORDER BY [b].[Id]");
         private void AssertSql(params string[] expected)
             => Fixture.TestSqlLoggerFactory.AssertBaseline(expected);
 
-        public class InheritanceRelationshipsQuerySqlServerFixture : InheritanceRelationshipsQueryRelationalFixture
+        public class InheritanceRelationshipsQueryVistaDBFixture : InheritanceRelationshipsQueryRelationalFixture
         {
             protected override ITestStoreFactory TestStoreFactory
                 => VistaDBTestStoreFactory.Instance;
+
+            public override async Task InitializeAsync()
+            {
+                await base.InitializeAsync();
+            }
         }
     }
 }

@@ -1,6 +1,7 @@
 // Copyright (c) .NET Foundation. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.TestUtilities;
 using VistaDB.EntityFrameworkCore.FunctionalTests.TestUtilities;
 using Xunit.Abstractions;
@@ -9,9 +10,9 @@ using Xunit.Abstractions;
 
 namespace Microsoft.EntityFrameworkCore.Query
 {
-    public class UdfDbFunctionVistaDBTests : UdfDbFunctionTestBase<UdfDbFunctionVistaDBTests.SqlServer>
+    public class UdfDbFunctionVistaDBTests : UdfDbFunctionTestBase<UdfDbFunctionVistaDBTests.VistaDB>
     {
-        public UdfDbFunctionVistaDBTests(SqlServer fixture, ITestOutputHelper testOutputHelper)
+        public UdfDbFunctionVistaDBTests(VistaDB fixture, ITestOutputHelper testOutputHelper)
             : base(fixture)
         {
             Fixture.TestSqlLoggerFactory.Clear();
@@ -787,12 +788,17 @@ ORDER BY [a].[Id], [g].[Year]");
             Fixture.TestSqlLoggerFactory.Clear();
         }
 
-        public class SqlServer : UdfFixtureBase
+        public class VistaDB : UdfFixtureBase
         {
             protected override string StoreName { get; } = "UDFDbFunctionSqlServerTests";
 
             protected override ITestStoreFactory TestStoreFactory
                 => VistaDBTestStoreFactory.Instance;
+
+            public override async Task InitializeAsync()
+            {
+                await base.InitializeAsync();
+            }
 
             protected override void Seed(DbContext context)
             {

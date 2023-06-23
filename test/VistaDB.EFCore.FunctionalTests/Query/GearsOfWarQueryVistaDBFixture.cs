@@ -3,6 +3,7 @@
 
 using Microsoft.EntityFrameworkCore.TestModels.GearsOfWarModel;
 using Microsoft.EntityFrameworkCore.TestUtilities;
+using System.Threading.Tasks;
 using VistaDB.EntityFrameworkCore.FunctionalTests.TestUtilities;
 
 namespace Microsoft.EntityFrameworkCore.Query
@@ -11,6 +12,11 @@ namespace Microsoft.EntityFrameworkCore.Query
     {
         protected override ITestStoreFactory TestStoreFactory
             => VistaDBTestStoreFactory.Instance;
+
+        public override async Task InitializeAsync()
+        {
+            await base.InitializeAsync();
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder, DbContext context)
         {

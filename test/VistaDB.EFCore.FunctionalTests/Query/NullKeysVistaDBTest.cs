@@ -2,21 +2,27 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using Microsoft.EntityFrameworkCore.TestUtilities;
+using System.Threading.Tasks;
 using VistaDB.EntityFrameworkCore.FunctionalTests.TestUtilities;
 
 namespace Microsoft.EntityFrameworkCore.Query
 {
-    public class NullKeysVistaDBTest : NullKeysTestBase<NullKeysVistaDBTest.NullKeysSqlServerFixture>
+    public class NullKeysVistaDBTest : NullKeysTestBase<NullKeysVistaDBTest.NullKeysVistaaDBFixture>
     {
-        public NullKeysVistaDBTest(NullKeysSqlServerFixture fixture)
+        public NullKeysVistaDBTest(NullKeysVistaaDBFixture fixture)
             : base(fixture)
         {
         }
 
-        public class NullKeysSqlServerFixture : NullKeysFixtureBase
+        public class NullKeysVistaaDBFixture : NullKeysFixtureBase
         {
             protected override ITestStoreFactory TestStoreFactory
                 => VistaDBTestStoreFactory.Instance;
+
+            public override async Task InitializeAsync()
+            {
+                await base.InitializeAsync();
+            }
         }
     }
 }

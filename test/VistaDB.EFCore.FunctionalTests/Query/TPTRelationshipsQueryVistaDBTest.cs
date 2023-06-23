@@ -9,10 +9,10 @@ using Xunit.Abstractions;
 namespace Microsoft.EntityFrameworkCore.Query
 {
     public class TPTRelationshipsQueryVistaDBTest
-        : TPTRelationshipsQueryTestBase<TPTRelationshipsQueryVistaDBTest.TPTRelationshipsQuerySqlServerFixture>
+        : TPTRelationshipsQueryTestBase<TPTRelationshipsQueryVistaDBTest.TPTRelationshipsQueryVistaDBFixture>
     {
         public TPTRelationshipsQueryVistaDBTest(
-            TPTRelationshipsQuerySqlServerFixture fixture,
+            TPTRelationshipsQueryVistaDBFixture fixture,
             ITestOutputHelper testOutputHelper)
             : base(fixture)
         {
@@ -1838,10 +1838,15 @@ ORDER BY [b].[Id]");
         private void AssertSql(params string[] expected)
             => Fixture.TestSqlLoggerFactory.AssertBaseline(expected);
 
-        public class TPTRelationshipsQuerySqlServerFixture : TPTRelationshipsQueryRelationalFixture
+        public class TPTRelationshipsQueryVistaDBFixture : TPTRelationshipsQueryRelationalFixture
         {
             protected override ITestStoreFactory TestStoreFactory
                 => VistaDBTestStoreFactory.Instance;
+
+            public override async Task InitializeAsync()
+            {
+                await base.InitializeAsync();
+            }
         }
     }
 }

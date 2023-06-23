@@ -2,16 +2,17 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using Microsoft.EntityFrameworkCore.TestUtilities;
+using System.Threading.Tasks;
 using VistaDB.EntityFrameworkCore.FunctionalTests.TestUtilities;
 using Xunit.Abstractions;
 
 namespace Microsoft.EntityFrameworkCore.Query
 {
     public class QueryFilterFuncletizationVistaDBTest
-        : QueryFilterFuncletizationTestBase<QueryFilterFuncletizationVistaDBTest.QueryFilterFuncletizationSqlServerFixture>
+        : QueryFilterFuncletizationTestBase<QueryFilterFuncletizationVistaDBTest.QueryFilterFuncletizationVistaDBFixture>
     {
         public QueryFilterFuncletizationVistaDBTest(
-            QueryFilterFuncletizationSqlServerFixture fixture,
+            QueryFilterFuncletizationVistaDBFixture fixture,
             ITestOutputHelper testOutputHelper)
             : base(fixture)
         {
@@ -437,10 +438,15 @@ WHERE ([m].[IsEnabled] = @__ef_filter__Property_0) AND ([m].[BossId] = 1)");
         private void AssertSql(params string[] expected)
             => Fixture.TestSqlLoggerFactory.AssertBaseline(expected);
 
-        public class QueryFilterFuncletizationSqlServerFixture : QueryFilterFuncletizationRelationalFixture
+        public class QueryFilterFuncletizationVistaDBFixture : QueryFilterFuncletizationRelationalFixture
         {
             protected override ITestStoreFactory TestStoreFactory
                 => VistaDBTestStoreFactory.Instance;
+
+            public override async Task InitializeAsync()
+            {
+                await base.InitializeAsync();
+            }
         }
     }
 }

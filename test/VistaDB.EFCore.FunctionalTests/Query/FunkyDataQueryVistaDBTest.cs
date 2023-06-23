@@ -8,9 +8,9 @@ using Xunit.Abstractions;
 
 namespace Microsoft.EntityFrameworkCore.Query
 {
-    public class FunkyDataQueryVistaDBTest : FunkyDataQueryTestBase<FunkyDataQueryVistaDBTest.FunkyDataQuerySqlServerFixture>
+    public class FunkyDataQueryVistaDBTest : FunkyDataQueryTestBase<FunkyDataQueryVistaDBTest.FunkyDataQueryVistaDBFixture>
     {
-        public FunkyDataQueryVistaDBTest(FunkyDataQuerySqlServerFixture fixture, ITestOutputHelper testOutputHelper)
+        public FunkyDataQueryVistaDBTest(FunkyDataQueryVistaDBFixture fixture, ITestOutputHelper testOutputHelper)
             : base(fixture)
         {
             Fixture.TestSqlLoggerFactory.Clear();
@@ -20,7 +20,7 @@ namespace Microsoft.EntityFrameworkCore.Query
         protected virtual bool CanExecuteQueryString
             => true;
 
-        protected override QueryAsserter CreateQueryAsserter(FunkyDataQuerySqlServerFixture fixture)
+        protected override QueryAsserter CreateQueryAsserter(FunkyDataQueryVistaDBFixture fixture)
             => new RelationalQueryAsserter(
                 fixture, RewriteExpectedQueryExpression, RewriteServerQueryExpression, canExecuteQueryString: CanExecuteQueryString);
 
@@ -463,13 +463,18 @@ ORDER BY [f].[Id]");
         private void AssertSql(params string[] expected)
             => Fixture.TestSqlLoggerFactory.AssertBaseline(expected);
 
-        public class FunkyDataQuerySqlServerFixture : FunkyDataQueryFixtureBase
+        public class FunkyDataQueryVistaDBFixture : FunkyDataQueryFixtureBase
         {
             public TestSqlLoggerFactory TestSqlLoggerFactory
                 => (TestSqlLoggerFactory)ListLoggerFactory;
 
             protected override ITestStoreFactory TestStoreFactory
                 => VistaDBTestStoreFactory.Instance;
+
+            public override async Task InitializeAsync()
+            {
+                await base.InitializeAsync();
+            }
         }
     }
 }

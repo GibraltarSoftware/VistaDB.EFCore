@@ -2,14 +2,15 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using Microsoft.EntityFrameworkCore.TestUtilities;
+using System.Threading.Tasks;
 using VistaDB.EntityFrameworkCore.FunctionalTests.TestUtilities;
 using Xunit.Abstractions;
 
 namespace Microsoft.EntityFrameworkCore.Query
 {
-    public class IncludeOneToOneVistaDBTest : IncludeOneToOneTestBase<IncludeOneToOneVistaDBTest.OneToOneQuerySqlServerFixture>
+    public class IncludeOneToOneVistaDBTest : IncludeOneToOneTestBase<IncludeOneToOneVistaDBTest.OneToOneQueryVistaDBFixture>
     {
-        public IncludeOneToOneVistaDBTest(OneToOneQuerySqlServerFixture fixture, ITestOutputHelper testOutputHelper)
+        public IncludeOneToOneVistaDBTest(OneToOneQueryVistaDBFixture fixture, ITestOutputHelper testOutputHelper)
             : base(fixture)
         {
             fixture.TestSqlLoggerFactory.Clear();
@@ -58,10 +59,15 @@ LEFT JOIN [Address2] AS [a] ON [p].[Id] = [a].[PersonId]");
         private void AssertSql(params string[] expected)
             => Fixture.TestSqlLoggerFactory.AssertBaseline(expected);
 
-        public class OneToOneQuerySqlServerFixture : OneToOneQueryFixtureBase
+        public class OneToOneQueryVistaDBFixture : OneToOneQueryFixtureBase
         {
             protected override ITestStoreFactory TestStoreFactory
                 => VistaDBTestStoreFactory.Instance;
+
+            public override async Task InitializeAsync()
+            {
+                await base.InitializeAsync();
+            }
 
             public TestSqlLoggerFactory TestSqlLoggerFactory
                 => (TestSqlLoggerFactory)ListLoggerFactory;

@@ -8,9 +8,9 @@ using Xunit.Abstractions;
 
 namespace Microsoft.EntityFrameworkCore.Query
 {
-    public class OwnedQueryVistaDBTest : OwnedQueryRelationalTestBase<OwnedQueryVistaDBTest.OwnedQuerySqlServerFixture>
+    public class OwnedQueryVistaDBTest : OwnedQueryRelationalTestBase<OwnedQueryVistaDBTest.OwnedQueryVistaDBFixture>
     {
-        public OwnedQueryVistaDBTest(OwnedQuerySqlServerFixture fixture, ITestOutputHelper testOutputHelper)
+        public OwnedQueryVistaDBTest(OwnedQueryVistaDBFixture fixture, ITestOutputHelper testOutputHelper)
             : base(fixture)
         {
             Fixture.TestSqlLoggerFactory.SetTestOutputHelper(testOutputHelper);
@@ -1169,10 +1169,15 @@ ORDER BY [f].[Id], [b].[Id], [p].[Id]");
         private void AssertSql(params string[] expected)
             => Fixture.TestSqlLoggerFactory.AssertBaseline(expected);
 
-        public class OwnedQuerySqlServerFixture : RelationalOwnedQueryFixture
+        public class OwnedQueryVistaDBFixture : RelationalOwnedQueryFixture
         {
             protected override ITestStoreFactory TestStoreFactory
                 => VistaDBTestStoreFactory.Instance;
+
+            public override async Task InitializeAsync()
+            {
+                await base.InitializeAsync();
+            }
         }
     }
 }

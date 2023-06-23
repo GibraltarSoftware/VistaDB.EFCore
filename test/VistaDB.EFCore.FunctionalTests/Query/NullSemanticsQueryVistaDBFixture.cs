@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See License.txt in the project root for license information.
 
 using Microsoft.EntityFrameworkCore.TestUtilities;
+using System.Threading.Tasks;
 using VistaDB.EntityFrameworkCore.FunctionalTests.TestUtilities;
 
 namespace Microsoft.EntityFrameworkCore.Query
@@ -10,5 +11,10 @@ namespace Microsoft.EntityFrameworkCore.Query
     {
         protected override ITestStoreFactory TestStoreFactory
             => VistaDBTestStoreFactory.Instance;
+
+        public override async Task InitializeAsync()
+        {
+            await base.InitializeAsync();
+        }
     }
 }
