@@ -133,18 +133,18 @@ namespace VistaDB.EntityFrameworkCore.FunctionalTests.TestUtilities
             }
             while (File.Exists(name + VistaDBExtension));
 
-            return new VistaDBNewTestStore(name).CreateTransient(createDatabase);
+            return new VistaDBNewTestStore(name, shared: false).CreateTransient(createDatabase);
         }
 
         private VistaDBNewTestStore CreateTransient(bool createDatabase)
         {
-            ConnectionString = CreateConnectionString(_name);
+            ConnectionString = TestEnvironment.EmptyVistaDBConnection; // No initial Data Source... will create one.
 
             Connection = new VistaDBConnection(ConnectionString);
 
             if (createDatabase)
             {
-                ((VistaDBConnection)Connection).CreateEmptyDatabase();
+                ((VistaDBConnection)Connection).CreateEmptyDatabase(_fileName); // TODO: Replace this call.
                 Connection.Open();
             }
 
@@ -542,7 +542,13 @@ namespace VistaDB.EntityFrameworkCore.FunctionalTests.TestUtilities
         {
             if (_deleteDatabase)
             {
-                ((VistaDBConnection)Connection).Drop(/*throwOnOpen: false*/);
+                Connection?.Close();
+
+                Thread.Sleep(100);
+
+                File.Delete(_fileName);
+
+                Thread.Sleep(100);
             }
 
             Connection?.Dispose();
@@ -571,19 +577,28 @@ namespace VistaDB.EntityFrameworkCore.FunctionalTests.TestUtilities
         }
     }
 
-    public static class VistaDBTestExtensions
+    public static class VistaDBTestExtensions // TODO: Remove these extension methods
     {
-        public static void CreateEmptyDatabase(this VistaDBConnection conn)
+        public static void CreateEmptyDatabase(this VistaDBConnection conn, string fileName)
         {
-            // Needs implementation.
-            throw new NotImplementedException(
-                "VistaDBTestExtensions.CreateEmptyDatabase(this VistaDBConnection conn) is not yet implemented");
+            using (var command = conn.CreateCommand())
+            {
+                command.CommandText = $"create database '{fileName}', page size 4";
+                command.ExecuteNonQuery();
+
+                // Our connection is now connected to the new database?
+            }
         }
 
-        public static void Drop(this VistaDBConnection conn)
+        public static void Drop(this VistaDBConnection conn, string fileName)
         {
-            // Needs implementation.
-            throw new NotImplementedException("VistaDBTestExtensions.Drop(this VistaDBConnection conn) is not yet implemented");
+            conn.Close();
+
+            Thread.Sleep(100);
+
+            File.Delete(fileName);
+
+            Thread.Sleep(100);
         }
     }
 }
