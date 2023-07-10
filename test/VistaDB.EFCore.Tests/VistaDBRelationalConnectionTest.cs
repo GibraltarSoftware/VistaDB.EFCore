@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.Storage.Internal;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
-using VistaDB.EntityFrameworkCore.Storage.Internal;
+using VistaDB.EntityFrameworkCore.Provider.Storage.Internal;
 using VistaDB.Provider;
 using Xunit;
 

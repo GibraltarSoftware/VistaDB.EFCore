@@ -5,8 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Storage.Internal;
 using VistaDB.Provider;
-using VistaDB.EntityFrameworkCore.Storage.Internal;
+using VistaDB.EntityFrameworkCore.Provider.Storage.Internal;
 
 namespace Microsoft.EntityFrameworkCore.TestUtilities
 {
@@ -52,7 +53,8 @@ namespace Microsoft.EntityFrameworkCore.TestUtilities
             _name = name;
         }
 
-        protected override void Initialize(Func<DbContext> createContext, Action<DbContext> seed)
+        public override TestStore Initialize(IServiceProvider serviceProvider, Func<DbContext> createContext,
+                                             Action<DbContext> seed, Action<DbContext> clear)
         {
             using (var context = createContext())
             {

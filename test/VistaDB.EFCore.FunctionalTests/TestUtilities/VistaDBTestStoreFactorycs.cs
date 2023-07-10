@@ -1,9 +1,10 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.EntityFrameworkCore.TestUtilities;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace Microsoft.EntityFrameworkCore.TestUtilities
+namespace VistaDB.EntityFrameworkCore.FunctionalTests.TestUtilities
 {
-    public class VistaDBTestStoreFactory : ITestStoreFactory
+    public class VistaDBTestStoreFactory : RelationalTestStoreFactory
     {
         public static VistaDBTestStoreFactory Instance { get; } = new VistaDBTestStoreFactory();
 
@@ -11,13 +12,13 @@ namespace Microsoft.EntityFrameworkCore.TestUtilities
         {
         }
 
-        public virtual TestStore Create(string storeName)
-            => VistaDBTestStore.Create(storeName);
+        public override TestStore Create(string storeName)
+            => VistaDBNewTestStore.Create(storeName);
 
-        public virtual TestStore GetOrCreate(string storeName)
-            => VistaDBTestStore.CreateScratch(true);
+        public override TestStore GetOrCreate(string storeName)
+            => VistaDBNewTestStore.CreateScratch(true);
 
-        public virtual IServiceCollection AddProviderServices(IServiceCollection serviceCollection)
+        public override IServiceCollection AddProviderServices(IServiceCollection serviceCollection)
             => serviceCollection.AddEntityFrameworkVistaDB()
                 .AddSingleton<ILoggerFactory>(new TestSqlLoggerFactory());
     }

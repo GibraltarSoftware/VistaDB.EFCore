@@ -14,7 +14,7 @@ namespace Microsoft.EntityFrameworkCore.TestUtilities
         public override IServiceCollection AddProviderServices(IServiceCollection services)
             => services.AddEntityFrameworkVistaDB();
 
-        protected override void UseProviderOptions(DbContextOptionsBuilder optionsBuilder)
+        public override void UseProviderOptions(DbContextOptionsBuilder optionsBuilder)
             => optionsBuilder.UseVistaDB(new VistaDBConnection("Database=DummyDatabase"));
     }
 }

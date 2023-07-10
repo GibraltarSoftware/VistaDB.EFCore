@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.TestUtilities;
 using VistaDB.EntityFrameworkCore.FunctionalTests;
+using VistaDB.EntityFrameworkCore.FunctionalTests.TestUtilities;
 using Xunit;
 
 namespace Microsoft.EntityFrameworkCore.Query
@@ -30,9 +31,14 @@ namespace Microsoft.EntityFrameworkCore.Query
                 modelBuilder.Entity<MappedCustomer>(
                     e =>
                     {
-                        e.Property(c => c.CompanyName2).Metadata.Relational().ColumnName = "CompanyName";
-                        e.Metadata.Relational().TableName = "Customers";
+                        e.Property(c => c.CompanyName2).Metadata.SetColumnName("CompanyName");
+                        e.Metadata.SetTableName("Customers");
+                        e.Metadata.SetSchema("dbo");
                     });
+
+                modelBuilder.Entity<MappedEmployee>()
+                    .Property(c => c.EmployeeID)
+                    .HasColumnType("int");
             }
         }
     }

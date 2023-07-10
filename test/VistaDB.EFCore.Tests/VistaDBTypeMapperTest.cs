@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.EntityFrameworkCore.TestUtilities;
-using VistaDB.EntityFrameworkCore.Storage.Internal;
+using VistaDB.EntityFrameworkCore.Provider.Storage.Internal;
 using Xunit;
 
 namespace Microsoft.EntityFrameworkCore

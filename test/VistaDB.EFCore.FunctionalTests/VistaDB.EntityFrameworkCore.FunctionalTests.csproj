@@ -9,6 +9,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="TestUtilities\VistaDBTestStore.cs" />
+    <Compile Remove="VistaDBDatabaseCreationTest.cs" />
+    <Compile Remove="VistaDBDataStoreCreatorTest.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Northwind.vdb6" />
   </ItemGroup>
 
@@ -17,22 +23,33 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
+
+  <ItemGroup>
+    <None Include="TestUtilities\VistaDBTestStore.cs" />
+    <None Include="VistaDBDatabaseCreationTest.cs" />
+    <None Include="VistaDBDataStoreCreatorTest.cs" />
+  </ItemGroup>
   
   <ItemGroup>
     <PackageReference Include="Loupe.Agent.Core.Extensibility" Version="4.13.0.2" />
     <PackageReference Include="Loupe.Agent.Core.Services" Version="4.13.0.2" />
     <PackageReference Include="Loupe.Agent.EntityFrameworkCore" Version="4.13.0.2" />
     <PackageReference Include="Loupe.Extensions.Logging" Version="4.13.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational.Specification.Tests" Version="2.1.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational.Specification.Tests" Version="5.0.12" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.0.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="3.0.0" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Configuration" Version="5.0.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\..\src\VistaDB.EFCore\VistaDB.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\..\src\EFCore.VistaDB\EFCore.VistaDB.csproj" />
   </ItemGroup>
 
 </Project>
