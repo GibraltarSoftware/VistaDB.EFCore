@@ -92,6 +92,8 @@ namespace Microsoft.EntityFrameworkCore.TestUtilities
                 else
                 {
                     using var context = createContext();
+
+                    //This creates the database from the configured model and then seeds it with the provided action.
                     context.Database.EnsureCreatedResiliently();
                     seed?.Invoke(context);
                 }

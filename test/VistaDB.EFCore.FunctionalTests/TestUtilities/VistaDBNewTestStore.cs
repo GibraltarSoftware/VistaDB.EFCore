@@ -115,7 +115,7 @@ namespace VistaDB.EntityFrameworkCore.FunctionalTests.TestUtilities
                 else
                 {
                     using var context = createContext();
-                    //context.Database.EnsureCreatedResiliently();
+                    //context.Database.EnsureCreatedResiliently(); <--This is where the SQL Server one created the schema from the model.
                     seed?.Invoke(context);
                 }
             }
@@ -144,7 +144,8 @@ namespace VistaDB.EntityFrameworkCore.FunctionalTests.TestUtilities
 
             if (createDatabase)
             {
-                ((VistaDBConnection)Connection).CreateEmptyDatabase();
+                CreateDatabase(null);
+//                ((VistaDBConnection)Connection).CreateEmptyDatabase();
                 Connection.Open();
             }
 
@@ -575,6 +576,19 @@ namespace VistaDB.EntityFrameworkCore.FunctionalTests.TestUtilities
     {
         public static void CreateEmptyDatabase(this VistaDBConnection conn)
         {
+
+            using (VistaDB.Provider.VistaDBConnection connection = new VistaDB.Provider.VistaDBConnection())
+            {
+                using (VistaDB.Provider.VistaDBCommand command = new VistaDB.Provider.VistaDBCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandText = "CREATE DATABASE 'NEWDB.vdb6', PAGE SIZE 4, LCID 1033, CASE SENSITIVE FALSE;";
+                    command.ExecuteNonQuery();
+                }
+            }
+
+
+
             // Needs implementation.
             throw new NotImplementedException(
                 "VistaDBTestExtensions.CreateEmptyDatabase(this VistaDBConnection conn) is not yet implemented");
