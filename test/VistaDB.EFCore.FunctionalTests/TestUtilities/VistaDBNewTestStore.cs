@@ -46,11 +46,22 @@ namespace VistaDB.EntityFrameworkCore.FunctionalTests.TestUtilities
                 .GetOrCreate(VistaDBNorthwindTestStoreFactory.Name).Initialize(null, (Func<DbContext>)null);
         */
 
+        public static string MapStoreName(string storeName)
+        {
+            if (storeName.Contains("Northwind"))
+                return "Northwind";
+
+            if (storeName.StartsWith("GearsOfWar"))
+                return "GearsOfWar";
+
+            return storeName;
+        }
+
         public VistaDBNewTestStore InitializeNorthwind()
             => InitializeVistaDB(null, (Func<DbContext>)null, null, null);
 
         public static VistaDBNewTestStore GetOrCreate(string name)
-            => new VistaDBNewTestStore(name);
+            => new VistaDBNewTestStore(name, shared: true, readOnlyConnection: true); // Assume shared for "Get".
 
         public static VistaDBNewTestStore GetOrCreateInitialized(string name)
             => new VistaDBNewTestStore(name).InitializeVistaDB(null, (Func<DbContext>)null, null);
@@ -59,7 +70,7 @@ namespace VistaDB.EntityFrameworkCore.FunctionalTests.TestUtilities
             => new VistaDBNewTestStore(name, scriptPath: scriptPath);
 
         public static VistaDBNewTestStore Create(string name, bool useFileName = false)
-            => new VistaDBNewTestStore(name, shared: false);
+            => new VistaDBNewTestStore(name, shared: false); // Assume not shared for "Create".
 
         public static VistaDBNewTestStore CreateInitialized(string name, bool useFileName = false, bool? multipleActiveResultSets = null)
             => new VistaDBNewTestStore(name, shared: false)
@@ -77,15 +88,15 @@ namespace VistaDB.EntityFrameworkCore.FunctionalTests.TestUtilities
             bool readOnlyConnection = false)
             : base(name, shared)
         {
-            _name = name;
-            _fileName = Path.Combine(CurrentDirectory, name + VistaDBExtension);
+            _name = MapStoreName(name);
+            _fileName = Path.Combine(CurrentDirectory, _name + VistaDBExtension);
 
             if (scriptPath != null)
             {
                 _scriptPath = Path.Combine(Path.GetDirectoryName(typeof(VistaDBNewTestStore).Assembly.Location), scriptPath);
             }
 
-            ConnectionString = CreateConnectionString(Name, _fileName, readOnlyConnection: readOnlyConnection);
+            ConnectionString = CreateConnectionString(_name, _fileName, readOnlyConnection: readOnlyConnection);
             Connection = new VistaDBConnection(ConnectionString);
         }
 
@@ -115,7 +126,7 @@ namespace VistaDB.EntityFrameworkCore.FunctionalTests.TestUtilities
                 else
                 {
                     using var context = createContext();
-                    //context.Database.EnsureCreatedResiliently();
+                    context.Database.EnsureCreatedResiliently();
                     seed?.Invoke(context);
                 }
             }
@@ -133,7 +144,7 @@ namespace VistaDB.EntityFrameworkCore.FunctionalTests.TestUtilities
             }
             while (File.Exists(name + VistaDBExtension));
 
-            return new VistaDBNewTestStore(name, shared: false).CreateTransient(createDatabase);
+            return new VistaDBNewTestStore(name, shared: false); //.CreateTransient(createDatabase);
         }
 
         private VistaDBNewTestStore CreateTransient(bool createDatabase)

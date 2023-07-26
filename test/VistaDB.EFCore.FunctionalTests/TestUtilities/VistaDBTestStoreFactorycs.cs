@@ -16,7 +16,7 @@ namespace VistaDB.EntityFrameworkCore.FunctionalTests.TestUtilities
             => VistaDBNewTestStore.Create(storeName);
 
         public override TestStore GetOrCreate(string storeName)
-            => VistaDBNewTestStore.CreateScratch(true);
+            => VistaDBNewTestStore.GetOrCreate(storeName); //.CreateScratch(true); // SQLite: ..TestStore.GetOrCreate(storeName);
 
         public override IServiceCollection AddProviderServices(IServiceCollection serviceCollection)
             => serviceCollection.AddEntityFrameworkVistaDB()

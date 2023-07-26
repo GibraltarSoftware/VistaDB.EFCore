@@ -15,10 +15,14 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="GearsOfWar.vdb6" />
     <None Remove="Northwind.vdb6" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="GearsOfWar.vdb6">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Northwind.vdb6">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
